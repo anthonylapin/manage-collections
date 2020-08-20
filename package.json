@@ -1,0 +1,38 @@
+{
+  "name": "manage-collections",
+  "version": "1.0.0",
+  "description": "Website where you can manage your collections",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd server && node app.js",
+    "server": "nodemon app.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently -n 'server,client' -c 'red,green'  \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonylapin/manage-collections.git"
+  },
+  "keywords": [
+    "MongoDB",
+    "Express",
+    "React",
+    "Node.js"
+  ],
+  "author": "Anton Lapin <anthonylapin11@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anthonylapin/manage-collections/issues"
+  },
+  "homepage": "https://github.com/anthonylapin/manage-collections#readme",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
