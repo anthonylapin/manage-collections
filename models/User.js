@@ -23,6 +23,7 @@ const userSchema = new Schema({
     },
     superuser: {
         type: Boolean,
+        required: true
     },
     collections: [
         {
