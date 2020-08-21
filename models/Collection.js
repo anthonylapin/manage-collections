@@ -1,5 +1,4 @@
 const { Schema, model, Types } = reqire('mongoose')
-const validate = require('mongoose-validator')
 
 const collectionSchema = Schema({
     owner: {
@@ -14,8 +13,7 @@ const collectionSchema = Schema({
     description: {
         type: String,
         required: true,
-        trim: true,
-        validate: descriptionValidator
+        trim: true
     },
     topic: {
         type: Types.ObjectId,
@@ -62,13 +60,5 @@ const collectionSchema = Schema({
         }
     ]
 })
-
-let descriptionValidator = [
-    validate({
-        validator: 'isLength',
-        arguments: [0, 140],
-        message: 'Description field has to be between 0 and 140 characters'
-    })
-]
 
 module.exports = model('Collection', collectionSchema)
