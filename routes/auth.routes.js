@@ -60,7 +60,7 @@ router.post('/signup',
 router.post('/signin',
     [
         check('email', 'Enter valid email').normalizeEmail().isEmail(),
-        check('password', 'Enter vaid password').isLength({
+        check('password', 'Enter valid password').isLength({
             min: 8
         })
     ],
