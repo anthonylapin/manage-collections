@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import {LoginForm} from "../components/LoginForm"
 import {AuthContext} from "../context/AuthContext"
 import {useHttp} from "../hooks/http.hook"
+import {SignInWithGoogleButton} from "../components/SignInWithGoogleButton";
 
 export const AuthPage: React.FC = () => {
     const auth = useContext(AuthContext)
@@ -23,6 +24,7 @@ export const AuthPage: React.FC = () => {
                <h4>Auth Page</h4>
            </div>
            <LoginForm onLogin={loginHandler} loading={loading} />
+           <SignInWithGoogleButton />
        </div>
    )
 }
