@@ -2,16 +2,23 @@ import React from 'react'
 import { BrowserRouter } from "react-router-dom"
 import { useRoutes } from "./routes"
 import { Navbar } from './components/Navbar'
+import {useAuth} from "./hooks/auth.hook"
+import {AuthContext} from "./context/AuthContext";
 
 const App: React.FC = () => {
-    const routes = useRoutes(false)
+    const {token, login, logout, userId} = useAuth()
+    const isAuthenticated = !!token
+    const routes = useRoutes(isAuthenticated)
+
     return (
-        <BrowserRouter>
-            <Navbar isAuthenticated={false} />
-            <div className="container">
-                {routes}
-            </div>
-        </BrowserRouter>
+        <AuthContext.Provider value={{token, login, logout, userId}}>
+            <BrowserRouter>
+                <Navbar isAuthenticated={isAuthenticated} />
+                <div className="container">
+                    {routes}
+                </div>
+            </BrowserRouter>
+        </AuthContext.Provider>
     )
 }
 

@@ -4,29 +4,27 @@ import {AuthPage} from "./pages/AuthPage"
 import {RegisterPage} from "./pages/RegisterPage"
 import { MainPage } from './pages/MainPage'
 
-interface routesFormProps {
-    isAuthenticated: boolean
-}
 
 export const useRoutes = (isAuthenticated: boolean) => {
     if(isAuthenticated) {
         return (
             <Switch>
-                <Route path={"/"} exact>
+                <Route path="/" exact>
                     <MainPage />
                 </Route>
+                <Redirect to="/" />
             </Switch>
         )
     }
     return (
         <Switch>
-            <Route path={"/signin"} exact>
+            <Route path="/signin" exact>
                 <AuthPage />
             </Route>
-            <Route path={"/signup"} exact>
+            <Route path="/signup" exact>
                 <RegisterPage />
             </Route>
-            <Redirect to={"/signin"} />
+            <Redirect to="/signin" />
         </Switch>
     )
 }

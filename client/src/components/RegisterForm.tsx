@@ -1,12 +1,12 @@
 import React from 'react'
 import { useFormik } from 'formik'
 
-interface SignUpForm {
+interface ISignUpForm {
     loading: boolean,
     onRegister: (firstName: string, lastName: string, email: string, password: string) => void
 }
 
-export const RegisterForm: React.FC<SignUpForm> = ({loading, onRegister}) => {
+export const RegisterForm: React.FC<ISignUpForm> = ({loading, onRegister}) => {
     const formik = useFormik({
         initialValues: {
             firstName: '',
@@ -72,7 +72,7 @@ export const RegisterForm: React.FC<SignUpForm> = ({loading, onRegister}) => {
                 {loading &&
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 }
-                Sign Up
+                Sign up
             </button>
         </form>
     );

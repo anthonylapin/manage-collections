@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { NavLink } from 'react-router-dom'
+import {AuthContext} from "../context/AuthContext"
 
 interface NavbarProps {
     isAuthenticated: boolean
@@ -7,6 +8,13 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) =>
     {
+        const auth = useContext(AuthContext)
+
+        const logoutHandler = (event: React.MouseEvent) => {
+            event.preventDefault()
+            auth.logout()
+        }
+
         const getNavItems = () => {
             if(isAuthenticated) {
                 return (
@@ -16,12 +24,17 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) =>
                                 Main page
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink onClick={logoutHandler} className="nav-link" to="/">
+                                Logout
+                            </NavLink>
+                        </li>
                     </ul>
                 )
             }
             return (
                 <ul className="navbar-nav">
-                    <li className="nav-item">
+                    <li className="nav-item active">
                         <NavLink className="nav-link" to="/signin">Sign in</NavLink>
                     </li>
                     <li className="nav-item active">

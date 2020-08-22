@@ -29,7 +29,7 @@ export const RegisterPage = () => {
     }
 
     return (
-        <div style={{paddingTop: "3rem"}}>
+        <div>
             <div className="text-center">
                 <h4>Registration</h4>
             </div>

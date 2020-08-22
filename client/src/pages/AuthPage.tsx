@@ -1,9 +1,28 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import {LoginForm} from "../components/LoginForm"
+import {AuthContext} from "../context/AuthContext"
+import {useHttp} from "../hooks/http.hook"
 
 export const AuthPage: React.FC = () => {
+    const auth = useContext(AuthContext)
+    const {loading, request, clearError} = useHttp()
+
+    useEffect(() => {
+        clearError()
+    }, [clearError])
+
+    const loginHandler = async (email: string, password: string) => {
+        try {
+            const data = await request('/api/auth/signin', 'POST', {email, password})
+            auth.login(data.token, data.userId)
+        } catch (e) {}
+    }
    return (
        <div>
-          <h1>Auth Page</h1>
+           <div className="text-center">
+               <h4>Auth Page</h4>
+           </div>
+           <LoginForm onLogin={loginHandler} loading={loading} />
        </div>
    )
 }
