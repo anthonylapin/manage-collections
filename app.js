@@ -4,14 +4,10 @@ const http = require('http')
 const server = http.createServer(app)
 const mongoose = require('mongoose')
 const config = require('config')
-const passport = require('passport')
-
 const PORT = process.env.PORT || config.get('port') || 5000
 const MONGODB_URI = config.get('mongoUri')
 
 app.use(express.json({ extended: true }))
-app.use(passport.initialize())
-
 
 app.use('/api/auth', require('./routes/auth.routes'))
 

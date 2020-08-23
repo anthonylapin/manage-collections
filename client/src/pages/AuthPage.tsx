@@ -18,13 +18,27 @@ export const AuthPage: React.FC = () => {
             auth.login(data.token, data.userId)
         } catch (e) {}
     }
+
+    const responseSuccessGoogle = async (res: any) => {
+        try {
+            const data = await request('/api/auth/googlelogin', 'POST', {tokenId: res.tokenId})
+            auth.login(data.token, data.userId)
+        } catch (e) {}
+    }
+
+    const responseFailureGoogle = () => {
+
+    }
    return (
        <div>
            <div className="text-center">
                <h4>Auth Page</h4>
            </div>
            <LoginForm onLogin={loginHandler} loading={loading} />
-           <SignInWithGoogleButton />
+           <SignInWithGoogleButton
+               responseSuccessGoogle={responseSuccessGoogle}
+               responseFailureGoogle={responseFailureGoogle}
+           />
        </div>
    )
 }

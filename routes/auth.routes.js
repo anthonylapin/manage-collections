@@ -4,6 +4,10 @@ const config = require('config')
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const {OAuth2Client} = require('google-auth-library')
+
+const client = new OAuth2Client('997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com')
+
 const router = Router()
 
 router.post('/signup',
@@ -109,5 +113,51 @@ router.post('/signin',
         }
     }
 )
+
+router.post('/googlelogin', async (req, res) => {
+    try {
+        const {tokenId} = req.body
+      const response = await client.verifyIdToken({
+          idToken: tokenId,
+          audience: "997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com"})
+        console.log(response.payload)
+        const {email_verified, given_name, family_name, email} = response.payload
+        if(!email_verified) {
+            return res.status(406).json({
+                message: 'Email not verified'
+            })
+        }
+
+        let user = await User.findOne({ email })
+
+        if(!user) {
+            const password = email + config.get('googleAuthSecret')
+            const hashedPassword = bcrypt.hash(password, 12)
+            const newUser = new User({
+                email,
+                hashedPassword,
+                firstName: given_name,
+                lastName: family_name,
+                superuser: false
+            })
+            await newUser.save()
+            user = newUser
+        }
+
+        const token = jwt.sign(
+            { userId: user.id },
+            config.get('jwtSecret'),
+            { expiresIn: '1h' }
+            )
+        res.json({
+            token,
+            userId: user.id
+        })
+    } catch (e) {
+        res.status(500).json({
+            message: 'Something went wrong.'
+        })
+    }
+})
 
 module.exports = router
