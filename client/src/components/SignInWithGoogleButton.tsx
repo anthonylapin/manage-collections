@@ -10,7 +10,7 @@ export const SignInWithGoogleButton: React.FC<ILoginGoogle> = ({responseSuccessG
     return (
         <GoogleLogin
             clientId="997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com"
-            buttonText="Login with Google"
+            buttonText="Sign in with Google"
             onSuccess={responseSuccessGoogle}
             onFailure={responseFailureGoogle}
             cookiePolicy={'single_host_origin'}
