@@ -2,5 +2,7 @@
     "port": 5000,
     "mongoUri": "mongodb+srv://admin:c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e@cluster0.tec2w.azure.mongodb.net/app?retryWrites=true&w=majority",
     "jwtSecret": "c9aa37498127e156de3c5a59bcd83d42474e18f8a25a7be791e2b207948d9988",
-    "googleAuthSecret": "753d5598b09ccd329688f04efca6119cc724da63a5f9ab85c1ec86d71cb2cd0f"
+    "googleAuthSecret": "753d5598b09ccd329688f04efca6119cc724da63a5f9ab85c1ec86d71cb2cd0f",
+    "googleClientId": "997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com",
+    "facebookAuthSecret": "50440e259fba9c4a1e0604a6af9d162c4372d584c5271f796b74c2d2f82953a8"
 }

@@ -5,8 +5,8 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const {OAuth2Client} = require('google-auth-library')
-
-const client = new OAuth2Client('997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com')
+const fetch = require('node-fetch')
+const client = new OAuth2Client(config.get('googleClientId'))
 
 const router = Router()
 
@@ -33,23 +33,13 @@ router.post('/signup',
             const { email, password, firstName, lastName } = req.body
 
             const candidate = await User.findOne({ email })
-
             if (candidate) {
                 return res.status(400).json({
                     message: 'User already exists'
                 })
             }
 
-            const hashedPassword = await bcrypt.hash(password, 12)
-            const user = new User({
-                email: email,
-                password: hashedPassword,
-                firstName: firstName,
-                lastName: lastName,
-                superuser: false
-            })
-
-            await user.save()
+            await createUser(email, password, firstName, lastName)
             res.status(201).json({
                 message: 'User has been created.'
             })
@@ -96,11 +86,7 @@ router.post('/signin',
                 })
             }
 
-            const token = jwt.sign(
-                { userId: user.id },
-                config.get('jwtSecret'),
-                { expiresIn: '1h' }
-            )
+            const token = generateToken(user.id)
 
             res.json({
                 token,
@@ -120,7 +106,6 @@ router.post('/googlelogin', async (req, res) => {
       const response = await client.verifyIdToken({
           idToken: tokenId,
           audience: "997018043744-pmlk5mtt5tvh529irf8071vptk13ggd1.apps.googleusercontent.com"})
-        console.log(response.payload)
         const {email_verified, given_name, family_name, email} = response.payload
         if(!email_verified) {
             return res.status(406).json({
@@ -129,26 +114,12 @@ router.post('/googlelogin', async (req, res) => {
         }
 
         let user = await User.findOne({ email })
-
         if(!user) {
             const password = email + config.get('googleAuthSecret')
-            const hashedPassword = bcrypt.hash(password, 12)
-            const newUser = new User({
-                email,
-                hashedPassword,
-                firstName: given_name,
-                lastName: family_name,
-                superuser: false
-            })
-            await newUser.save()
-            user = newUser
+            user = await createUser(email, password, given_name, family_name)
         }
 
-        const token = jwt.sign(
-            { userId: user.id },
-            config.get('jwtSecret'),
-            { expiresIn: '1h' }
-            )
+        const token = generateToken(user.id)
         res.json({
             token,
             userId: user.id
@@ -159,5 +130,58 @@ router.post('/googlelogin', async (req, res) => {
         })
     }
 })
+
+router.post('/facebooklogin', async (req, res) => {
+    const {userID, accessToken} = req.body
+    let urlGraphFacebook = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`
+
+    try {
+        let response = await fetch(urlGraphFacebook, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        response = await response.json()
+        const {email, name} = response
+        const nameAsArray = name.split(' ')
+
+        let user = await User.findOne({ email })
+        if(!user) {
+            const password = email + config.get('googleAuthSecret')
+            user = await createUser(email, password, nameAsArray[0], nameAsArray[1])
+        }
+
+        const token = generateToken(user.id)
+        res.json({
+            token,
+            userId: user.id,
+        })
+    } catch(e) {
+        res.status(500).json({
+            message: 'Something went wrong.'
+        })
+    }
+})
+
+async function createUser(email, password, firstName, lastName) {
+    const hashedPassword = await bcrypt.hash(password, 12)
+    const user = new User({
+        email: email,
+        password: hashedPassword,
+        firstName: firstName,
+        lastName: lastName,
+        superuser: false
+    })
+    await user.save()
+    return user
+}
+
+function generateToken(userId) {
+    const token = jwt.sign(
+        { userId: userId },
+        config.get('jwtSecret'),
+        { expiresIn: '1h' }
+    )
+    return token
+}
 
 module.exports = router

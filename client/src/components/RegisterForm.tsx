@@ -68,12 +68,14 @@ export const RegisterForm: React.FC<ISignUpForm> = ({loading, onRegister}) => {
                     />
                 </div>
             </div>
-            <button className="btn btn-primary" disabled={loading} type="submit">
-                {loading &&
+            <div className="text-center">
+                <button className="btn btn-primary" disabled={loading} type="submit">
+                    {loading &&
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                }
-                Sign up
-            </button>
+                    }
+                    Sign up
+                </button>
+            </div>
         </form>
     );
 }

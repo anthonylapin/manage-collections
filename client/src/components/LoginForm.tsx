@@ -42,12 +42,14 @@ export const LoginForm: React.FC<ILoginForm> = ({loading, onLogin}) => {
                         value={formik.values.password}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">
-                    {loading &&
+                <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
+                        {loading &&
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    }
-                    Sign in
-                </button>
+                        }
+                        Sign in
+                    </button>
+                </div>
         </form>
     )
 }
