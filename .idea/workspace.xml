@@ -26,17 +26,22 @@
   <component name="ChangeListManager">
     <list default="true" id="80a84980-39c3-4249-afd2-7e6f055c392a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegisterForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/SignInWithGoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SignInWithGoogleButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/OrComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/OrComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/RegisterForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SignInWithFacebookButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/SignInWithFacebookButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SignInWithGoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/SignInWithGoogleButton.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/AuthPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/default.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MainPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/RegisterPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/RegisterPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Collection.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Collection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Item.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Tag.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Tag.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/WhichAreAllowedField.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/auth.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +64,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/client/node_modules/typescript/lib" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/src/components/common" />
+      <recent name="$PROJECT_DIR$/client/src/components/auth" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,7 +84,9 @@
       <workItem from="1598194573501" duration="4636000" />
       <workItem from="1598217506344" duration="643000" />
       <workItem from="1598254289381" duration="5363000" />
-      <workItem from="1598261963436" duration="3179000" />
+      <workItem from="1598261963436" duration="3426000" />
+      <workItem from="1598343967609" duration="3921000" />
+      <workItem from="1598379134798" duration="750000" />
     </task>
     <servers />
   </component>

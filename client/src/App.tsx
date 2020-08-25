@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter } from "react-router-dom"
 import { useRoutes } from "./routes"
-import { Navbar } from './components/Navbar'
+import { Navbar } from './components/common/Navbar'
 import {useAuth} from "./hooks/auth.hook"
 import {AuthContext} from "./context/AuthContext";
 

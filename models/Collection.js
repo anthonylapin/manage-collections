@@ -1,13 +1,14 @@
-const { Schema, model, Types } = reqire('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
 const collectionSchema = Schema({
-    owner: {
-        type: Types.ObjectId,
-        ref: 'User'
-    },
     name: {
         type: String,
         trim: true,
+        required: true
+    },
+    owner: {
+        type: Types.ObjectId,
+        ref: 'User',
         required: true
     },
     description: {
@@ -18,47 +19,78 @@ const collectionSchema = Schema({
     topic: {
         type: Types.ObjectId,
         ref: 'Topic',
+        required: true
     },
     imageUrl: {
         type: String,
         trim: true
     },
-    numericFieldKeys: [
-        {
-            type: String,
-            trim: true
-        }
-    ],
-    oneLineFieldKeys: [
-        {
-            type: String,
-            trim: true
-        }
-    ],
-    TextFieldKeys: [
-        {
-            type: String,
-            trim: true
-        }
-    ],
-    DateFieldKeys: [
-        {
-            type: String,
-            trim: true
-        }
-    ],
-    BooleanCheckboxesFieldKeys: [
-        {
-            type: String,
-            trim: true
-        }
-    ],
     items: [
         {
             type: Types.ObjectId,
             ref: 'Item'
         }
-    ]
+    ],
+    numericField1: {
+        type: String,
+        trim: true
+    },
+    numericField2: {
+        type: String,
+        trim: true
+    },
+    numericField3: {
+        type: String,
+        trim: true
+    },
+    oneLineField1: {
+        type: String,
+        trim: true
+    },
+    oneLineField2: {
+        type: String,
+        trim: true
+    },
+    oneLineField3: {
+        type: String,
+        trim: true
+    },
+    textField1: {
+        type: String,
+        trim: true
+    },
+    textField2: {
+        type: String,
+        trim: true
+    },
+    textField3: {
+        type: String,
+        trim: true
+    },
+    dateField1: {
+        type: String,
+        trim: true
+    },
+    dateField2: {
+        type: String,
+        trim: true
+    },
+    dateField3: {
+        type: String,
+        trim: true
+    },
+    booleanCheckbox1: {
+        type: String,
+        trim: true
+    },
+    booleanCheckbox2: {
+        type: String,
+        trim: true
+    },
+    booleanCheckbox3: {
+        type: String,
+        trim: true
+    }
 })
 
 module.exports = model('Collection', collectionSchema)

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {RegisterForm} from "../components/RegisterForm"
+import {RegisterForm} from "../components/auth/RegisterForm"
 import {useHttp} from "../hooks/http.hook"
 import {useHistory} from 'react-router-dom'
 

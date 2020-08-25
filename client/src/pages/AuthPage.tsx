@@ -1,10 +1,10 @@
 import React, {useContext, useEffect} from 'react'
-import {LoginForm} from "../components/LoginForm"
+import {LoginForm} from "../components/auth/LoginForm"
 import {AuthContext} from "../context/AuthContext"
 import {useHttp} from "../hooks/http.hook"
-import {SignInWithGoogleButton} from "../components/SignInWithGoogleButton"
-import {OrComponent} from "../components/OrComponent"
-import {SignInWithFacebookButton} from "../components/SignInWithFacebookButton";
+import {SignInWithGoogleButton} from "../components/auth/SignInWithGoogleButton"
+import {OrComponent} from "../components/common/OrComponent"
+import {SignInWithFacebookButton} from "../components/auth/SignInWithFacebookButton";
 
 export const AuthPage: React.FC = () => {
     const auth = useContext(AuthContext)
