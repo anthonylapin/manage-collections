@@ -12,6 +12,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 <Route path="/" exact>
                     <MainPage />
                 </Route>
+                <Route path="/add/collection">
+
+                </Route>
                 <Redirect to="/" />
             </Switch>
         )

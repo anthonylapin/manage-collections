@@ -43,7 +43,7 @@ export const LoginForm: React.FC<ILoginForm> = ({loading, onLogin}) => {
                     />
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-success">
                         {loading &&
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         }
