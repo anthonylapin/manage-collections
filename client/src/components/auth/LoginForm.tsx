@@ -1,10 +1,6 @@
 import React from 'react'
 import {useFormik} from "formik"
-
-interface ILoginForm {
-    loading: boolean,
-    onLogin: (email: string, password: string) => void
-}
+import {ILoginForm} from "../../interfaces/common"
 
 export const LoginForm: React.FC<ILoginForm> = ({loading, onLogin}) => {
     const formik = useFormik({

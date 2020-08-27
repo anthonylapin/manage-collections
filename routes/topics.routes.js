@@ -3,6 +3,26 @@ const { check, validationResult } = require('express-validator')
 const Topic = require('../models/Topic')
 const router = Router()
 
+router.get('/show', async (req, res) => {
+    try {
+        const topics = await Topic.find({})
+        const topicsInfo = topics.map(topic => {
+            return {
+                id: topic.id,
+                name: topic.name
+            }
+        })
+        res.status(200).json({
+            message: 'Topics successfully found',
+            topics: topicsInfo
+        })
+    } catch(e) {
+        res.status(500).json({
+            message: 'Something went wrong. Try again.'
+        })
+    }
+})
+
 router.post('/create',
     [
         check('name', 'Name must exist.').exists().isLength({

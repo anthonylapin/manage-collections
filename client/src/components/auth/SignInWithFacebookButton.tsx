@@ -1,9 +1,6 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
-
-interface ILoginFacebook {
-    responseFacebook: (res: any) => void,
-}
+import {ILoginFacebook} from "../../interfaces/common"
 
 export const SignInWithFacebookButton: React.FC<ILoginFacebook> = ({responseFacebook}) => {
     return (

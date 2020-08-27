@@ -21,7 +21,7 @@ const collectionSchema = Schema({
         ref: 'Topic',
         required: true
     },
-    imageUrl: {
+    image: {
         type: String,
         trim: true
     },
@@ -79,15 +79,15 @@ const collectionSchema = Schema({
         type: String,
         trim: true
     },
-    booleanCheckbox1: {
+    checkboxField1: {
         type: String,
         trim: true
     },
-    booleanCheckbox2: {
+    checkboxField2: {
         type: String,
         trim: true
     },
-    booleanCheckbox3: {
+    checkboxField3: {
         type: String,
         trim: true
     }

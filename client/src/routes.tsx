@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import {AuthPage} from "./pages/AuthPage"
 import {RegisterPage} from "./pages/RegisterPage"
 import { MainPage } from './pages/MainPage'
-import {AddCollectionPage} from "./pages/collections/AddCollectionPage"
+import {CreateCollectionPage} from "./pages/collections/CreateCollectionPage"
 import {UpdateCollectionPage} from "./pages/collections/UpdateCollectionPage"
 import {DeleteCollectionPage} from "./pages/collections/DeleteCollectionPage"
 import {ShowCollectionsPage} from "./pages/collections/ShowCollectionsPage"
@@ -16,8 +16,8 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 <Route path="/" exact>
                     <MainPage />
                 </Route>
-                <Route path="/add/collection">
-                    <AddCollectionPage />
+                <Route path="/create/collection">
+                    <CreateCollectionPage />
                 </Route>
                 <Route path="/update/collection">
                     <UpdateCollectionPage />

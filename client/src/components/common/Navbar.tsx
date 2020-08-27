@@ -1,12 +1,9 @@
 import React, {useContext} from 'react'
 import { NavLink } from 'react-router-dom'
 import {AuthContext} from "../../context/AuthContext"
+import {INavbarProps} from "../../interfaces/common"
 
-interface NavbarProps {
-    isAuthenticated: boolean
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) =>
+export const Navbar: React.FC<INavbarProps> = ({ isAuthenticated }) =>
     {
         const auth = useContext(AuthContext)
 

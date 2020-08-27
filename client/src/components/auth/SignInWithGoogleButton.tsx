@@ -1,10 +1,6 @@
 import React from 'react'
 import { GoogleLogin } from 'react-google-login'
-
-interface ILoginGoogle {
-    responseSuccessGoogle: (res: any) => void,
-    responseFailureGoogle: () => void
-}
+import {ILoginGoogle} from "../../interfaces/common"
 
 export const SignInWithGoogleButton: React.FC<ILoginGoogle> = ({responseSuccessGoogle, responseFailureGoogle}) => {
     return (

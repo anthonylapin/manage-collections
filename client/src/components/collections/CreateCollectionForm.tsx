@@ -1,6 +1,14 @@
 import React from 'react'
+import {ICreateCollection} from "../../interfaces/common"
 
-export const AddCollectionPage: React.FC = () => {
+export const CreateCollectionForm: React.FC<ICreateCollection> = ({topics}) => {
+    const getOptions = () => {
+        return topics.map((topic, index) => (
+            <option key={index} value={topic.id}>
+                {topic.name}
+            </option>
+        ))
+    }
     return (
         <form>
             <p><b>Required fields</b></p>
@@ -11,9 +19,7 @@ export const AddCollectionPage: React.FC = () => {
             <div className="form-group">
                 <label htmlFor="topic">Topic</label>
                 <select className="form-control" id="topic">
-                    <option>Alcohol</option>
-                    <option>Books</option>
-                    <option>Music</option>
+                    {getOptions()}
                 </select>
             </div>
             <div className="form-group">
@@ -92,4 +98,3 @@ export const AddCollectionPage: React.FC = () => {
         </form>
     )
 }
-
