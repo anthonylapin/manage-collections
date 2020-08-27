@@ -1,11 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import {CreateCollectionForm} from "../../components/collections/CreateCollectionForm"
 import {useHttp} from "../../hooks/http.hook"
-
-interface ITopic {
-    id: string,
-    name: string
-}
+import {ITopic} from "../../interfaces/common"
+import {Loader} from "../../components/common/Loader"
 
 export const CreateCollectionPage: React.FC = () => {
     const [topics, setTopics] = useState<ITopic[]>([])
@@ -23,10 +20,10 @@ export const CreateCollectionPage: React.FC = () => {
     }, [fetchTopics])
 
     if(loading) {
-        return <h1>Loading</h1>
+        return <Loader />
     }
+
     return (
         <CreateCollectionForm topics={topics} />
     )
 }
-
