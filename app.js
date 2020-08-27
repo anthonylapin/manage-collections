@@ -10,6 +10,8 @@ const MONGODB_URI = config.get('mongoUri')
 app.use(express.json({ extended: true }))
 
 app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/collections', require('./routes/collections.routes'))
+app.use('/api/topics', require('./routes/topics.routes'))
 
 const connectToDatabase = async () => {
     try {
