@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run install-client && npm run build",
-    "server": "nodemon app.js",
+    "server": "nodemon app.js --ignore client",
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"npm run server\" \"npm run client\""
   },
@@ -32,9 +30,18 @@
   },
   "homepage": "https://github.com/anthonylapin/manage-collections#readme",
   "dependencies": {
+    "@google-cloud/storage": "^5.3.0",
+    "@types/react-facebook-login": "^4.1.2",
+    "bcrypt": "^5.0.0",
     "config": "^3.3.1",
     "express": "^4.17.1",
-    "mongoose": "^5.10.0"
+    "express-validator": "^6.6.1",
+    "google-auth-library": "^6.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "mongoose-validator": "^2.1.0",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
