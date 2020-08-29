@@ -2,10 +2,6 @@ export interface INavbarProps {
     isAuthenticated: boolean
 }
 
-export interface ICreateCollection {
-    topics: ITopic[]
-}
-
 export interface ITopic {
     id: string,
     name: string
@@ -36,4 +32,36 @@ export interface IAuthContext {
     login: (jwtToken: string, id: string) => void,
     logout: () => void,
     isAuthenticated?: boolean
+}
+
+export interface IProgress {
+    percentage: number
+}
+
+export interface ICreateCollection {
+    topics: ITopic[],
+    handleCreateCollection: (values: ICreateCollectionValues) => void
+}
+
+export interface ICreateCollectionValues {
+    name: string,
+    topic: string,
+    description: string,
+    imageUrl?: string,
+    numericField1: string,
+    numericField2: string,
+    numericField3: string,
+    oneLineField1: string,
+    oneLineField2: string,
+    oneLineField3:string,
+    textField1: string,
+    textField2: string,
+    textField3: string,
+    dateField1: string,
+    dateField2: string,
+    dateField3: string,
+    checkboxField1: string,
+    checkboxField2: string,
+    checkboxField3: string,
+    file?: Blob | string
 }

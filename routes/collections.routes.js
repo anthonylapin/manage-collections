@@ -2,31 +2,29 @@ const {Router} = require('express')
 const { check, validationResult } = require('express-validator')
 const auth = require('../middleware/auth.middleware')
 const Collection = require('../models/Collection')
+const {Types} = require('mongoose')
 const router = Router()
 
 router.post('/create',
-    auth,
     [
-      check('name', 'Name should exist').exists().isLength({
-          min: 1
-      }),
       check('description', 'Description must be non-empty and maximum 140 characters.').isLength({
           min: 1,
           max: 140
-      }),
-      check('topic', 'Topic must exist.').exists(),
+      })
     ],
+    auth,
     async (req, res) => {
         const errors = validationResult(req)
-
         if(!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
                 message: 'Incorrect data during creating new collection.'
             })
         }
+
         try {
-            const newCollection = await createNewCollection(req.body)
+            const newCollection = await createNewCollection(req.body, req.user.userId)
+            console.log(newCollection)
             res.status(201).json({
                 message: `New collection ${newCollection.name} is created.`
             })
@@ -38,12 +36,14 @@ router.post('/create',
     }
 )
 
-async function createNewCollection(body) {
+async function createNewCollection(body, userId) {
+    const topicId = Types.ObjectId(body.topic)
+
     const newCollection = new Collection({
         name: body.name,
-        owner: user.userId,
+        owner: userId,
         description: body.description,
-        topic: body.topicId,
+        topic: topicId,
         image: body.imageUrl,
         numericField1: body.numericField1,
         numericField2: body.numericField2,

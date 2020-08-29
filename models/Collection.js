@@ -21,7 +21,7 @@ const collectionSchema = Schema({
         ref: 'Topic',
         required: true
     },
-    image: {
+    imageUrl: {
         type: String,
         trim: true
     },

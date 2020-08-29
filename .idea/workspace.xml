@@ -26,11 +26,19 @@
   <component name="ChangeListManager">
     <list default="true" id="80a84980-39c3-4249-afd2-7e6f055c392a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/collections/CreateCollectionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/collections/CreateCollectionForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/interfaces/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/interfaces/common.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/collections/CreateCollectionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/collections/CreateCollectionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/default.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Collection.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Collection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/collections.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/collections.routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +64,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config" />
       <recent name="$PROJECT_DIR$/client/src/pages/collections" />
       <recent name="$PROJECT_DIR$/client/src/components/common" />
       <recent name="$PROJECT_DIR$/client/src/components/auth" />
@@ -81,7 +90,10 @@
       <workItem from="1598433915259" duration="3679000" />
       <workItem from="1598465544163" duration="406000" />
       <workItem from="1598518300604" duration="2071000" />
-      <workItem from="1598520665270" duration="6795000" />
+      <workItem from="1598520665270" duration="7009000" />
+      <workItem from="1598536066849" duration="8174000" />
+      <workItem from="1598612420815" duration="10503000" />
+      <workItem from="1598685267363" duration="1993000" />
     </task>
     <servers />
   </component>
@@ -101,6 +113,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598685437152">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1598685437152" />
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1598260794233">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -111,7 +127,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/pages/RegisterPage.tsx</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
