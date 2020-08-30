@@ -5,6 +5,19 @@ const Collection = require('../models/Collection')
 const {Types} = require('mongoose')
 const router = Router()
 
+router.get('/', auth, async (req, res) => {
+    try {
+        const collections = await findCollectionsForUser(req.user.userId)
+        res.json({
+            collections
+        })
+    } catch(e) {
+        res.status(500).json({
+            message: 'Something went wrong, try again.'
+        })
+    }
+})
+
 router.post('/create',
     [
       check('description', 'Description must be non-empty and maximum 140 characters.').isLength({
@@ -62,6 +75,10 @@ async function createNewCollection(body, userId) {
     })
     await newCollection.save()
     return newCollection
+}
+
+async function findCollectionsForUser(id) {
+    const collections = await Collection.find({owner: id})
 }
 
 module.exports = router
