@@ -3,6 +3,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 import { CollectionsTable } from "../../components/collections/CollectionsTable";
 import { ICollectionValues } from "../../interfaces/common";
+import { Link } from "react-router-dom";
 
 export const ShowCollectionsPage: React.FC = () => {
   const [collections, setCollections] = useState<ICollectionValues[]>([]);
@@ -21,6 +22,17 @@ export const ShowCollectionsPage: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  if (!collections.length) {
+    return (
+      <div className="text-center">
+        <h4>There is no created collections yet.</h4>
+        <Link to="/create/collection">
+          Click here to create a new collection.
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div>

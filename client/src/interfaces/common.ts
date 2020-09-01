@@ -101,3 +101,15 @@ export interface ICollectionTable {
 export interface ICollectionDetailParams {
   id: string;
 }
+
+export interface ICreateItemPage {
+  collectionId: string;
+}
+
+export interface IUpdateItemPage {
+  collectionId: string;
+}
+
+export interface IDeleteItemPage {
+  collectionId: string;
+}

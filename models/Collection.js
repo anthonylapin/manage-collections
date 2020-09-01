@@ -91,6 +91,10 @@ const collectionSchema = Schema({
     type: String,
     trim: true,
   },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = model("Collection", collectionSchema);

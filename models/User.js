@@ -31,6 +31,11 @@ const userSchema = new Schema({
       ref: "Collection",
     },
   ],
+  created: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 });
 
 module.exports = model("User", userSchema);
