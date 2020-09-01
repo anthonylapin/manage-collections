@@ -7,6 +7,7 @@ import {CreateCollectionPage} from "./pages/collections/CreateCollectionPage"
 import {UpdateCollectionPage} from "./pages/collections/UpdateCollectionPage"
 import {DeleteCollectionPage} from "./pages/collections/DeleteCollectionPage"
 import {ShowCollectionsPage} from "./pages/collections/ShowCollectionsPage"
+import {CollectionDetailPage} from "./pages/collections/CollectionDetailPage"
 
 
 export const useRoutes = (isAuthenticated: boolean) => {
@@ -27,6 +28,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 </Route>
                 <Route path="/show/collections">
                     <ShowCollectionsPage />
+                </Route>
+                <Route path="/collection/detail/:id">
+                    <CollectionDetailPage />
                 </Route>
                 <Redirect to="/" />
             </Switch>

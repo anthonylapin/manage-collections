@@ -1,10 +1,12 @@
-import React, {useCallback, useContext, useEffect} from 'react'
-import {useHttp} from '../../hooks/http.hook'
-import {AuthContext} from "../../context/AuthContext"
-import {CollectionsTable} from "../../components/collections/CollectionsTable"
+import React, { useState, useCallback, useContext, useEffect } from 'react'
+import { useHttp } from '../../hooks/http.hook'
+import { AuthContext } from "../../context/AuthContext"
+import { CollectionsTable } from "../../components/collections/CollectionsTable"
+import { ICollectionValues } from "../../interfaces/common"
 
 export const ShowCollectionsPage: React.FC = () => {
-    const {request} = useHttp()
+    const [collections, setCollections] = useState<ICollectionValues[]>([])
+    const { request } = useHttp()
     const auth = useContext(AuthContext)
 
     const fetchData = useCallback(async () => {
@@ -12,10 +14,8 @@ export const ShowCollectionsPage: React.FC = () => {
             const data = await request('/api/collections', 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             })
-            console.log(data)
-        } catch (e) {
-
-        }
+            setCollections(data.collections)
+        } catch (e) { }
     }, [request, auth.token])
 
     useEffect(() => {
@@ -25,9 +25,9 @@ export const ShowCollectionsPage: React.FC = () => {
 
     return (
         <div>
-            <div className="text-center mb-2">
+            <div className="text-center">
                 <h5>Your collections list</h5>
-                <CollectionsTable />
+                <CollectionsTable collections={collections} />
             </div>
         </div>
     )

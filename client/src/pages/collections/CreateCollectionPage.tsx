@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useCallback, useContext} from 'react'
-import {useHistory} from 'react-router-dom'
-import {CreateCollectionForm} from "../../components/collections/CreateCollectionForm"
-import {useHttp} from "../../hooks/http.hook"
+import React, { useState, useEffect, useCallback, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { CreateCollectionForm } from "../../components/collections/CreateCollectionForm"
+import { useHttp } from "../../hooks/http.hook"
 import { AuthContext } from '../../context/AuthContext'
-import {ICreateCollectionValues, ITopic} from "../../interfaces/common"
-import {Loader} from "../../components/common/Loader"
+import { ICreateCollectionValues, ITopic } from "../../interfaces/common"
+import { Loader } from "../../components/common/Loader"
 import axios from 'axios'
 
 export const CreateCollectionPage: React.FC = () => {
     const [topics, setTopics] = useState<ITopic[]>([])
-    const {request, loading, setLoading} = useHttp()
+    const { request, loading, setLoading } = useHttp()
     const auth = useContext(AuthContext)
     const history = useHistory()
 
@@ -17,7 +17,7 @@ export const CreateCollectionPage: React.FC = () => {
         try {
             const fetched = await request('/api/topics/show', 'GET')
             setTopics(fetched.topics)
-        } catch(e) {}
+        } catch (e) { }
     }, [request])
 
     useEffect(() => {
@@ -32,13 +32,15 @@ export const CreateCollectionPage: React.FC = () => {
         values['imageUrl'] = imageUrl
         delete values['file']
 
-        await request('/api/collections/create', 'POST', values, {
-            Authorization: `Bearer ${auth.token}`
-        })
-        history.push('/')
+        try {
+            await request('/api/collections/create', 'POST', values, {
+                Authorization: `Bearer ${auth.token}`
+            })
+            history.push('/')
+        } catch (e) { }
     }
 
-    if(loading) {
+    if (loading) {
         return <Loader />
     }
 
@@ -48,7 +50,7 @@ export const CreateCollectionPage: React.FC = () => {
 }
 
 async function uploadFileToGoogleStorage(file: Blob | string | undefined) {
-    if(!file) {
+    if (!file) {
         return ''
     }
 
@@ -62,8 +64,8 @@ async function uploadFileToGoogleStorage(file: Blob | string | undefined) {
             }
         })
         return response.data
-    } catch(err) {
-        if(err.response.status === 500) {
+    } catch (err) {
+        if (err.response.status === 500) {
             console.log('There was a problem with a server.')
         } else {
             console.log(err.response.data.message)

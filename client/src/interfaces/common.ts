@@ -65,3 +65,34 @@ export interface ICreateCollectionValues {
     checkboxField3: string,
     file?: Blob | string
 }
+
+export interface ICollectionValues {
+    _id: string,
+    name: string,
+    topic: string,
+    description: string,
+    imageUrl?: string,
+    numericField1?: string,
+    numericField2?: string,
+    numericField3?: string,
+    oneLineField1?: string,
+    oneLineField2?: string,
+    oneLineField3?:string,
+    textField1?: string,
+    textField2?: string,
+    textField3?: string,
+    dateField1?: string,
+    dateField2?: string,
+    dateField3?: string,
+    checkboxField1?: string,
+    checkboxField2?: string,
+    checkboxField3?: string,
+}
+
+export interface ICollectionTable {
+    collections: ICollectionValues[]
+}
+
+export interface ICollectionDetailParams {
+    id: string
+}

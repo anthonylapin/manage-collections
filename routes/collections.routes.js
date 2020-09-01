@@ -7,13 +7,13 @@ const router = Router()
 
 router.get('/', auth, async (req, res) => {
     try {
-        const collections = await findCollectionsForUser(req.user.userId)
+        const collections = await Collection.find({owner: req.user.userId})
         res.json({
             collections
         })
     } catch(e) {
         res.status(500).json({
-            message: 'Something went wrong, try again.'
+            message: 'Something wen t wrong, try again.'
         })
     }
 })
@@ -56,7 +56,7 @@ async function createNewCollection(body, userId) {
         owner: userId,
         description: body.description,
         topic: topicId,
-        image: body.imageUrl,
+        imageUrl: body.imageUrl,
         numericField1: body.numericField1,
         numericField2: body.numericField2,
         numericField3: body.numericField3,
