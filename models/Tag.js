@@ -1,17 +1,17 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require("mongoose");
 
 const tagSchema = Schema({
-    name: {
-        type: String,
-        trim: true,
-        required: true
+  name: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  items: [
+    {
+      type: Types.ObjectId,
+      ref: "Item",
     },
-    items: [
-        {
-            type: Types.ObjectId,
-            ref: 'Item'
-        }
-    ]
-})
+  ],
+});
 
-module.exports = model('Tag', tagSchema)
+module.exports = model("Tag", tagSchema);
