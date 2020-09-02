@@ -13,7 +13,27 @@ router.get("/", auth, async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Something wen t wrong, try again.",
+      message: "Something went wrong, try again.",
+    });
+  }
+});
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const collection = await Collection.findOne({ id: req.params.id });
+
+    if (!collection) {
+      return res.status(404).json({
+        message: "Not found",
+      });
+    }
+
+    res.json({
+      collection,
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
     });
   }
 });
@@ -82,10 +102,6 @@ async function createNewCollection(body, userId) {
   });
   await newCollection.save();
   return newCollection;
-}
-
-async function findCollectionsForUser(id) {
-  const collections = await Collection.find({ owner: id });
 }
 
 module.exports = router;

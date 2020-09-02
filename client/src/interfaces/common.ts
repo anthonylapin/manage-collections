@@ -106,6 +106,29 @@ export interface ICreateItemPage {
   collectionId: string;
 }
 
+export interface ICreateItemForm {
+  existingTags: string[];
+  numericFieldKey1?: string;
+  numericFieldKey2?: string;
+  numericFieldKey3?: string;
+  oneLineFieldKey1?: string;
+  oneLineFieldKey2?: string;
+  oneLineFieldKey3?: string;
+  textFieldKey1?: string;
+  textFieldKey2?: string;
+  textFieldKey3?: string;
+  dateFieldKey1?: string;
+  dateFieldKey2?: string;
+  dateFieldKey3?: string;
+  checkboxFieldKey1?: string;
+  checkboxFieldKey2?: string;
+  checkboxFieldKey3?: string;
+}
+
+export interface ICreateItemFormProps {
+  itemForm: ICreateItemForm;
+}
+
 export interface IUpdateItemPage {
   collectionId: string;
 }

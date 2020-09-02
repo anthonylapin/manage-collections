@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import jwtDecode from "jwt-decode";
 
 const storageName = "userData";
 
@@ -31,10 +32,16 @@ export const useAuth = () => {
     const data = JSON.parse(jsonData || "{}");
 
     if (data && data.token) {
-      login(data.token, data.userId);
+      const { exp } = jwtDecode(data.token);
+      const expirationTime = exp * 1000 - 60000;
+      if (Date.now() >= expirationTime) {
+        logout();
+      } else {
+        login(data.token, data.userId);
+      }
     }
     setReady(true);
-  }, [login]);
+  }, [login, logout]);
 
   return { login, logout, token, userId, ready };
 };
