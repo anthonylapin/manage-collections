@@ -20,7 +20,7 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/:id", auth, async (req, res) => {
   try {
-    const collection = await Collection.findOne({ id: req.params.id });
+    const collection = await Collection.findOne({ _id: req.params.id });
 
     if (!collection) {
       return res.status(404).json({

@@ -6,7 +6,8 @@ const router = Router();
 
 router.get("/", auth, async (req, res) => {
   try {
-    const tags = await Tag.find({});
+    let tags = await Tag.find({});
+    tags = tags.map((tag) => tag.name);
     res.json({
       tags,
     });

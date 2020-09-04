@@ -12,7 +12,7 @@ const itemSchema = Schema({
       ref: "Tag",
     },
   ],
-  collection: {
+  collectionId: {
     type: Types.ObjectId,
     ref: "Collection",
     required: true,

@@ -1,17 +1,26 @@
 import React, { useCallback, useEffect, useContext, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ICreateItemPage, ICreateItemForm } from "../../interfaces/common";
+import { useParams, useHistory } from "react-router-dom";
+import {
+  ICreateItemPage,
+  ICreateItemForm,
+  IItemObj,
+} from "../../interfaces/common";
 import { useHttp } from "../../hooks/http.hook";
 import { CreateItemForm } from "../../components/items/CreateItemForm";
 import { AuthContext } from "../../context/AuthContext";
+import { Loader } from "../../components/common/Loader";
 
 export const CreateItemPage: React.FC = () => {
   const collectionId = useParams<ICreateItemPage>().collectionId;
   const [itemForm, setItemForm] = useState<ICreateItemForm>({
     existingTags: [],
   });
-  const { request, clearError } = useHttp();
+  const [collectionExists, setCollectionExists] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const { request, clearError, loading } = useHttp();
   const { token } = useContext(AuthContext);
+  const history = useHistory();
 
   const getCollection = useCallback(async () => {
     try {
@@ -47,7 +56,9 @@ export const CreateItemPage: React.FC = () => {
         checkboxFieldKey2: collectionInfo.checkboxField2,
         checkboxFieldKey3: collectionInfo.checkboxField3,
       }));
-    } catch (error) {}
+    } catch (error) {
+      setCollectionExists(false);
+    }
   }, [request, collectionId, token]);
 
   useEffect(() => {
@@ -58,5 +69,41 @@ export const CreateItemPage: React.FC = () => {
     clearError();
   }, [clearError]);
 
-  return <CreateItemForm itemForm={itemForm} />;
+  const submitHandler = async (itemObj: IItemObj) => {
+    try {
+      await request(
+        "/api/items/create",
+        "POST",
+        { ...itemObj, collectionId },
+        { Authorization: `Bearer ${token}` }
+      );
+      setShowSuccess(true);
+      setTimeout(() => {
+        history.push("/show/collections");
+      }, 5000);
+    } catch (e) {}
+  };
+
+  if (!collectionExists) {
+    return <h1>NOT FOUND</h1>;
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  return (
+    <div className="createItemPage">
+      {showSuccess && (
+        <div className="alert alert-success" role="alert">
+          New item has been created successfully! You will be redirected to show
+          collections page in 5 seconds...
+        </div>
+      )}
+
+      {!showSuccess && (
+        <CreateItemForm itemForm={itemForm} submitHandler={submitHandler} />
+      )}
+    </div>
+  );
 };

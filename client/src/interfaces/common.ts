@@ -127,6 +127,28 @@ export interface ICreateItemForm {
 
 export interface ICreateItemFormProps {
   itemForm: ICreateItemForm;
+  submitHandler: (itemObj: IItemObj) => void;
+}
+
+export interface IItemObj {
+  _id?: string;
+  name: string;
+  tags?: string[];
+  numericField1?: number;
+  numericField2?: number;
+  numericField3?: number;
+  oneLineField1?: string;
+  oneLineField2?: string;
+  oneLineField3?: string;
+  textField1?: string;
+  textField2?: string;
+  textField3?: string;
+  dateField1?: Date;
+  dateField2?: Date;
+  dateField3?: Date;
+  checkboxField1?: boolean;
+  checkboxField2?: boolean;
+  checkboxField3?: boolean;
 }
 
 export interface IUpdateItemPage {
