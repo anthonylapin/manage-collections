@@ -125,9 +125,32 @@ export interface ICreateItemForm {
   checkboxFieldKey3?: string;
 }
 
-export interface ICreateItemFormProps {
+export interface IItemFormProps {
   itemForm: ICreateItemForm;
   submitHandler: (itemObj: IItemObj) => void;
+  defaultValues: IDefaultItemFormValues;
+  header: string;
+  buttonName: string;
+}
+
+export interface IDefaultItemFormValues {
+  name: string;
+  tags: string;
+  numericField1: number | undefined;
+  numericField2: number | undefined;
+  numericField3: number | undefined;
+  oneLineField1: string | undefined;
+  oneLineField2: string | undefined;
+  oneLineField3: string | undefined;
+  textField1: string | undefined;
+  textField2: string | undefined;
+  textField3: string | undefined;
+  dateField1: Date;
+  dateField2: Date;
+  dateField3: Date;
+  checkboxField1: boolean;
+  checkboxField2: boolean;
+  checkboxField3: boolean;
 }
 
 export interface IItemObj {
@@ -157,4 +180,9 @@ export interface IUpdateItemPage {
 
 export interface IDeleteItemPage {
   collectionId: string;
+}
+
+export interface ISelectItem {
+  items: IItemObj[];
+  onSelect: (selectedId: string) => void;
 }

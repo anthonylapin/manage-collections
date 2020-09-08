@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AutoSuggest from "react-autosuggest";
-import { ICreateItemFormProps, IItemObj } from "../../interfaces/common";
+import { IItemFormProps, IItemObj } from "../../interfaces/common";
 import { useFormik } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,32 +13,35 @@ const alertMessages = {
   textField: "This field must be non-empty.",
 };
 
-export const CreateItemForm: React.FC<ICreateItemFormProps> = ({
+export const ItemForm: React.FC<IItemFormProps> = ({
   itemForm,
   submitHandler,
+  defaultValues,
+  header,
+  buttonName,
 }) => {
-  const [tags, setTags] = useState("");
-  const [startDate1, setStartDate1] = useState(new Date());
-  const [startDate2, setStartDate2] = useState(new Date());
-  const [startDate3, setStartDate3] = useState(new Date());
+  const [tags, setTags] = useState(defaultValues.tags);
+  const [startDate1, setStartDate1] = useState(defaultValues.dateField1);
+  const [startDate2, setStartDate2] = useState(defaultValues.dateField2);
+  const [startDate3, setStartDate3] = useState(defaultValues.dateField3);
   const [checkboxes, setCheckboxes] = useState({
-    checkboxField1: false,
-    checkboxField2: false,
-    checkboxField3: false,
+    checkboxField1: defaultValues.checkboxField1,
+    checkboxField2: defaultValues.checkboxField2,
+    checkboxField3: defaultValues.checkboxField3,
   });
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      numericField1: "",
-      numericField2: "",
-      numericField3: "",
-      oneLineField1: "",
-      oneLineField2: "",
-      oneLineField3: "",
-      textField1: "",
-      textField2: "",
-      textField3: "",
+      name: defaultValues.name,
+      numericField1: defaultValues.numericField1,
+      numericField2: defaultValues.numericField2,
+      numericField3: defaultValues.numericField3,
+      oneLineField1: defaultValues.oneLineField1,
+      oneLineField2: defaultValues.oneLineField2,
+      oneLineField3: defaultValues.oneLineField3,
+      textField1: defaultValues.textField1,
+      textField2: defaultValues.textField2,
+      textField3: defaultValues.textField3,
     },
     onSubmit: (values) => {
       const numericFields = {
@@ -190,6 +193,9 @@ export const CreateItemForm: React.FC<ICreateItemFormProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      <div className="text-center">
+        <h5>{header}</h5>
+      </div>
       <div className="form-group">
         {alerts.name && (
           <div className="show-alert">
@@ -489,7 +495,7 @@ export const CreateItemForm: React.FC<ICreateItemFormProps> = ({
       )}
 
       <button type="submit" className="btn btn-primary">
-        Create
+        {buttonName}
       </button>
     </form>
   );
