@@ -1,7 +1,7 @@
 import { useState, useContext, useCallback } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "./http.hook";
-import { ICreateItemForm } from "../interfaces/common";
+import { ICreateItemForm, ICollection } from "../interfaces/common";
 
 export const useCollection = (collectionId: string) => {
   const { request } = useHttp();
@@ -9,9 +9,17 @@ export const useCollection = (collectionId: string) => {
   const [itemForm, setItemForm] = useState<ICreateItemForm>({
     existingTags: [],
   });
+  const [collection, setCollection] = useState<ICollection>({
+    name: "",
+    owner: "",
+    description: "",
+    topic: "",
+    imageUrl: "",
+    created: new Date(),
+  });
   const [collectionExists, setCollectionExists] = useState(true);
 
-  const getCollection = useCallback(async () => {
+  const getItemForm = useCallback(async () => {
     try {
       let response = await request(
         `/api/collections/${collectionId}`,
@@ -50,5 +58,32 @@ export const useCollection = (collectionId: string) => {
     }
   }, [request, collectionId, token]);
 
-  return { getCollection, itemForm, collectionExists };
+  const getCollection = useCallback(async () => {
+    try {
+      let response = await request(
+        `/api/collections/${collectionId}`,
+        "GET",
+        null,
+        { Authorization: `Bearer ${token}` }
+      );
+      const collectionInfo = response.collection;
+      const ownerName = response.ownerName;
+
+      response = await request(`/api/topics/${collectionInfo.topic}`);
+      const topicName = response.topic.name;
+
+      setCollection({
+        name: collectionInfo.name,
+        owner: ownerName,
+        description: collectionInfo.description,
+        topic: topicName,
+        imageUrl: collectionInfo.imageUrl,
+        created: new Date(collectionInfo.created),
+      });
+    } catch (e) {
+      setCollectionExists(false);
+    }
+  }, [request, collectionId, token]);
+
+  return { getItemForm, getCollection, itemForm, collectionExists, collection };
 };

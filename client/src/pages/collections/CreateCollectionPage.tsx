@@ -15,7 +15,7 @@ export const CreateCollectionPage: React.FC = () => {
 
   const fetchTopics = useCallback(async () => {
     try {
-      const fetched = await request("/api/topics/show", "GET");
+      const fetched = await request("/api/topics/", "GET");
       setTopics(fetched.topics);
     } catch (e) {}
   }, [request]);

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth.middleware");
 const Collection = require("../models/Collection");
+const User = require("../models/User");
 const { Types } = require("mongoose");
 const router = Router();
 
@@ -19,19 +20,17 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/:id", auth, async (req, res) => {
+  const userId = Types.ObjectId(req.user.userId);
   try {
     const collection = await Collection.findOne({ _id: req.params.id });
-
-    if (!collection) {
-      return res.status(404).json({
-        message: "Not found",
-      });
-    }
+    const owner = await User.findOne({ _id: userId });
 
     res.json({
       collection,
+      ownerName: `${owner.firstName} ${owner.lastName}`,
     });
   } catch (e) {
+    console.log(e.message);
     res.status(500).json({
       message: "Something went wrong, try again.",
     });

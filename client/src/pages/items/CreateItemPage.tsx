@@ -34,7 +34,7 @@ const defaultValues: IDefaultItemFormValues = {
 
 export const CreateItemPage: React.FC = () => {
   const collectionId = useParams<ICreateItemPage>().collectionId;
-  const { getCollection, itemForm, collectionExists } = useCollection(
+  const { getItemForm, itemForm, collectionExists } = useCollection(
     collectionId
   );
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -44,8 +44,8 @@ export const CreateItemPage: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    getCollection();
-  }, [getCollection]);
+    getItemForm();
+  }, [getItemForm]);
 
   useEffect(() => {
     clearError();

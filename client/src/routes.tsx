@@ -11,6 +11,7 @@ import { CollectionDetailPage } from "./pages/collections/CollectionDetailPage";
 import { CreateItemPage } from "./pages/items/CreateItemPage";
 import { UpdateItemPage } from "./pages/items/UpdateItemPage";
 import { DeleteItemPage } from "./pages/items/DeleteItemPage";
+import { DetailItemPage } from "./pages/items/DetailItemPage";
 export const useRoutes = (isAuthenticated: boolean) => {
   if (isAuthenticated) {
     return (
@@ -41,6 +42,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
         </Route>
         <Route path="/delete/item/:collectionId">
           <DeleteItemPage />
+        </Route>
+        <Route path="/item/detail/:id">
+          <DetailItemPage />
         </Route>
         <Redirect to="/" />
       </Switch>

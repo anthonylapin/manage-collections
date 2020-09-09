@@ -40,7 +40,7 @@ export const UpdateItemPage: React.FC = () => {
 
   const { request, loading } = useHttp();
   const { items } = useItems(collectionId);
-  const { getCollection, itemForm, collectionExists } = useCollection(
+  const { getItemForm, itemForm, collectionExists } = useCollection(
     collectionId
   );
   const history = useHistory();
@@ -53,8 +53,8 @@ export const UpdateItemPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getCollection();
-  }, [getCollection]);
+    getItemForm();
+  }, [getItemForm]);
 
   const selectHandler = async (selectedId: string) => {
     const foundItem = items.find((item) => item._id === selectedId);

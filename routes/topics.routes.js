@@ -1,9 +1,10 @@
 const { Router } = require("express");
+const { Types } = require("mongoose");
 const { check, validationResult } = require("express-validator");
 const Topic = require("../models/Topic");
 const router = Router();
 
-router.get("/show", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const topics = await Topic.find({});
     const topicsInfo = topics.map((topic) => {
@@ -19,6 +20,21 @@ router.get("/show", async (req, res) => {
   } catch (e) {
     res.status(500).json({
       message: "Something went wrong. Try again.",
+    });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const topicId = Types.ObjectId(req.params.id);
+    const topic = await Topic.findById(topicId);
+
+    res.json({
+      topic,
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
     });
   }
 });

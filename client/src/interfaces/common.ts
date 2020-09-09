@@ -106,6 +106,10 @@ export interface ICreateItemPage {
   collectionId: string;
 }
 
+export interface IDetailItemPage {
+  itemId: string;
+}
+
 export interface ICreateItemForm {
   existingTags: string[];
   numericFieldKey1?: string;
@@ -191,4 +195,22 @@ export interface ISelectItem {
 
 export interface ISuccessAlert {
   message: string;
+}
+
+export interface ICollection {
+  name: string;
+  owner: string;
+  description: string;
+  topic: string;
+  imageUrl: string;
+  created: Date;
+}
+
+export interface ICollectionCard {
+  collection: ICollection;
+  items: IItemObj[];
+}
+
+export interface IItemsList {
+  items: IItemObj[];
 }
