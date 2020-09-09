@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IUpdateItemPage,
   IItemObj,
@@ -7,6 +7,7 @@ import {
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useCollection } from "../../hooks/collection.hook";
+import { useItems } from "../../hooks/item.hooks";
 import { Loader } from "../../components/common/Loader";
 import { SelectItemForm } from "../../components/items/SelectItemForm";
 import { ItemForm } from "../../components/items/ItemForm";
@@ -14,7 +15,6 @@ import { SuccessAlert } from "../../components/common/SuccessAlert";
 
 export const UpdateItemPage: React.FC = () => {
   const collectionId = useParams<IUpdateItemPage>().collectionId;
-  const [items, setItems] = useState<IItemObj[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string | undefined>("");
   const [showForm, setShowForm] = useState(false);
   const [defaultValues, setDefaultValues] = useState<IDefaultItemFormValues>({
@@ -39,15 +39,11 @@ export const UpdateItemPage: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const { request, loading } = useHttp();
+  const { items } = useItems(collectionId);
   const { getCollection, itemForm, collectionExists } = useCollection(
     collectionId
   );
   const history = useHistory();
-
-  const fetchItems = useCallback(async () => {
-    const fetchedItems = await request(`/api/items/${collectionId}`);
-    setItems(fetchedItems.foundItems);
-  }, [request, collectionId]);
 
   const getTags = async (itemId: string | undefined) => {
     try {
@@ -55,10 +51,6 @@ export const UpdateItemPage: React.FC = () => {
       return response.foundTags;
     } catch (e) {}
   };
-
-  useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
 
   useEffect(() => {
     getCollection();
@@ -102,7 +94,7 @@ export const UpdateItemPage: React.FC = () => {
 
   const submitHandler = async (submitObj: IItemObj) => {
     try {
-      const response = await request(
+      await request(
         `/api/items/${selectedItemId}`,
         "PUT",
         { item: submitObj },
@@ -142,6 +134,7 @@ export const UpdateItemPage: React.FC = () => {
           buttonName="Find item"
           items={items}
           onSelect={selectHandler}
+          buttonClass="btn btn-secondary"
         />
       )}
       {showForm && !showSuccessAlert && (

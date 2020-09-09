@@ -15,7 +15,7 @@ router.post("/create", auth, async (req, res) => {
     });
     await newItem.save();
 
-    await addItemsToTags(req.body.tags, newItem._id);
+    await addItemToTags(req.body.tags, newItem._id);
     await createNewTags(req.body.tags, newItem._id);
 
     res.status(201).json({
@@ -47,10 +47,7 @@ router.put("/:id", async (req, res) => {
   const item = req.body.item;
   const itemId = Types.ObjectId(req.params.id);
   try {
-    const response = await Item.updateOne(
-      { _id: itemId },
-      { $set: { ...item, tags: [] } }
-    );
+    await Item.updateOne({ _id: itemId }, { $set: { ...item, tags: [] } });
 
     await updateTags(item.tags, itemId);
 
@@ -65,24 +62,48 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const itemId = Types.ObjectId(req.params.id);
+  try {
+    await deleteItemFromTags(itemId);
+    await deleteItem(itemId);
+
+    res.json({
+      message: `Deleted item with id: ${itemId}`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong. Try again.",
+    });
+  }
+});
+
+async function deleteItem(itemId) {
+  await Item.deleteOne({ _id: itemId });
+}
+
 async function updateTags(tags, itemId) {
-  await deleteItemsFromTags(tags, itemId);
-  await addItemsToTags(tags, itemId);
+  await deleteItemFromTagsThatAreNotInGivenTags(tags, itemId);
+  await addItemToTags(tags, itemId);
   await createNewTags(tags, itemId);
 }
 
-async function addItemsToTags(tags, itemId) {
+async function addItemToTags(tags, itemId) {
   await Tag.updateMany(
     { name: { $in: tags } },
     { $addToSet: { items: [itemId] } }
   );
 }
 
-async function deleteItemsFromTags(tags, itemId) {
+async function deleteItemFromTagsThatAreNotInGivenTags(tags, itemId) {
   await Tag.updateMany(
     { items: [itemId], name: { $nin: tags } },
     { $pullAll: { items: [itemId] } }
   );
+}
+
+async function deleteItemFromTags(itemId) {
+  await Tag.updateMany({ items: [itemId] }, { $pullAll: { items: [itemId] } });
 }
 
 async function createNewTags(tags, itemId) {

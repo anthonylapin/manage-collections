@@ -6,6 +6,7 @@ export const SelectItemForm: React.FC<ISelectItem> = ({
   items,
   onSelect,
   buttonName,
+  buttonClass,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -36,7 +37,7 @@ export const SelectItemForm: React.FC<ISelectItem> = ({
           ))}
         </select>
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className={buttonClass}>
         {buttonName}
       </button>
     </form>

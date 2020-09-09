@@ -186,6 +186,7 @@ export interface ISelectItem {
   items: IItemObj[];
   onSelect: (selectedId: string) => void;
   buttonName: string;
+  buttonClass: string;
 }
 
 export interface ISuccessAlert {
