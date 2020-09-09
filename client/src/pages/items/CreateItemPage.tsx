@@ -10,6 +10,7 @@ import { useCollection } from "../../hooks/collection.hook";
 import { ItemForm } from "../../components/items/ItemForm";
 import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "../../components/common/Loader";
+import { SuccessAlert } from "../../components/common/SuccessAlert";
 
 const defaultValues: IDefaultItemFormValues = {
   name: "",
@@ -36,7 +37,7 @@ export const CreateItemPage: React.FC = () => {
   const { getCollection, itemForm, collectionExists } = useCollection(
     collectionId
   );
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const { request, clearError, loading } = useHttp();
   const { token } = useContext(AuthContext);
@@ -58,7 +59,7 @@ export const CreateItemPage: React.FC = () => {
         { ...itemObj, collectionId },
         { Authorization: `Bearer ${token}` }
       );
-      setShowSuccess(true);
+      setShowSuccessAlert(true);
       setTimeout(() => {
         history.push("/show/collections");
       }, 5000);
@@ -75,14 +76,11 @@ export const CreateItemPage: React.FC = () => {
 
   return (
     <div className="createItemPage">
-      {showSuccess && (
-        <div className="alert alert-success" role="alert">
-          New item has been created successfully! You will be redirected to show
-          collections page in 5 seconds...
-        </div>
+      {showSuccessAlert && (
+        <SuccessAlert message="Item has been created successfully" />
       )}
 
-      {!showSuccess && (
+      {!showSuccessAlert && (
         <ItemForm
           header="Create item"
           defaultValues={defaultValues}

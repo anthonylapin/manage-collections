@@ -2,7 +2,11 @@ import React from "react";
 import { ISelectItem } from "../../interfaces/common";
 import { useFormik } from "formik";
 
-export const SelectItemForm: React.FC<ISelectItem> = ({ items, onSelect }) => {
+export const SelectItemForm: React.FC<ISelectItem> = ({
+  items,
+  onSelect,
+  buttonName,
+}) => {
   const formik = useFormik({
     initialValues: {
       item: "default value",
@@ -33,7 +37,7 @@ export const SelectItemForm: React.FC<ISelectItem> = ({ items, onSelect }) => {
         </select>
       </div>
       <button type="submit" className="btn btn-primary">
-        Find item
+        {buttonName}
       </button>
     </form>
   );

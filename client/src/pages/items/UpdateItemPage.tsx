@@ -4,17 +4,13 @@ import {
   IItemObj,
   IDefaultItemFormValues,
 } from "../../interfaces/common";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useCollection } from "../../hooks/collection.hook";
 import { Loader } from "../../components/common/Loader";
 import { SelectItemForm } from "../../components/items/SelectItemForm";
 import { ItemForm } from "../../components/items/ItemForm";
-
-/**
- * form where you choose which item to update
- * form where you update item
- */
+import { SuccessAlert } from "../../components/common/SuccessAlert";
 
 export const UpdateItemPage: React.FC = () => {
   const collectionId = useParams<IUpdateItemPage>().collectionId;
@@ -40,11 +36,13 @@ export const UpdateItemPage: React.FC = () => {
     checkboxField2: false,
     checkboxField3: false,
   });
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const { request, loading } = useHttp();
   const { getCollection, itemForm, collectionExists } = useCollection(
     collectionId
   );
+  const history = useHistory();
 
   const fetchItems = useCallback(async () => {
     const fetchedItems = await request(`/api/items/${collectionId}`);
@@ -110,8 +108,10 @@ export const UpdateItemPage: React.FC = () => {
         { item: submitObj },
         {}
       );
-
-      console.log(response);
+      setShowSuccessAlert(true);
+      setTimeout(() => {
+        history.push("/show/collections");
+      }, 5000);
     } catch (e) {}
   };
 
@@ -133,8 +133,18 @@ export const UpdateItemPage: React.FC = () => {
 
   return (
     <div>
-      {!showForm && <SelectItemForm items={items} onSelect={selectHandler} />}
-      {showForm && (
+      {showSuccessAlert && (
+        <SuccessAlert message="Item has been updated successfully" />
+      )}
+
+      {!showForm && !showSuccessAlert && (
+        <SelectItemForm
+          buttonName="Find item"
+          items={items}
+          onSelect={selectHandler}
+        />
+      )}
+      {showForm && !showSuccessAlert && (
         <ItemForm
           header="Update item"
           defaultValues={defaultValues}

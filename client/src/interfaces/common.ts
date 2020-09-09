@@ -185,4 +185,9 @@ export interface IDeleteItemPage {
 export interface ISelectItem {
   items: IItemObj[];
   onSelect: (selectedId: string) => void;
+  buttonName: string;
+}
+
+export interface ISuccessAlert {
+  message: string;
 }
