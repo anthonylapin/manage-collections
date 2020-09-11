@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { IDeleteItemPage } from "../../interfaces/common";
-import { SelectItemForm } from "../../components/items/SelectItemForm";
+import { SelectForm } from "../../components/common/SelectForm";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
 import { useItems } from "../../hooks/item.hooks";
 import { useHttp } from "../../hooks/http.hook";
@@ -31,10 +31,11 @@ export const DeleteItemPage: React.FC = () => {
       )}
 
       {!showSuccessAlert && (
-        <SelectItemForm
-          buttonName="Delete item"
+        <SelectForm
+          target="item"
+          buttonAction="Delete"
           buttonClass="btn btn-danger"
-          items={items}
+          items={items.map((item) => ({ _id: item._id, name: item.name }))}
           onSelect={selectHandler}
         />
       )}

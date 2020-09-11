@@ -3,6 +3,23 @@ import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "./http.hook";
 import { ICreateItemForm, ICollection } from "../interfaces/common";
 
+export const useCollections = () => {
+  const { request } = useHttp();
+  const { token } = useContext(AuthContext);
+  const [collections, setCollections] = useState<ICollection[]>([]);
+
+  const getCollections = useCallback(async () => {
+    try {
+      let response = await request("/api/collections", "GET", null, {
+        Authorization: `Bearer ${token}`,
+      });
+      setCollections(response.collections);
+    } catch (e) {}
+  }, [request, token]);
+
+  return { collections, getCollections };
+};
+
 export const useCollection = (collectionId: string) => {
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -85,5 +102,11 @@ export const useCollection = (collectionId: string) => {
     }
   }, [request, collectionId, token]);
 
-  return { getItemForm, getCollection, itemForm, collectionExists, collection };
+  return {
+    getItemForm,
+    getCollection,
+    itemForm,
+    collectionExists,
+    collection,
+  };
 };

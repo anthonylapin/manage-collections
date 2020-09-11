@@ -1,12 +1,13 @@
 import React from "react";
-import { ISelectItem } from "../../interfaces/common";
+import { ISelectForm } from "../../interfaces/common";
 import { useFormik } from "formik";
 
-export const SelectItemForm: React.FC<ISelectItem> = ({
+export const SelectForm: React.FC<ISelectForm> = ({
   items,
   onSelect,
-  buttonName,
+  buttonAction,
   buttonClass,
+  target,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -17,10 +18,20 @@ export const SelectItemForm: React.FC<ISelectItem> = ({
     },
   });
 
+  if (!items.length) {
+    return (
+      <div className="text-center">
+        <h5>
+          No {target} to {buttonAction}
+        </h5>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="form-group">
-        <label htmlFor="selectItem">Select item</label>
+        <label htmlFor="selectItem">Select {target}</label>
         <select
           className="form-control"
           id="item"
@@ -28,7 +39,7 @@ export const SelectItemForm: React.FC<ISelectItem> = ({
           onChange={formik.handleChange}
         >
           <option value="default value" disabled>
-            Select item
+            Select {target}
           </option>
           {items.map((item, index) => (
             <option key={index} value={item._id}>
@@ -38,7 +49,7 @@ export const SelectItemForm: React.FC<ISelectItem> = ({
         </select>
       </div>
       <button type="submit" className={buttonClass}>
-        {buttonName}
+        {`${buttonAction} ${target}`}
       </button>
     </form>
   );

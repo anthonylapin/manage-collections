@@ -74,6 +74,24 @@ router.post(
   }
 );
 
+router.put("/:id", async (req, res) => {
+  const collectionId = Types.ObjectId(req.params.id);
+  try {
+    await Collection.updateOne(
+      { _id: collectionId },
+      { $set: { ...req.body } }
+    );
+
+    res.json({
+      message: "Updated",
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Something went wrong. Try again.",
+    });
+  }
+});
+
 async function createNewCollection(body, userId) {
   const topicId = Types.ObjectId(body.topic);
 

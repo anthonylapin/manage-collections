@@ -9,7 +9,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { useCollection } from "../../hooks/collection.hook";
 import { useItems } from "../../hooks/item.hooks";
 import { Loader } from "../../components/common/Loader";
-import { SelectItemForm } from "../../components/items/SelectItemForm";
+import { SelectForm } from "../../components/common/SelectForm";
 import { ItemForm } from "../../components/items/ItemForm";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
 
@@ -130,9 +130,10 @@ export const UpdateItemPage: React.FC = () => {
       )}
 
       {!showForm && !showSuccessAlert && (
-        <SelectItemForm
-          buttonName="Find item"
-          items={items}
+        <SelectForm
+          buttonAction="Find"
+          target="item"
+          items={items.map((item) => ({ _id: item._id, name: item.name }))}
           onSelect={selectHandler}
           buttonClass="btn btn-secondary"
         />

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import {
-  ICreateCollection,
+  ICollectionForm,
   ICreateCollectionValues,
 } from "../../interfaces/common";
 import { useFormik } from "formik";
 
-export const CreateCollectionForm: React.FC<ICreateCollection> = ({
+export const CollectionForm: React.FC<ICollectionForm> = ({
   topics,
-  handleCreateCollection,
+  onSubmit,
+  defaultValues,
+  buttonAction,
 }) => {
   const [file, setFile] = useState<Blob | string>("");
 
@@ -17,31 +19,31 @@ export const CreateCollectionForm: React.FC<ICreateCollection> = ({
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      topic: "",
-      description: "",
-      numericField1: "",
-      numericField2: "",
-      numericField3: "",
-      oneLineField1: "",
-      oneLineField2: "",
-      oneLineField3: "",
-      textField1: "",
-      textField2: "",
-      textField3: "",
-      dateField1: "",
-      dateField2: "",
-      dateField3: "",
-      checkboxField1: "",
-      checkboxField2: "",
-      checkboxField3: "",
+      name: defaultValues.name,
+      topic: defaultValues.topic,
+      description: defaultValues.description,
+      numericField1: defaultValues.numericFieldKey1,
+      numericField2: defaultValues.numericFieldKey2,
+      numericField3: defaultValues.numericFieldKey3,
+      oneLineField1: defaultValues.oneLineFieldKey1,
+      oneLineField2: defaultValues.oneLineFieldKey2,
+      oneLineField3: defaultValues.oneLineFieldKey3,
+      textField1: defaultValues.textFieldKey1,
+      textField2: defaultValues.textFieldKey2,
+      textField3: defaultValues.textFieldKey3,
+      dateField1: defaultValues.dateFieldKey1,
+      dateField2: defaultValues.dateFieldKey2,
+      dateField3: defaultValues.dateFieldKey3,
+      checkboxField1: defaultValues.checkboxFieldKey1,
+      checkboxField2: defaultValues.checkboxFieldKey2,
+      checkboxField3: defaultValues.checkboxFieldKey3,
     },
     onSubmit: (values) => {
       const formValuesObj: ICreateCollectionValues = {
         ...values,
         file,
       };
-      handleCreateCollection(formValuesObj);
+      onSubmit(formValuesObj);
     },
   });
 
@@ -272,7 +274,7 @@ export const CreateCollectionForm: React.FC<ICreateCollection> = ({
         />
       </div>
       <button type="submit" className="btn btn-primary">
-        Create
+        {buttonAction}
       </button>
     </form>
   );

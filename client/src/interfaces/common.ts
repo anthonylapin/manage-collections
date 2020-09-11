@@ -43,34 +43,6 @@ export interface IProgress {
   percentage: number;
 }
 
-export interface ICreateCollection {
-  topics: ITopic[];
-  handleCreateCollection: (values: ICreateCollectionValues) => void;
-}
-
-export interface ICreateCollectionValues {
-  name: string;
-  topic: string;
-  description: string;
-  imageUrl?: string;
-  numericField1: string;
-  numericField2: string;
-  numericField3: string;
-  oneLineField1: string;
-  oneLineField2: string;
-  oneLineField3: string;
-  textField1: string;
-  textField2: string;
-  textField3: string;
-  dateField1: string;
-  dateField2: string;
-  dateField3: string;
-  checkboxField1: string;
-  checkboxField2: string;
-  checkboxField3: string;
-  file?: Blob | string;
-}
-
 export interface ICollectionValues {
   _id: string;
   name: string;
@@ -186,11 +158,17 @@ export interface IDeleteItemPage {
   collectionId: string;
 }
 
-export interface ISelectItem {
-  items: IItemObj[];
+export interface ISelectForm {
+  items: ISelectFormItem[];
   onSelect: (selectedId: string) => void;
-  buttonName: string;
+  buttonAction: string;
   buttonClass: string;
+  target: string;
+}
+
+export interface ISelectFormItem {
+  _id: string | undefined;
+  name: string;
 }
 
 export interface ISuccessAlert {
@@ -198,6 +176,7 @@ export interface ISuccessAlert {
 }
 
 export interface ICollection {
+  _id?: string;
   name: string;
   owner: string;
   description: string;
@@ -213,4 +192,61 @@ export interface ICollectionCard {
 
 export interface IItemsList {
   items: IItemObj[];
+}
+
+export interface ICreateCollection {
+  topics: ITopic[];
+  handleCreateCollection: (values: ICreateCollectionValues) => void;
+}
+
+export interface ICollectionForm {
+  onSubmit: (values: ICreateCollectionValues) => void;
+  defaultValues: ICollectionFormValues;
+  topics: ITopic[];
+  buttonAction: string;
+}
+
+export interface ICollectionFormValues {
+  name: string;
+  owner: string;
+  description: string;
+  topic: string;
+  numericFieldKey1: string;
+  numericFieldKey2: string;
+  numericFieldKey3: string;
+  oneLineFieldKey1: string;
+  oneLineFieldKey2: string;
+  oneLineFieldKey3: string;
+  textFieldKey1: string;
+  textFieldKey2: string;
+  textFieldKey3: string;
+  dateFieldKey1: string;
+  dateFieldKey2: string;
+  dateFieldKey3: string;
+  checkboxFieldKey1: string;
+  checkboxFieldKey2: string;
+  checkboxFieldKey3: string;
+}
+
+export interface ICreateCollectionValues {
+  name: string;
+  topic: string;
+  description: string;
+  imageUrl?: string;
+  numericField1: string;
+  numericField2: string;
+  numericField3: string;
+  oneLineField1: string;
+  oneLineField2: string;
+  oneLineField3: string;
+  textField1: string;
+  textField2: string;
+  textField3: string;
+  dateField1: string;
+  dateField2: string;
+  dateField3: string;
+  checkboxField1: string;
+  checkboxField2: string;
+  checkboxField3: string;
+  file?: Blob | string;
 }
