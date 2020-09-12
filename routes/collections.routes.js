@@ -4,6 +4,8 @@ const auth = require("../middleware/auth.middleware");
 const Collection = require("../models/Collection");
 const User = require("../models/User");
 const { Types } = require("mongoose");
+const Item = require("../models/Item");
+const Tag = require("../models/Tag");
 const router = Router();
 
 router.get("/", auth, async (req, res) => {
@@ -92,6 +94,25 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const collectionId = Types.ObjectId(req.params.id);
+  try {
+    const itemsIds = await findItemsIdsFromCollection(collectionId);
+    await deleteItemsFromTags(itemsIds);
+    await deleteItems(itemsIds);
+    await deleteCollection(collectionId);
+
+    res.json({
+      message: "Deleted",
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      message: "Something went wrong. Try again.",
+    });
+  }
+});
+
 async function createNewCollection(body, userId) {
   const topicId = Types.ObjectId(body.topic);
 
@@ -119,6 +140,26 @@ async function createNewCollection(body, userId) {
   });
   await newCollection.save();
   return newCollection;
+}
+
+async function findItemsIdsFromCollection(collectionId) {
+  const items = await Item.find({ collectionId });
+  return items.map((item) => Types.ObjectId(item._id));
+}
+
+async function deleteItemsFromTags(itemsIds) {
+  await Tag.updateMany(
+    { items: { $in: itemsIds } },
+    { $pullAll: { items: itemsIds } }
+  );
+}
+
+async function deleteItems(itemsIds) {
+  await Item.deleteMany({ _id: { $in: itemsIds } });
+}
+
+async function deleteCollection(collectionId) {
+  await Collection.deleteOne({ _id: collectionId });
 }
 
 module.exports = router;
