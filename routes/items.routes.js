@@ -2,6 +2,9 @@ const { Router } = require("express");
 const auth = require("../middleware/auth.middleware");
 const Tag = require("../models/Tag");
 const Item = require("../models/Item");
+const Collection = require("../models/Collection");
+const User = require("../models/User");
+const Topic = require("../models/Topic");
 const { Types } = require("mongoose");
 
 const router = Router();
@@ -14,9 +17,10 @@ router.post("/create", auth, async (req, res) => {
       tags: [],
     });
     await newItem.save();
-
-    await addItemToTags(req.body.tags, newItem._id);
-    await createNewTags(req.body.tags, newItem._id);
+    if (req.body.tags[0]) {
+      await addItemToTags(req.body.tags, newItem._id);
+      await createNewTags(req.body.tags, newItem._id);
+    }
 
     res.status(201).json({
       message: "New item is created!",
@@ -30,8 +34,8 @@ router.post("/create", auth, async (req, res) => {
 });
 
 router.get("/:collectionId", async (req, res) => {
+  const collectionId = Types.ObjectId(req.params.collectionId);
   try {
-    const collectionId = req.params.collectionId;
     const foundItems = await Item.find({
       collectionId,
     });
@@ -43,9 +47,27 @@ router.get("/:collectionId", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.get("/item/:itemId", async (req, res) => {
+  const itemId = Types.ObjectId(req.params.itemId);
+  try {
+    const item = await getItem(itemId);
+    const collection = await getCollection(item.collectionId);
+
+    res.send({
+      item,
+      collection,
+    });
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({
+      message: "Something went wrong. Try again.",
+    });
+  }
+});
+
+router.put("/:itemId", async (req, res) => {
   const item = req.body.item;
-  const itemId = Types.ObjectId(req.params.id);
+  const itemId = Types.ObjectId(req.params.itemId);
   try {
     await Item.updateOne({ _id: itemId }, { $set: { ...item, tags: [] } });
 
@@ -119,6 +141,59 @@ async function createNewTags(tags, itemId) {
   }));
 
   await Tag.insertMany(tagsDocuments);
+}
+
+async function getItem(itemId) {
+  const item = await Item.findById(itemId);
+  const tags = await getTags(itemId);
+  return {
+    ...item._doc,
+    tags,
+  };
+}
+
+async function getTags(itemId) {
+  const tags = await Tag.find({ items: { $in: [itemId] } });
+  return tags.map((tag) => tag.name);
+}
+
+async function getCollection(collectionId) {
+  const collection = await Collection.findById(collectionId);
+  const owner = await getOwnerName(collection.owner);
+  const topic = await getTopicName(collection.topic);
+
+  return {
+    _id: collection._id,
+    name: collection.name,
+    owner,
+    topic,
+    numericFieldKey1: collection.numericField1,
+    numericFieldKey2: collection.numericField2,
+    numericFieldKey3: collection.numericField3,
+    oneLineFieldKey1: collection.oneLineField1,
+    oneLineFieldKey2: collection.oneLineField2,
+    oneLineFieldKey3: collection.oneLineField3,
+    textFieldKey1: collection.textField1,
+    textFieldKey2: collection.textField2,
+    textFieldKey3: collection.textField3,
+    dateFieldKey1: collection.dateField1,
+    dateFieldKey2: collection.dateField2,
+    dateFieldKey3: collection.dateField3,
+    checkboxFieldKey1: collection.checkboxField1,
+    checkboxFieldKey2: collection.checkboxField2,
+    checkboxFieldKey3: collection.checkboxField3,
+  };
+}
+
+async function getTopicName(topicId) {
+  const topic = await Topic.findById(topicId);
+  return topic.name;
+}
+
+async function getOwnerName(ownerId) {
+  const user = await User.findById(ownerId);
+  const username = `${user.firstName} ${user.lastName}`;
+  return username;
 }
 
 module.exports = router;

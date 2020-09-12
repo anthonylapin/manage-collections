@@ -133,6 +133,7 @@ export interface IItemObj {
   _id?: string;
   name: string;
   tags?: string[];
+  created?: Date;
   numericField1?: number;
   numericField2?: number;
   numericField3?: number;
@@ -207,6 +208,7 @@ export interface ICollectionForm {
 }
 
 export interface ICollectionFormValues {
+  _id?: string;
   name: string;
   owner: string;
   description: string;
@@ -249,4 +251,9 @@ export interface ICreateCollectionValues {
   checkboxField2: string;
   checkboxField3: string;
   file?: Blob | string;
+}
+
+export interface IItemCard {
+  item: IItemObj;
+  collection: ICollectionFormValues;
 }

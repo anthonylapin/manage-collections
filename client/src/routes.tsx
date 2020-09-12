@@ -43,7 +43,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
         <Route path="/delete/item/:collectionId">
           <DeleteItemPage />
         </Route>
-        <Route path="/item/detail/:id">
+        <Route path="/item/detail/:itemId">
           <DetailItemPage />
         </Route>
         <Redirect to="/" />

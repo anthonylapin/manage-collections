@@ -51,6 +51,10 @@ export const CreateCollectionPage: React.FC = () => {
     values["imageUrl"] = imageUrl;
     delete values["file"];
 
+    if (!values.topic) {
+      values.topic = topics[0].id;
+    }
+
     try {
       await request("/api/collections/create", "POST", values, {
         Authorization: `Bearer ${auth.token}`,

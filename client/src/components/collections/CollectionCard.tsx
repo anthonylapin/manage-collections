@@ -14,7 +14,7 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
           src={collection.imageUrl}
           className="card-img-top"
           alt=""
-          style={{}}
+          style={{ maxHeight: "400px", maxWidth: "400px" }}
         />
         <div className="card-body">
           <h5 className="card-title">{collection.name}</h5>

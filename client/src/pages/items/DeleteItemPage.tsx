@@ -27,7 +27,7 @@ export const DeleteItemPage: React.FC = () => {
   return (
     <div>
       {showSuccessAlert && (
-        <SuccessAlert message="Item has been updated successfully" />
+        <SuccessAlert message="Item has been deleted successfully" />
       )}
 
       {!showSuccessAlert && (

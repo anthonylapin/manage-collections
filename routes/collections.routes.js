@@ -66,9 +66,10 @@ router.post(
         req.user.userId
       );
       res.status(201).json({
-        message: `New collection ${newCollection.name} is created.`,
+        message: `New collection is created.`,
       });
     } catch (e) {
+      console.log(e.message);
       res.status(500).json({
         message: "Something went wrong, try again.",
       });
@@ -114,13 +115,11 @@ router.delete("/:id", async (req, res) => {
 });
 
 async function createNewCollection(body, userId) {
-  const topicId = Types.ObjectId(body.topic);
-
   const newCollection = new Collection({
     name: body.name,
     owner: userId,
     description: body.description,
-    topic: topicId,
+    topic: body.topic,
     imageUrl: body.imageUrl,
     numericField1: body.numericField1,
     numericField2: body.numericField2,
@@ -139,6 +138,7 @@ async function createNewCollection(body, userId) {
     checkboxField3: body.checkboxField3,
   });
   await newCollection.save();
+  console.log(newCollection);
   return newCollection;
 }
 
