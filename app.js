@@ -1,12 +1,17 @@
 const express = require("express");
 const app = express();
 const http = require("http");
+const socketIO = require("socket.io");
 const server = http.createServer(app);
 const mongoose = require("mongoose");
 const config = require("config");
+const { handleSocketConnection } = require("./socket");
 
 const PORT = process.env.PORT || config.get("port") || 5000;
 const MONGODB_URI = config.get("mongoUri");
+
+const io = socketIO(server);
+handleSocketConnection(io);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +21,7 @@ app.use("/api/collections", require("./routes/collections.routes"));
 app.use("/api/items", require("./routes/items.routes"));
 app.use("/api/topics", require("./routes/topics.routes"));
 app.use("/api/tags", require("./routes/tags.routes"));
+app.use("/api/comments", require("./routes/comment.routes"));
 
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");

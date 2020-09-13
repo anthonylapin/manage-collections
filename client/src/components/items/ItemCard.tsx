@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { IItemCard } from "../../interfaces/common";
-
-const yyyymmdd = (date_ob: Date) => {
-  let date = ("0" + date_ob.getDate()).slice(-2);
-  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  let year = date_ob.getFullYear();
-
-  return year + "-" + month + "-" + date;
-};
+import { yyyymmdd } from "../../helper/dateConverter";
 
 export const ItemCard: React.FC<IItemCard> = ({ item, collection }) => {
   return (

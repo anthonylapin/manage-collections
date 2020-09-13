@@ -52,8 +52,6 @@ export function useItem(itemId: string) {
       });
       setCollection(response.collection);
       setItem(response.item);
-
-      console.log(response);
     } catch (e) {}
   }, [itemId, request, token]);
 

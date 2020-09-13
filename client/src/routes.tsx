@@ -58,6 +58,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
       <Route path="/signup" exact>
         <RegisterPage />
       </Route>
+      <Route path="/item/detail/:itemId">
+        <DetailItemPage />
+      </Route>
       <Redirect to="/signin" />
     </Switch>
   );

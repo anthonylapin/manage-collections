@@ -257,3 +257,19 @@ export interface IItemCard {
   item: IItemObj;
   collection: ICollectionFormValues;
 }
+
+export interface IComment {
+  id?: string;
+  author: string;
+  text: string;
+  itemId: string;
+  created?: Date;
+}
+
+export interface IAddComment {
+  onSubmit: (comment: string) => void;
+}
+
+export interface ICommentCard {
+  comment: IComment;
+}

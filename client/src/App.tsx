@@ -16,7 +16,9 @@ const App: React.FC = () => {
   }
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, userId }}>
+    <AuthContext.Provider
+      value={{ token, login, logout, userId, isAuthenticated }}
+    >
       <BrowserRouter>
         <Navbar isAuthenticated={isAuthenticated} />
         <div className="container">{routes}</div>
