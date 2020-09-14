@@ -256,6 +256,8 @@ export interface ICreateCollectionValues {
 export interface IItemCard {
   item: IItemObj;
   collection: ICollectionFormValues;
+  onLike: () => void;
+  likes: number;
 }
 
 export interface IComment {
@@ -272,4 +274,9 @@ export interface IAddComment {
 
 export interface ICommentCard {
   comment: IComment;
+}
+
+export interface ILike {
+  userId: string;
+  itemId: string;
 }

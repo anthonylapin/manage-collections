@@ -8,6 +8,7 @@ import io from "socket.io-client";
 import { AuthContext } from "../../context/AuthContext";
 import { useComments } from "../../hooks/comment.hook";
 import { CommentCard } from "../../components/common/CommentCard";
+import { useLikes } from "../../hooks/like.hook";
 let socket: SocketIOClient.Socket = {} as SocketIOClient.Socket;
 
 export const DetailItemPage: React.FC = () => {
@@ -15,6 +16,7 @@ export const DetailItemPage: React.FC = () => {
   const { userId, isAuthenticated } = useContext(AuthContext);
   const { getItems, item, collection } = useItem(itemId);
   const { comments, getComments, setComments } = useComments(itemId);
+  const { likes, getLikes, setLikes } = useLikes(itemId);
 
   useEffect(() => {
     getItems();
@@ -23,6 +25,10 @@ export const DetailItemPage: React.FC = () => {
   useEffect(() => {
     getComments();
   }, [getComments]);
+
+  useEffect(() => {
+    getLikes();
+  }, [getLikes]);
 
   const connectSocket = useCallback(() => {
     socket = io();
@@ -37,10 +43,25 @@ export const DetailItemPage: React.FC = () => {
 
   useEffect(() => {
     socket.on("comment added", (addedComment: IComment) => {
-      console.log(addedComment);
       setComments((prev) => [...prev, addedComment]);
     });
   }, [setComments]);
+
+  useEffect(() => {
+    socket.on("like", (response: number) => {
+      setLikes((prev) => prev + response);
+    });
+  }, [setLikes]);
+
+  const likeHandler = () => {
+    if (!isAuthenticated) {
+      window.alert("You have to sign in to make it possible to like a post");
+      return;
+    }
+
+    const like = { userId, itemId };
+    socket.emit("like", like);
+  };
 
   const submitHandler = (newComment: string) => {
     let comment = {
@@ -53,7 +74,12 @@ export const DetailItemPage: React.FC = () => {
 
   return (
     <div>
-      <ItemCard item={item} collection={collection} />
+      <ItemCard
+        item={item}
+        collection={collection}
+        onLike={likeHandler}
+        likes={likes}
+      />
 
       {isAuthenticated && <AddComment onSubmit={submitHandler} />}
 

@@ -1,5 +1,6 @@
 const Comment = require("./models/Comment");
 const User = require("./models/User");
+const Like = require("./models/Like");
 const { Types } = require("mongoose");
 
 function handleSocketConnection(io) {
@@ -15,6 +16,28 @@ function handleSocketConnection(io) {
         ...comment._doc,
         author: `${author.firstName} ${author.lastName}`,
       });
+    });
+
+    socket.on("like", async (like) => {
+      if (!like.userId) {
+        return;
+      }
+
+      let returnValue = 1;
+      const candidate = await Like.findOne({
+        userId: like.userId,
+        itemId: like.itemId,
+      });
+
+      if (candidate) {
+        await candidate.remove();
+        returnValue = -1;
+      } else {
+        const newLike = new Like(like);
+        await newLike.save();
+      }
+
+      io.emit("like", returnValue);
     });
   });
 }

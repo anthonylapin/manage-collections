@@ -54,7 +54,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
         ...values,
         ...checkboxes,
         ...numericFields,
-        tags: tags.split(" "),
+        tags: tags.trim().split(" "),
         dateField1: startDate1,
         dateField2: startDate2,
         dateField3: startDate3,

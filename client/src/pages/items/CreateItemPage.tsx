@@ -62,7 +62,7 @@ export const CreateItemPage: React.FC = () => {
       setShowSuccessAlert(true);
       setTimeout(() => {
         history.push("/show/collections");
-      }, 5000);
+      }, 1500);
     } catch (e) {}
   };
 

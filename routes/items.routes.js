@@ -17,6 +17,7 @@ router.post("/create", auth, async (req, res) => {
       tags: [],
     });
     await newItem.save();
+    console.log(req.body.tags);
     if (req.body.tags[0]) {
       await addItemToTags(req.body.tags, newItem._id);
       await createNewTags(req.body.tags, newItem._id);

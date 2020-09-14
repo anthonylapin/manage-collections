@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { IItemCard } from "../../interfaces/common";
 import { yyyymmdd } from "../../helper/dateConverter";
 
-export const ItemCard: React.FC<IItemCard> = ({ item, collection }) => {
+export const ItemCard: React.FC<IItemCard> = ({
+  item,
+  collection,
+  onLike,
+  likes,
+}) => {
   return (
     <div className="card">
       <div className="card-header">
@@ -109,6 +114,11 @@ export const ItemCard: React.FC<IItemCard> = ({ item, collection }) => {
           {yyyymmdd(item.created ? new Date(item.created) : new Date())}
         </li>
       </ul>
+      <div className="card-footer">
+        <button onClick={onLike} className="btn btn-danger">
+          Like {likes}
+        </button>
+      </div>
     </div>
   );
 };

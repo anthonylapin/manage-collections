@@ -10,18 +10,19 @@ const { handleSocketConnection } = require("./socket");
 const PORT = process.env.PORT || config.get("port") || 5000;
 const MONGODB_URI = config.get("mongoUri");
 
-const io = socketIO(server);
-handleSocketConnection(io);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const io = socketIO(server);
+handleSocketConnection(io);
 
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/collections", require("./routes/collections.routes"));
 app.use("/api/items", require("./routes/items.routes"));
 app.use("/api/topics", require("./routes/topics.routes"));
 app.use("/api/tags", require("./routes/tags.routes"));
-app.use("/api/comments", require("./routes/comment.routes"));
+app.use("/api/comments", require("./routes/comments.routes"));
+app.use("/api/likes", require("./routes/likes.routes"));
 
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
