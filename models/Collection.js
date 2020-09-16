@@ -97,4 +97,6 @@ const collectionSchema = Schema({
   },
 });
 
+collectionSchema.index({ "$**": "text" });
+
 module.exports = model("Collection", collectionSchema);

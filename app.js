@@ -23,6 +23,7 @@ app.use("/api/topics", require("./routes/topics.routes"));
 app.use("/api/tags", require("./routes/tags.routes"));
 app.use("/api/comments", require("./routes/comments.routes"));
 app.use("/api/likes", require("./routes/likes.routes"));
+app.use("/api/search", require("./routes/search.routes"));
 
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");

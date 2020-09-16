@@ -14,4 +14,6 @@ const topicSchema = Schema({
   ],
 });
 
+topicSchema.index({ name: "text" });
+
 module.exports = model("Topic", topicSchema);
