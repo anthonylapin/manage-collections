@@ -280,3 +280,12 @@ export interface ILike {
   userId: string;
   itemId: string;
 }
+
+export interface ISearchForm {
+  onSearch: (query: string) => void;
+  loading: boolean;
+}
+
+export interface ISearchItemPage {
+  query: string;
+}

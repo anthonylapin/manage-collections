@@ -83,14 +83,16 @@ export const DetailItemPage: React.FC = () => {
 
       {isAuthenticated && <AddComment onSubmit={submitHandler} />}
 
-      <div className="mt-4">
-        <div className="text-center">
-          <h5>Comments</h5>
+      {comments.length !== 0 && (
+        <div className="mt-4">
+          <div className="text-center">
+            <h5>Comments</h5>
+          </div>
+          {comments.map((comment, index) => (
+            <CommentCard key={index} comment={comment} />
+          ))}
         </div>
-        {comments.map((comment, index) => (
-          <CommentCard key={index} comment={comment} />
-        ))}
-      </div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,31 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { SearchContext } from "../../context/SearchContext";
+import { useHttp } from "../../hooks/http.hook";
 import { INavbarProps } from "../../interfaces/common";
+import { Types } from "../../reducers/reducers";
 import { SearchForm } from "./SearchForm";
 
 export const Navbar: React.FC<INavbarProps> = ({ isAuthenticated }) => {
   const auth = useContext(AuthContext);
+  const { dispatch } = useContext(SearchContext);
+  const { request, loading } = useHttp();
+  const history = useHistory();
+
+  const searchItems = async (query: string) => {
+    try {
+      const response = await request(`/api/search?q=${query}`);
+      dispatch({
+        type: Types.Search,
+        payload: {
+          items: response.items,
+          query: response.query,
+        },
+      });
+      history.push(`/search/results`);
+    } catch (error) {}
+  };
 
   const logoutHandler = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -63,7 +83,7 @@ export const Navbar: React.FC<INavbarProps> = ({ isAuthenticated }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         {getNavItems()}
-        <SearchForm />
+        <SearchForm onSearch={searchItems} loading={loading} />
       </div>
     </nav>
   );

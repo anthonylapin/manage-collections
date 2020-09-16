@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { RegisterForm } from "../components/auth/RegisterForm";
-import { useHttp } from "../hooks/http.hook";
+import { useHttp } from "../../hooks/http.hook";
 import { useHistory } from "react-router-dom";
+import { RegisterForm } from "../../components/auth/RegisterForm";
 
 export const RegisterPage = () => {
   const history = useHistory();
@@ -37,6 +37,7 @@ export const RegisterPage = () => {
       <div className="text-center">
         <h4>Registration</h4>
       </div>
+      {/* <RegisterForm loading={loading} onRegister={registerHandler} /> */}
       <RegisterForm loading={loading} onRegister={registerHandler} />
     </div>
   );

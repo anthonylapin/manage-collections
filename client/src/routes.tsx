@@ -1,8 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { AuthPage } from "./pages/AuthPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { MainPage } from "./pages/MainPage";
+
+import { ManageCollectionsPage } from "./pages/collections/ManageCollectionsPage";
 import { CreateCollectionPage } from "./pages/collections/CreateCollectionPage";
 import { UpdateCollectionPage } from "./pages/collections/UpdateCollectionPage";
 import { DeleteCollectionPage } from "./pages/collections/DeleteCollectionPage";
@@ -12,12 +11,15 @@ import { CreateItemPage } from "./pages/items/CreateItemPage";
 import { UpdateItemPage } from "./pages/items/UpdateItemPage";
 import { DeleteItemPage } from "./pages/items/DeleteItemPage";
 import { DetailItemPage } from "./pages/items/DetailItemPage";
+import { AuthPage } from "./pages/auth/AuthPage";
+import { RegisterPage } from "./pages/auth/RegisterPage";
+import { SearchItemsPage } from "./pages/items/SearchItemsPage";
 export const useRoutes = (isAuthenticated: boolean) => {
   if (isAuthenticated) {
     return (
       <Switch>
-        <Route path="/" exact>
-          <MainPage />
+        <Route path="/manage/collections" exact>
+          <ManageCollectionsPage />
         </Route>
         <Route path="/create/collection">
           <CreateCollectionPage />
@@ -46,7 +48,10 @@ export const useRoutes = (isAuthenticated: boolean) => {
         <Route path="/item/detail/:itemId">
           <DetailItemPage />
         </Route>
-        <Redirect to="/" />
+        <Route path="/search/results">
+          <SearchItemsPage />
+        </Route>
+        <Redirect to="/manage/collections" />
       </Switch>
     );
   }
@@ -60,6 +65,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
       </Route>
       <Route path="/item/detail/:itemId">
         <DetailItemPage />
+      </Route>
+      <Route path="/search/results">
+        <SearchItemsPage />
       </Route>
       <Redirect to="/signin" />
     </Switch>

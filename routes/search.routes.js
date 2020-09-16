@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   const q = req.query.q;
   try {
     const items = await searchInDatabase(q);
-    res.json({ items });
+    res.json({ items, query: q });
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong, try again",
@@ -22,50 +22,41 @@ router.get("/", async (req, res) => {
 async function searchInDatabase(q) {
   let items = [];
   let data;
-  data = await searchInItems(q);
-  items = updateItemsArray(data, items);
+  items = await searchInItems(q);
 
   data = await searchInCollections(q);
-  items = updateItemsArray(data, items);
+  items = [...items, ...data];
 
   data = await searchInComments(q);
-  items = updateItemsArray(data, items);
+  items = [...items, ...data];
 
   data = await searchInTopics(q);
-  items = updateItemsArray(data, items);
+  items = [...items, ...data];
 
   data = await searchInTags(q);
-  items = updateItemsArray(data, items);
+  items = [...items, ...data];
 
-  return items;
+  uniqueItems = removeDuplicatesFromArray(items);
+
+  return uniqueItems;
 }
 
 async function searchInItems(q) {
-  const data = await Item.find(
-    {
-      $text: {
-        $search: q,
-      },
+  const data = await Item.find({
+    $text: {
+      $search: q,
     },
-    {
-      __v: 0,
-    }
-  );
+  });
 
   return data;
 }
 
 async function searchInCollections(q) {
-  let collections = await Collection.find(
-    {
-      $text: {
-        $search: q,
-      },
+  let collections = await Collection.find({
+    $text: {
+      $search: q,
     },
-    {
-      __v: 0,
-    }
-  );
+  });
 
   collectionsIds = collections.map((collection) => collection._id);
 
@@ -74,16 +65,11 @@ async function searchInCollections(q) {
 }
 
 async function searchInComments(q) {
-  let comments = await Comment.find(
-    {
-      $text: {
-        $search: q,
-      },
+  let comments = await Comment.find({
+    $text: {
+      $search: q,
     },
-    {
-      __v: 0,
-    }
-  );
+  });
 
   itemIds = comments.map((comment) => comment.itemId);
 
@@ -92,16 +78,11 @@ async function searchInComments(q) {
 }
 
 async function searchInTopics(q) {
-  let topics = await Topic.find(
-    {
-      $text: {
-        $search: q,
-      },
+  let topics = await Topic.find({
+    $text: {
+      $search: q,
     },
-    {
-      __v: 0,
-    }
-  );
+  });
 
   const topicsIds = topics.map((topic) => topic._id);
 
@@ -113,16 +94,11 @@ async function searchInTopics(q) {
 }
 
 async function searchInTags(q) {
-  let tags = await Tag.find(
-    {
-      $text: {
-        $search: q,
-      },
+  let tags = await Tag.find({
+    $text: {
+      $search: q,
     },
-    {
-      __v: 0,
-    }
-  );
+  });
 
   arraysOfItemsIds = tags.map((tag) => tag.items);
   let itemsIds = [].concat.apply([], arraysOfItemsIds);
@@ -132,28 +108,18 @@ async function searchInTags(q) {
   return items;
 }
 
-function updateItemsArray(data, items) {
-  if (data.length) {
-    data.forEach((element) =>
-      items.pushIfNotExist(element, function (e) {
-        return e._id === element._id;
-      })
-    );
-  }
-  return items;
+function removeDuplicatesFromArray(array) {
+  const arrayOfUniqueIds = [];
+  const uniqueArray = [];
+
+  array.forEach((element) => {
+    if (!arrayOfUniqueIds.includes(String(element._id))) {
+      arrayOfUniqueIds.push(String(element._id));
+      uniqueArray.push(element);
+    }
+  });
+
+  return uniqueArray;
 }
-
-Array.prototype.inArray = function (comparer) {
-  for (var i = 0; i < this.length; i++) {
-    if (comparer(this[i])) return true;
-  }
-  return false;
-};
-
-Array.prototype.pushIfNotExist = function (element, comparer) {
-  if (!this.inArray(comparer)) {
-    this.push(element);
-  }
-};
 
 module.exports = router;
