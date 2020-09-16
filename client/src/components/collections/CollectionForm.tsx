@@ -4,6 +4,7 @@ import {
   ICreateCollectionValues,
 } from "../../interfaces/common";
 import { useFormik } from "formik";
+import { SelectTopicForm } from "../topics/SelectTopicForm";
 
 export const CollectionForm: React.FC<ICollectionForm> = ({
   topics,
@@ -71,17 +72,11 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
           value={formik.values.name}
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="topic">Topic</label>
-        <select
-          className="form-control"
-          id="topic"
-          onChange={formik.handleChange}
-          value={formik.values.topic}
-        >
-          {getOptions()}
-        </select>
-      </div>
+      <SelectTopicForm
+        onChange={formik.handleChange}
+        value={formik.values.topic}
+        getOptions={getOptions}
+      />
       <div className="form-group">
         <label htmlFor="description">Short description</label>
         <textarea

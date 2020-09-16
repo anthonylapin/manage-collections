@@ -289,3 +289,13 @@ export interface ISearchForm {
 export interface ISearchItemPage {
   query: string;
 }
+
+export interface ISelectTopicForm {
+  onChange: ((event: React.ChangeEvent<HTMLSelectElement>) => void) | undefined;
+  getOptions: () => JSX.Element[];
+  value: string | number | readonly string[] | undefined;
+}
+
+export interface ICollectionsSortBy {
+  onChange: (key: string) => void;
+}

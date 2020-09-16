@@ -37,8 +37,8 @@ export const Navbar: React.FC<INavbarProps> = ({ isAuthenticated }) => {
       return (
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/">
-              Main page
+            <NavLink className="nav-link" to="/manage/collections">
+              My collections
             </NavLink>
           </li>
           <li className="nav-item">

@@ -9,8 +9,12 @@ const Tag = require("../models/Tag");
 const router = Router();
 
 router.get("/", auth, async (req, res) => {
+  const key = req.query.key;
   try {
-    const collections = await Collection.find({ owner: req.user.userId });
+    let collections = await Collection.find({ owner: req.user.userId });
+    if (key) {
+      collections = await sortCollection(key, collections);
+    }
     res.json({
       collections,
     });
@@ -160,6 +164,95 @@ async function deleteItems(itemsIds) {
 
 async function deleteCollection(collectionId) {
   await Collection.deleteOne({ _id: collectionId });
+}
+
+const sortKeys = {
+  Name: "NAME",
+  DateCreated: "DATE_CREATED",
+  Size: "SIZE",
+  Default: "DEFAULT",
+};
+
+async function sortCollection(key, collections) {
+  switch (key) {
+    case sortKeys.Name:
+      return sortByName(collections);
+    case sortKeys.DateCreated:
+      return sortByDate(collections);
+    case sortKeys.Size:
+      const sortedCollections = await sortBySize(collections);
+      return sortedCollections;
+    default:
+      console.log("No sort");
+      return collections;
+  }
+}
+
+function sortByName(collections) {
+  collections.sort((a, b) => {
+    let nameA = a.name.toUpperCase();
+    let nameB = b.name.toUpperCase();
+
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return collections;
+}
+
+function sortByDate(collections) {
+  collections.sort((a, b) => {
+    let dateA = new Date(a.created);
+    let dateB = new Date(b.created);
+    return dateB - dateA;
+  });
+
+  return collections;
+}
+
+async function sortBySize(collections) {
+  const sortedCollections = [];
+  let collectionIds = collections.map((collection) => collection._id);
+  let items = await Item.find({ collectionId: { $in: collectionIds } }).sort({
+    collectionId: 1,
+  });
+
+  collectionsIds = items.map((item) => item.collectionId);
+  collectionsIds = removeDuplicatesFromArray(collectionsIds);
+
+  collectionsIds.forEach((id) => {
+    let foundCollection = collections.find(
+      (collection) => String(collection._id) === String(id)
+    );
+    sortedCollections.push(foundCollection);
+  });
+
+  collections.forEach((collection) => {
+    if (!sortedCollections.includes(collection)) {
+      sortedCollections.push(collection);
+    }
+  });
+
+  return sortedCollections;
+}
+
+function removeDuplicatesFromArray(array) {
+  const arrayOfUniqueIds = [];
+  const uniqueArray = [];
+
+  array.forEach((element) => {
+    if (!arrayOfUniqueIds.includes(String(element))) {
+      arrayOfUniqueIds.push(String(element));
+      uniqueArray.push(element);
+    }
+  });
+
+  return uniqueArray;
 }
 
 module.exports = router;

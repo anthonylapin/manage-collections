@@ -4,6 +4,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { CollectionsTable } from "../../components/collections/CollectionsTable";
 import { ICollectionValues } from "../../interfaces/common";
 import { Link } from "react-router-dom";
+import { CollectionFilterByComponent } from "../../components/collections/CollectionFilterByComponent";
+import { CollectionSortByComponent } from "../../components/collections/CollectionsSortByComponent";
 
 export const ShowCollectionsPage: React.FC = () => {
   const [collections, setCollections] = useState<ICollectionValues[]>([]);
@@ -23,6 +25,20 @@ export const ShowCollectionsPage: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const sortCollections = async (key: string) => {
+    try {
+      const response = await request(
+        `/api/collections?key=${key}`,
+        "GET",
+        null,
+        {
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
+      setCollections(response.collections);
+    } catch (error) {}
+  };
+
   if (!collections.length) {
     return (
       <div className="text-center">
@@ -38,6 +54,10 @@ export const ShowCollectionsPage: React.FC = () => {
     <div>
       <div className="text-center">
         <h5>Your collections list</h5>
+        <div className="row">
+          <CollectionSortByComponent onChange={sortCollections} />
+          <CollectionFilterByComponent />
+        </div>
         <CollectionsTable collections={collections} />
       </div>
     </div>
