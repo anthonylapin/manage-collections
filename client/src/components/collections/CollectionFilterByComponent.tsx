@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { createUnionOrIntersectionTypeNode } from "typescript";
+import { ICollectionsFilterBy } from "../../interfaces/common";
+import { SelectTopicForm } from "../topics/SelectTopicForm";
 
-export const CollectionFilterByComponent: React.FC = () => {
+export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
+  onChange,
+  topics,
+}) => {
+  const [selectedTopic, setSelectedTopic] = useState("default");
+
+  const handleChange = (e: any) => {
+    if (e.target.name === "topic") {
+      setSelectedTopic(e.target.value);
+    }
+    onChange(e.target.name, e.target.value);
+  };
+
+  const getOptions = () => {
+    return topics.map((topic, index) => (
+      <option key={index} value={topic.id}>
+        {topic.name}
+      </option>
+    ));
+  };
+
   return (
     <div className="col">
       <h6>Filter by</h6>
@@ -12,10 +35,22 @@ export const CollectionFilterByComponent: React.FC = () => {
               className="form-control"
               id="filter-by-name"
               placeholder="Name"
+              name="name"
+              onChange={handleChange}
             />
           </div>
         </div>
-        <div className="col"></div>
+        <div className="col">
+          <select
+            className="form-control"
+            name="topic"
+            value={selectedTopic}
+            onChange={handleChange}
+          >
+            <option value="default">Default</option>
+            {getOptions()}
+          </select>
+        </div>
       </div>
     </div>
   );

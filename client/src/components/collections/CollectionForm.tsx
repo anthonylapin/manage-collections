@@ -13,6 +13,10 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
   buttonAction,
 }) => {
   const [file, setFile] = useState<Blob | string>("");
+  const [showAlert, setShowAlert] = useState({
+    name: false,
+    description: false,
+  });
 
   const handleFileChange = (e: any) => {
     setFile(e.target.files[0]);
@@ -44,7 +48,18 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
         ...values,
         file,
       };
-      onSubmit(formValuesObj);
+
+      if (values.name && values.description) {
+        onSubmit(formValuesObj);
+      }
+
+      if (!values.name) {
+        setShowAlert((prev) => ({ ...prev, name: true }));
+      }
+
+      if (!values.description) {
+        setShowAlert((prev) => ({ ...prev, description: true }));
+      }
     },
   });
 
@@ -56,12 +71,24 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
     ));
   };
 
+  const fieldMustBeNonEmpty = () => {
+    return (
+      <div>
+        <hr />
+        <div className="alert alert-danger" role="alert">
+          This field must me non-empty
+        </div>
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <p>
         <b>Required fields</b>
       </p>
       <div className="form-group">
+        {showAlert.name && fieldMustBeNonEmpty()}
         <label htmlFor="name">Collection name</label>
         <input
           type="text"
@@ -78,6 +105,7 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
         getOptions={getOptions}
       />
       <div className="form-group">
+        {showAlert.description && fieldMustBeNonEmpty()}
         <label htmlFor="description">Short description</label>
         <textarea
           className="form-control"

@@ -65,10 +65,7 @@ router.post(
     }
 
     try {
-      const newCollection = await createNewCollection(
-        req.body,
-        req.user.userId
-      );
+      await createNewCollection(req.body, req.user.userId);
       res.status(201).json({
         message: `New collection is created.`,
       });
@@ -142,7 +139,6 @@ async function createNewCollection(body, userId) {
     checkboxField3: body.checkboxField3,
   });
   await newCollection.save();
-  console.log(newCollection);
   return newCollection;
 }
 
@@ -183,7 +179,6 @@ async function sortCollection(key, collections) {
       const sortedCollections = await sortBySize(collections);
       return sortedCollections;
     default:
-      console.log("No sort");
       return collections;
   }
 }

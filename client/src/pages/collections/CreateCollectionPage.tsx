@@ -60,7 +60,9 @@ export const CreateCollectionPage: React.FC = () => {
         Authorization: `Bearer ${auth.token}`,
       });
       history.push("/");
-    } catch (e) {}
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
   if (loading) {

@@ -299,3 +299,8 @@ export interface ISelectTopicForm {
 export interface ICollectionsSortBy {
   onChange: (key: string) => void;
 }
+
+export interface ICollectionsFilterBy {
+  onChange: (name: string, topic: string) => void;
+  topics: ITopic[];
+}

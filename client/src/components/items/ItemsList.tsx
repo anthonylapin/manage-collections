@@ -3,6 +3,14 @@ import { IItemsList } from "../../interfaces/common";
 import { Link } from "react-router-dom";
 
 export const ItemsList: React.FC<IItemsList> = ({ items }) => {
+  if (!items.length) {
+    return (
+      <div>
+        <div className="card-text">No items created yet.</div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="card-text">Items:</div>
