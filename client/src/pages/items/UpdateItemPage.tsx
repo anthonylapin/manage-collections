@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   IUpdateItemPage,
   IItemObj,
@@ -12,6 +12,8 @@ import { Loader } from "../../components/common/Loader";
 import { SelectForm } from "../../components/common/SelectForm";
 import { ItemForm } from "../../components/items/ItemForm";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 export const UpdateItemPage: React.FC = () => {
   const collectionId = useParams<IUpdateItemPage>().collectionId;
@@ -37,6 +39,7 @@ export const UpdateItemPage: React.FC = () => {
     checkboxField3: false,
   });
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const isDark = useContext(ThemeContext) === darkTheme;
 
   const { request, loading } = useHttp();
   const { items } = useItems(collectionId);
@@ -135,7 +138,9 @@ export const UpdateItemPage: React.FC = () => {
           target="item"
           items={items.map((item) => ({ _id: item._id, name: item.name }))}
           onSelect={selectHandler}
-          buttonClass="btn btn-secondary"
+          buttonClass={
+            isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+          }
         />
       )}
       {showForm && !showSuccessAlert && (
@@ -145,6 +150,7 @@ export const UpdateItemPage: React.FC = () => {
           itemForm={itemForm}
           submitHandler={submitHandler}
           buttonName="Update"
+          isDark={isDark}
         />
       )}
     </div>

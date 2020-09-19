@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { ThemeContext } from "styled-components";
 import { SelectForm } from "../../components/common/SelectForm";
+import { darkTheme } from "../../components/themes/Themes";
 import { useCollections } from "../../hooks/collection.hook";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -8,6 +10,7 @@ export const DeleteCollectionPage: React.FC = () => {
   const { collections, getCollections } = useCollections();
   const { request } = useHttp();
   const history = useHistory();
+  const isDark = useContext(ThemeContext) === darkTheme;
 
   useEffect(() => {
     getCollections();
@@ -28,7 +31,7 @@ export const DeleteCollectionPage: React.FC = () => {
           name: item.name,
         }))}
         onSelect={selectHandler}
-        buttonClass="btn btn-danger"
+        buttonClass={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
         buttonAction="Delete"
         target="collection"
       />

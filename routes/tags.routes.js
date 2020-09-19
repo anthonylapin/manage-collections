@@ -9,7 +9,9 @@ router.get("/", async (req, res) => {
   try {
     let tags = await Tag.find({});
 
-    tags = tags.map((tag) => tag.name);
+    if (!req.query.withId) {
+      tags = tags.map((tag) => tag.name);
+    }
     res.json({
       tags,
     });

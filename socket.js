@@ -5,6 +5,10 @@ const { Types } = require("mongoose");
 
 function handleSocketConnection(io) {
   io.on("connection", (socket) => {
+    socket.on("forceDisconnect", function () {
+      socket.disconnect();
+    });
+
     socket.on("add comment", async (newComment) => {
       const comment = await createComment(newComment);
       const userId = Types.ObjectId(comment.author);

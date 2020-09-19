@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { createUnionOrIntersectionTypeNode } from "typescript";
 import { ICollectionsFilterBy } from "../../interfaces/common";
-import { SelectTopicForm } from "../topics/SelectTopicForm";
 
 export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
   onChange,

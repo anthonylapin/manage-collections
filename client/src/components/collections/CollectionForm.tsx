@@ -11,6 +11,7 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
   onSubmit,
   defaultValues,
   buttonAction,
+  isDark,
 }) => {
   const [file, setFile] = useState<Blob | string>("");
   const [showAlert, setShowAlert] = useState({
@@ -296,7 +297,10 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
           value={formik.values.checkboxField3}
         />
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button
+        type="submit"
+        className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+      >
         {buttonAction}
       </button>
     </form>

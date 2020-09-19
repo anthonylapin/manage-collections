@@ -5,18 +5,26 @@ import { AuthContext } from "../context/AuthContext";
 
 export function useItems(collectionId: string) {
   const [items, setItems] = useState<IItemObj[]>([]);
+  const [itemsToShow, setItemsToShow] = useState<IItemObj[]>(items);
   const { request } = useHttp();
 
-  const fetchItems = useCallback(async () => {
-    const fetchedItems = await request(`/api/items/${collectionId}`);
-    setItems(fetchedItems.foundItems);
-  }, [request, collectionId]);
+  const fetchItems = useCallback(
+    async (key?: string) => {
+      let url = key
+        ? `/api/items/${collectionId}?key=${key}`
+        : `/api/items/${collectionId}`;
+      const fetchedItems = await request(url);
+      setItems(fetchedItems.items);
+      setItemsToShow(fetchedItems.items);
+    },
+    [request, collectionId]
+  );
 
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
-  return { items };
+  return { items, itemsToShow, setItemsToShow, fetchItems };
 }
 
 export function useItem(itemId: string) {

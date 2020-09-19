@@ -66,6 +66,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
       <Route path="/item/detail/:itemId">
         <DetailItemPage />
       </Route>
+      <Route path="/collection/detail/:id">
+        <CollectionDetailPage />
+      </Route>
       <Route path="/search/results">
         <SearchItemsPage />
       </Route>

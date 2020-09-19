@@ -7,6 +7,7 @@ const { Types } = require("mongoose");
 const Item = require("../models/Item");
 const Tag = require("../models/Tag");
 const router = Router();
+const helper = require("../helper");
 
 router.get("/", auth, async (req, res) => {
   const key = req.query.key;
@@ -25,11 +26,10 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/:id", auth, async (req, res) => {
-  const userId = Types.ObjectId(req.user.userId);
+router.get("/:id", async (req, res) => {
   try {
     const collection = await Collection.findOne({ _id: req.params.id });
-    const owner = await User.findOne({ _id: userId });
+    const owner = await User.findOne({ _id: collection.owner });
 
     res.json({
       collection,
@@ -172,42 +172,15 @@ const sortKeys = {
 async function sortCollection(key, collections) {
   switch (key) {
     case sortKeys.Name:
-      return sortByName(collections);
+      return helper.sortByName(collections);
     case sortKeys.DateCreated:
-      return sortByDate(collections);
+      return helper.sortByDate(collections);
     case sortKeys.Size:
       const sortedCollections = await sortBySize(collections);
       return sortedCollections;
     default:
       return collections;
   }
-}
-
-function sortByName(collections) {
-  collections.sort((a, b) => {
-    let nameA = a.name.toUpperCase();
-    let nameB = b.name.toUpperCase();
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  });
-
-  return collections;
-}
-
-function sortByDate(collections) {
-  collections.sort((a, b) => {
-    let dateA = new Date(a.created);
-    let dateB = new Date(b.created);
-    return dateB - dateA;
-  });
-
-  return collections;
 }
 
 async function sortBySize(collections) {

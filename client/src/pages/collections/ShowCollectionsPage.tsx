@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { CollectionFilterByComponent } from "../../components/collections/CollectionFilterByComponent";
 import { CollectionSortByComponent } from "../../components/collections/CollectionsSortByComponent";
 import { useTopics } from "../../hooks/topic.hook";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 export const ShowCollectionsPage: React.FC = () => {
   const [collections, setCollections] = useState<ICollectionValues[]>([]);
@@ -16,6 +18,7 @@ export const ShowCollectionsPage: React.FC = () => {
   const { request } = useHttp();
   const auth = useContext(AuthContext);
   const { topics, getTopics } = useTopics();
+  const isDark = useContext(ThemeContext) === darkTheme;
 
   const fetchData = useCallback(async () => {
     try {
@@ -110,7 +113,7 @@ export const ShowCollectionsPage: React.FC = () => {
             onChange={filterCollections}
           />
         </div>
-        <CollectionsTable collections={collectionToShow} />
+        <CollectionsTable collections={collectionToShow} isDark={isDark} />
       </div>
     </div>
   );

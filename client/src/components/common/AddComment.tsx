@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import { IAddComment } from "../../interfaces/common";
 
-export const AddComment: React.FC<IAddComment> = ({ onSubmit }) => {
+export const AddComment: React.FC<IAddComment> = ({ onSubmit, isDark }) => {
   const [showAlert, setShowAlert] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -41,7 +41,10 @@ export const AddComment: React.FC<IAddComment> = ({ onSubmit }) => {
             value={formik.values.comment}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+        >
           Add comment
         </button>
       </form>

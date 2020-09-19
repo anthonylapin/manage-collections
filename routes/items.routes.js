@@ -3,9 +3,13 @@ const auth = require("../middleware/auth.middleware");
 const Tag = require("../models/Tag");
 const Item = require("../models/Item");
 const Collection = require("../models/Collection");
+const Comment = require("../models/Comment");
+const Like = require("../models/Like");
 const User = require("../models/User");
 const Topic = require("../models/Topic");
 const { Types } = require("mongoose");
+const helper = require("../helper");
+const { sortArrayByElementOccurences } = require("../helper");
 
 const router = Router();
 
@@ -36,12 +40,18 @@ router.post("/create", auth, async (req, res) => {
 
 router.get("/:collectionId", async (req, res) => {
   const collectionId = Types.ObjectId(req.params.collectionId);
+  const sortKey = req.query.key;
   try {
-    const foundItems = await Item.find({
+    let items = await Item.find({
       collectionId,
     });
-    res.json({ foundItems });
+    if (sortKey) {
+      items = await sortItems(sortKey, items);
+    }
+
+    res.json({ items });
   } catch (e) {
+    console.log(e.message);
     res.status(500).json({
       message: "Something went wrong, try again.",
     });
@@ -195,6 +205,90 @@ async function getOwnerName(ownerId) {
   const user = await User.findById(ownerId);
   const username = `${user.firstName} ${user.lastName}`;
   return username;
+}
+
+const sortKeys = {
+  Default: "DEFAULT",
+  Name: "NAME",
+  DateCreated: "DATE_CREATED",
+  Tags: "TAGS",
+  Comments: "COMMENTS",
+  Likes: "LIKES",
+};
+
+async function sortItems(sortKey, items) {
+  let sortedItems;
+  switch (sortKey) {
+    case sortKeys.Name:
+      return helper.sortByName(items);
+    case sortKeys.DateCreated:
+      return helper.sortByDate(items);
+    case sortKeys.Tags:
+      sortedItems = await sortByTags(items);
+      return sortedItems;
+    case sortKeys.Comments:
+      sortedItems = await sortByLikesOrComments(items, sortKeys.Comments);
+      return sortedItems;
+    case sortKeys.Likes:
+      sortedItems = await sortByLikesOrComments(items, sortKeys.Likes);
+      return sortedItems;
+    default:
+      return items;
+  }
+}
+
+async function sortByTags(items) {
+  let itemsIds = items.map((item) => item._id);
+  let tags = await Tag.find({ items: { $in: itemsIds } });
+  let arrayOfArraysOfItemsIds = tags.map((tag) => tag.items);
+
+  let arrayOfItemsIds = [].concat.apply([], arrayOfArraysOfItemsIds);
+  arrayOfItemsIds = helper.sortArrayByElementOccurences(arrayOfItemsIds);
+
+  const sortedItems = [];
+
+  arrayOfItemsIds.forEach((id) => {
+    const candidate = items.find((item) => String(item._id) === String(id));
+    if (candidate) {
+      sortedItems.push(candidate);
+    }
+  });
+
+  items.forEach((item) => {
+    if (!sortedItems.includes(item)) {
+      sortedItems.push(item);
+    }
+  });
+
+  return sortedItems;
+}
+
+async function sortByLikesOrComments(items, key) {
+  const sortedItems = [];
+  let things = [];
+  let itemsIds = items.map((item) => item._id);
+
+  if (key === sortKeys.Likes) {
+    const likes = await Like.find({ itemId: { $in: items } });
+    things = likes.map((like) => like.itemId);
+  } else {
+    let comments = await Comment.find({ itemId: { $in: itemsIds } });
+    things = comments.map((comment) => comment.itemId);
+  }
+
+  let sortedItemsIds = sortArrayByElementOccurences(things);
+
+  sortedItemsIds.forEach((id) => {
+    const candidate = items.find((item) => String(item._id) === String(id));
+    sortedItems.push(candidate);
+  });
+
+  items.forEach((item) => {
+    if (!sortedItems.includes(item)) {
+      sortedItems.push(item);
+    }
+  });
+  return sortedItems;
 }
 
 module.exports = router;

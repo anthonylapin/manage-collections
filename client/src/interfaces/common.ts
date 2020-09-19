@@ -1,5 +1,6 @@
 export interface INavbarProps {
   isAuthenticated: boolean;
+  onToggle: () => void;
 }
 
 export interface ITopic {
@@ -10,6 +11,7 @@ export interface ITopic {
 export interface ILoginForm {
   loading: boolean;
   onLogin: (email: string, password: string) => void;
+  isDark: boolean;
 }
 
 export interface IRegisterForm {
@@ -20,15 +22,18 @@ export interface IRegisterForm {
     email: string,
     password: string
   ) => void;
+  isDark: boolean;
 }
 
 export interface ILoginFacebook {
   responseFacebook: (res: any) => void;
+  className: string;
 }
 
 export interface ILoginGoogle {
   responseSuccessGoogle: (res: any) => void;
   responseFailureGoogle: () => void;
+  className: string;
 }
 
 export interface IAuthContext {
@@ -68,6 +73,7 @@ export interface ICollectionValues {
 
 export interface ICollectionTable {
   collections: ICollectionValues[];
+  isDark: boolean;
 }
 
 export interface ICollectionDetailParams {
@@ -107,6 +113,7 @@ export interface IItemFormProps {
   defaultValues: IDefaultItemFormValues;
   header: string;
   buttonName: string;
+  isDark: boolean;
 }
 
 export interface IDefaultItemFormValues {
@@ -189,6 +196,9 @@ export interface ICollection {
 export interface ICollectionCard {
   collection: ICollection;
   items: IItemObj[];
+  onSort: (key: string) => void;
+  onFilter: (key: string, value: string) => void;
+  isDark: boolean;
 }
 
 export interface IItemsList {
@@ -205,6 +215,7 @@ export interface ICollectionForm {
   defaultValues: ICollectionFormValues;
   topics: ITopic[];
   buttonAction: string;
+  isDark: boolean;
 }
 
 export interface ICollectionFormValues {
@@ -258,6 +269,7 @@ export interface IItemCard {
   collection: ICollectionFormValues;
   onLike: () => void;
   likes: number;
+  isDark: boolean;
 }
 
 export interface IComment {
@@ -270,10 +282,12 @@ export interface IComment {
 
 export interface IAddComment {
   onSubmit: (comment: string) => void;
+  isDark: boolean;
 }
 
 export interface ICommentCard {
   comment: IComment;
+  isDark: boolean;
 }
 
 export interface ILike {
@@ -303,4 +317,17 @@ export interface ICollectionsSortBy {
 export interface ICollectionsFilterBy {
   onChange: (name: string, topic: string) => void;
   topics: ITopic[];
+}
+
+export interface IItemsSortBy {
+  onChange: (key: string) => void;
+}
+
+export interface IItemsFilterBy {
+  onChange: (key: string, value: string) => void;
+}
+
+export interface ITag {
+  name: string;
+  items: string[];
 }

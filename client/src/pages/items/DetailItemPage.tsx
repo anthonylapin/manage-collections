@@ -9,6 +9,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { useComments } from "../../hooks/comment.hook";
 import { CommentCard } from "../../components/common/CommentCard";
 import { useLikes } from "../../hooks/like.hook";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 let socket: SocketIOClient.Socket = {} as SocketIOClient.Socket;
 
 export const DetailItemPage: React.FC = () => {
@@ -17,6 +19,7 @@ export const DetailItemPage: React.FC = () => {
   const { getItems, item, collection } = useItem(itemId);
   const { comments, getComments, setComments } = useComments(itemId);
   const { likes, getLikes, setLikes } = useLikes(itemId);
+  const isDark = useContext(ThemeContext) === darkTheme;
 
   useEffect(() => {
     getItems();
@@ -33,7 +36,9 @@ export const DetailItemPage: React.FC = () => {
   const connectSocket = useCallback(() => {
     socket = io();
     return () => {
+      socket.emit("forceDisconnect");
       socket.disconnect();
+      socket.close();
     };
   }, []);
 
@@ -79,9 +84,12 @@ export const DetailItemPage: React.FC = () => {
         collection={collection}
         onLike={likeHandler}
         likes={likes}
+        isDark={isDark}
       />
 
-      {isAuthenticated && <AddComment onSubmit={submitHandler} />}
+      {isAuthenticated && (
+        <AddComment isDark={isDark} onSubmit={submitHandler} />
+      )}
 
       {comments.length !== 0 && (
         <div className="mt-4">
@@ -89,7 +97,7 @@ export const DetailItemPage: React.FC = () => {
             <h5>Comments</h5>
           </div>
           {comments.map((comment, index) => (
-            <CommentCard key={index} comment={comment} />
+            <CommentCard isDark={isDark} key={index} comment={comment} />
           ))}
         </div>
       )}

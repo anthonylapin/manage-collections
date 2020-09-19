@@ -5,6 +5,7 @@ import { IRegisterForm } from "../../interfaces/common";
 export const RegisterForm: React.FC<IRegisterForm> = ({
   loading,
   onRegister,
+  isDark,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -73,7 +74,11 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
         </div>
       </div>
       <div className="text-center">
-        <button className="btn btn-primary" disabled={loading} type="submit">
+        <button
+          className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+          disabled={loading}
+          type="submit"
+        >
           {loading && (
             <span
               className="spinner-border spinner-border-sm"

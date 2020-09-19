@@ -2,7 +2,11 @@ import React from "react";
 import { useFormik } from "formik";
 import { ILoginForm } from "../../interfaces/common";
 
-export const LoginForm: React.FC<ILoginForm> = ({ loading, onLogin }) => {
+export const LoginForm: React.FC<ILoginForm> = ({
+  loading,
+  onLogin,
+  isDark,
+}) => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,7 +43,10 @@ export const LoginForm: React.FC<ILoginForm> = ({ loading, onLogin }) => {
         />
       </div>
       <div className="text-center">
-        <button type="submit" className="btn btn-success">
+        <button
+          type="submit"
+          className={isDark ? "btn btn-outline-success" : "btn btn-success"}
+        >
           {loading && (
             <span
               className="spinner-border spinner-border-sm"

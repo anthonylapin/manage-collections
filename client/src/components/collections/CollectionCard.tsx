@@ -1,20 +1,28 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { ICollectionCard } from "../../interfaces/common";
+import { ItemsFilterByComponent } from "../items/ItemsFilterByComponent";
 import { ItemsList } from "../items/ItemsList";
+import { ItemsSortByComponent } from "../items/ItemsSortByComponent";
 
 export const CollectionCard: React.FC<ICollectionCard> = ({
   collection,
   items,
+  onSort,
+  onFilter,
+  isDark,
 }) => {
   return (
     <div style={{ width: "100%" }}>
-      <div className="card" style={{ display: "table", margin: "0 auto" }}>
+      <div
+        className={isDark ? "card bg-dark" : "card"}
+        style={{ display: "table", margin: "0 auto" }}
+      >
         <img
           src={collection.imageUrl}
           className="card-img-top"
           alt=""
-          style={{ maxHeight: "400px", maxWidth: "400px" }}
+          style={{ width: "100%" }}
         />
         <div className="card-body">
           <h5 className="card-title">{collection.name}</h5>
@@ -26,6 +34,13 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
             className="card-text"
             source={collection.description}
           />
+          <div className="card-text text-center">
+            <h5>Items</h5>
+          </div>
+          <div className="row">
+            <ItemsSortByComponent onChange={onSort} />
+            <ItemsFilterByComponent onChange={onFilter} />
+          </div>
           <ItemsList items={items} />
         </div>
       </div>

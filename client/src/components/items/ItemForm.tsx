@@ -19,6 +19,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
   defaultValues,
   header,
   buttonName,
+  isDark,
 }) => {
   const [tags, setTags] = useState(defaultValues.tags);
   const [startDate1, setStartDate1] = useState(defaultValues.dateField1);
@@ -494,7 +495,10 @@ export const ItemForm: React.FC<IItemFormProps> = ({
         </div>
       )}
 
-      <button type="submit" className="btn btn-primary">
+      <button
+        type="submit"
+        className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+      >
         {buttonName}
       </button>
     </form>

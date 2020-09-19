@@ -12,8 +12,12 @@ import { CollectionForm } from "../../components/collections/CollectionForm";
 import { Loader } from "../../components/common/Loader";
 import { uploadFileToGoogleStorage } from "../../helper/uploadFileToGoogleStorage";
 import { useHistory } from "react-router-dom";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 export const UpdateCollectionPage: React.FC = () => {
+  const theme = useContext(ThemeContext);
+  const isDark: boolean = theme === darkTheme;
   const [collectionId, setCollectionId] = useState("");
   const [collectionForm, setCollectionForm] = useState<ICollectionFormValues>({
     name: "",
@@ -119,7 +123,7 @@ export const UpdateCollectionPage: React.FC = () => {
             _id: item._id,
             name: item.name,
           }))}
-          buttonClass="btn btn-primary"
+          buttonClass={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
           buttonAction="Find"
           target="collection"
         />
@@ -130,6 +134,7 @@ export const UpdateCollectionPage: React.FC = () => {
           defaultValues={collectionForm}
           topics={topics}
           buttonAction="Update"
+          isDark={isDark}
         />
       )}
     </div>

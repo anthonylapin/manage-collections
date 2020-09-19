@@ -1,10 +1,10 @@
 import React from "react";
 import { ICommentCard } from "../../interfaces/common";
 
-export const CommentCard: React.FC<ICommentCard> = ({ comment }) => {
+export const CommentCard: React.FC<ICommentCard> = ({ comment, isDark }) => {
   return (
     <div
-      className="card mt-4 "
+      className={isDark ? "card mt-4 bg-dark" : "card mt-4"}
       style={{
         height: "100%",
         width: "100%",

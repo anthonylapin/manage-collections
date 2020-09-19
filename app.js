@@ -71,7 +71,7 @@ app.post("/api/googlecloud/upload", multer.single("file"), async (req, res) => {
 
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(config.get("mongoUriLocalhost"), {
+    await mongoose.connect(config.get("mongoUri"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

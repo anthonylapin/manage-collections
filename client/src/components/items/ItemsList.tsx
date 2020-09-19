@@ -13,7 +13,6 @@ export const ItemsList: React.FC<IItemsList> = ({ items }) => {
 
   return (
     <div>
-      <div className="card-text">Items:</div>
       <ul>
         {items.map((item, index) => (
           <li key={index}>

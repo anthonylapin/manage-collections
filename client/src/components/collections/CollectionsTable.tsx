@@ -4,6 +4,7 @@ import { ICollectionTable } from "../../interfaces/common";
 
 export const CollectionsTable: React.FC<ICollectionTable> = ({
   collections,
+  isDark,
 }) => {
   return (
     <table className="table mt-4">
@@ -18,7 +19,9 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
             <th>
               <Link
                 to={`/create/item/${collection._id}`}
-                className="btn btn-primary"
+                className={
+                  isDark ? "btn btn-outline-primary" : "btn btn-primary"
+                }
               >
                 Add item
               </Link>
@@ -26,7 +29,9 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
             <th>
               <Link
                 to={`/update/item/${collection._id}`}
-                className="btn btn-secondary"
+                className={
+                  isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                }
               >
                 Update item
               </Link>
@@ -34,7 +39,7 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
             <th>
               <Link
                 to={`/delete/item/${collection._id}`}
-                className="btn btn-danger"
+                className={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
               >
                 Delete item
               </Link>

@@ -10,6 +10,8 @@ import {
 } from "../../interfaces/common";
 import { Loader } from "../../components/common/Loader";
 import { useTopics } from "../../hooks/topic.hook";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 const defaultValues: ICollectionFormValues = {
   name: "",
@@ -38,6 +40,8 @@ export const CreateCollectionPage: React.FC = () => {
   const { request, loading, setLoading } = useHttp();
   const auth = useContext(AuthContext);
   const history = useHistory();
+  const theme = useContext(ThemeContext);
+  const isDark: boolean = theme === darkTheme;
 
   useEffect(() => {
     getTopics();
@@ -75,6 +79,7 @@ export const CreateCollectionPage: React.FC = () => {
       topics={topics}
       onSubmit={handleCreateCollection}
       buttonAction="Create"
+      isDark={isDark}
     />
   );
 };

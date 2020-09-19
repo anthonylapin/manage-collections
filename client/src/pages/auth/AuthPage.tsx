@@ -5,8 +5,11 @@ import { useHttp } from "../../hooks/http.hook";
 import { SignInWithGoogleButton } from "../../components/auth/SignInWithGoogleButton";
 import { OrComponent } from "../../components/common/OrComponent";
 import { SignInWithFacebookButton } from "../../components/auth/SignInWithFacebookButton";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 export const AuthPage: React.FC = () => {
+  const isDark = useContext(ThemeContext) === darkTheme;
   const auth = useContext(AuthContext);
   const { loading, request, clearError } = useHttp();
 
@@ -52,14 +55,18 @@ export const AuthPage: React.FC = () => {
       <div className="text-center">
         <h4>Sign in</h4>
       </div>
-      <LoginForm onLogin={loginHandler} loading={loading} />
+      <LoginForm isDark={isDark} onLogin={loginHandler} loading={loading} />
       <OrComponent />
       <div className="text-center social-btn">
         <SignInWithGoogleButton
           responseSuccessGoogle={responseSuccessGoogle}
           responseFailureGoogle={responseFailureGoogle}
+          className={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
         />
-        <SignInWithFacebookButton responseFacebook={responseFacebook} />
+        <SignInWithFacebookButton
+          responseFacebook={responseFacebook}
+          className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+        />
       </div>
     </div>
   );

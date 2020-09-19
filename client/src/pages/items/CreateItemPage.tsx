@@ -11,6 +11,8 @@ import { ItemForm } from "../../components/items/ItemForm";
 import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "../../components/common/Loader";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
+import { ThemeContext } from "styled-components";
+import { darkTheme } from "../../components/themes/Themes";
 
 const defaultValues: IDefaultItemFormValues = {
   name: "",
@@ -38,6 +40,7 @@ export const CreateItemPage: React.FC = () => {
     collectionId
   );
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const isDark = useContext(ThemeContext) === darkTheme;
 
   const { request, clearError, loading } = useHttp();
   const { token } = useContext(AuthContext);
@@ -87,6 +90,7 @@ export const CreateItemPage: React.FC = () => {
           itemForm={itemForm}
           submitHandler={submitHandler}
           buttonName="Create"
+          isDark={isDark}
         />
       )}
     </div>

@@ -22,7 +22,6 @@ export const useCollections = () => {
 
 export const useCollection = (collectionId: string) => {
   const { request } = useHttp();
-  const { token } = useContext(AuthContext);
   const [itemForm, setItemForm] = useState<ICreateItemForm>({
     existingTags: [],
   });
@@ -42,13 +41,11 @@ export const useCollection = (collectionId: string) => {
         `/api/collections/${collectionId}`,
         "GET",
         null,
-        { Authorization: `Bearer ${token}` }
+        {}
       );
       const collectionInfo = response.collection;
 
-      response = await request("/api/tags", "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
+      response = await request("/api/tags", "GET", null, {});
 
       const existingTags = response.tags;
 
@@ -73,15 +70,14 @@ export const useCollection = (collectionId: string) => {
     } catch (error) {
       setCollectionExists(false);
     }
-  }, [request, collectionId, token]);
+  }, [request, collectionId]);
 
   const getCollection = useCallback(async () => {
     try {
       let response = await request(
         `/api/collections/${collectionId}`,
         "GET",
-        null,
-        { Authorization: `Bearer ${token}` }
+        null
       );
       const collectionInfo = response.collection;
       const ownerName = response.ownerName;
@@ -100,7 +96,7 @@ export const useCollection = (collectionId: string) => {
     } catch (e) {
       setCollectionExists(false);
     }
-  }, [request, collectionId, token]);
+  }, [request, collectionId]);
 
   return {
     getItemForm,
