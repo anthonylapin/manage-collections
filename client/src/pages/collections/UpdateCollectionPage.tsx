@@ -59,7 +59,7 @@ export const UpdateCollectionPage: React.FC = () => {
     setCollectionId(selectedId);
     try {
       const response = await request(
-        `/api/collections/${selectedId}`,
+        `/api/collections/collection/${selectedId}`,
         "GET",
         null,
         {

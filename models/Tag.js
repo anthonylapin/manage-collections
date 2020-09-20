@@ -14,6 +14,6 @@ const tagSchema = Schema({
   ],
 });
 
-tagSchema.index({ name: "text" });
+tagSchema.index({ "$**": "text" });
 
 module.exports = model("Tag", tagSchema);

@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ThemeContext } from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
-import { SearchContext } from "../../context/SearchContext";
-import { useHttp } from "../../hooks/http.hook";
+import { useSearch } from "../../hooks/search.hook";
 import { INavbarProps } from "../../interfaces/common";
-import { Types } from "../../reducers/reducers";
 import { darkTheme } from "../themes/Themes";
 import { SearchForm } from "./SearchForm";
 
@@ -14,25 +12,9 @@ export const Navbar: React.FC<INavbarProps> = ({
   onToggle,
 }) => {
   const auth = useContext(AuthContext);
-  const { dispatch } = useContext(SearchContext);
-  const { request, loading } = useHttp();
-  const history = useHistory();
   const theme = useContext(ThemeContext);
   const isDark = theme === darkTheme;
-
-  const searchItems = async (query: string) => {
-    try {
-      const response = await request(`/api/search?q=${query}`);
-      dispatch({
-        type: Types.Search,
-        payload: {
-          items: response.items,
-          query: response.query,
-        },
-      });
-      history.push(`/search/results`);
-    } catch (error) {}
-  };
+  const { searchItems, loading } = useSearch();
 
   const logoutHandler = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -78,7 +60,11 @@ export const Navbar: React.FC<INavbarProps> = ({
             Sign up<span className="sr-only">(current)</span>
           </NavLink>
         </li>
-        <li onClick={onToggle} className="nav-item active">
+        <li
+          onClick={onToggle}
+          style={{ cursor: "pointer" }}
+          className="nav-item active"
+        >
           <NavLink className="nav-link disabled" to="">
             Theme<span className="sr-only">(current)</span>
           </NavLink>

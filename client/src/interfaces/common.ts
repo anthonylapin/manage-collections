@@ -328,6 +328,16 @@ export interface IItemsFilterBy {
 }
 
 export interface ITag {
+  _id?: string;
   name: string;
   items: string[];
+}
+
+export interface ITagCloud {
+  tags: ITag[];
+  onClick: (id: string | undefined) => void;
+}
+
+export interface ICollectionsList {
+  collections: ICollection[];
 }

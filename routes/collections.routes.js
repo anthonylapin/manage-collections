@@ -26,7 +26,26 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/all", async (req, res) => {
+  const key = req.query.key;
+  try {
+    let collections = await Collection.find({});
+    if (key) {
+      collections = await sortCollection(key, collections);
+    }
+
+    res.json({
+      collections,
+      key,
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
+    });
+  }
+});
+
+router.get("/collection/:id", async (req, res) => {
   try {
     const collection = await Collection.findOne({ _id: req.params.id });
     const owner = await User.findOne({ _id: collection.owner });
@@ -185,19 +204,15 @@ async function sortCollection(key, collections) {
 
 async function sortBySize(collections) {
   const sortedCollections = [];
-  let collectionIds = collections.map((collection) => collection._id);
-  let items = await Item.find({ collectionId: { $in: collectionIds } }).sort({
-    collectionId: 1,
-  });
+  let items = await Item.find({ collectionId: { $in: collections } });
+  let collectionIds = items.map((item) => item.collectionId);
+  collectionIds = helper.sortArrayByElementOccurences(collectionIds);
 
-  collectionsIds = items.map((item) => item.collectionId);
-  collectionsIds = removeDuplicatesFromArray(collectionsIds);
-
-  collectionsIds.forEach((id) => {
-    let foundCollection = collections.find(
-      (collection) => String(collection._id) === String(id)
+  collectionIds.forEach((id) => {
+    const collection = collections.find(
+      (element) => String(element._id) === String(id)
     );
-    sortedCollections.push(foundCollection);
+    sortedCollections.push(collection);
   });
 
   collections.forEach((collection) => {

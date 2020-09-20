@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const Tag = require("../models/Tag");
-const auth = require("../middleware/auth.middleware");
 const { Types } = require("mongoose");
 
 const router = Router();

@@ -8,6 +8,20 @@ export const useCollections = () => {
   const { token } = useContext(AuthContext);
   const [collections, setCollections] = useState<ICollection[]>([]);
 
+  const getAllCollections = useCallback(
+    async (key?: string) => {
+      try {
+        let url = "/api/collections/all";
+        if (key) {
+          url = `/api/collections/all?key=${key}`;
+        }
+        let response = await request(url);
+        setCollections(response.collections);
+      } catch (e) {}
+    },
+    [request]
+  );
+
   const getCollections = useCallback(async () => {
     try {
       let response = await request("/api/collections", "GET", null, {
@@ -17,7 +31,7 @@ export const useCollections = () => {
     } catch (e) {}
   }, [request, token]);
 
-  return { collections, getCollections };
+  return { collections, getCollections, getAllCollections };
 };
 
 export const useCollection = (collectionId: string) => {
@@ -38,7 +52,7 @@ export const useCollection = (collectionId: string) => {
   const getItemForm = useCallback(async () => {
     try {
       let response = await request(
-        `/api/collections/${collectionId}`,
+        `/api/collections/collection/${collectionId}`,
         "GET",
         null,
         {}
@@ -75,7 +89,7 @@ export const useCollection = (collectionId: string) => {
   const getCollection = useCallback(async () => {
     try {
       let response = await request(
-        `/api/collections/${collectionId}`,
+        `/api/collections/collection/${collectionId}`,
         "GET",
         null
       );

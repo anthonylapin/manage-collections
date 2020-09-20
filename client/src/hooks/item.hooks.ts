@@ -3,6 +3,25 @@ import { useHttp } from "./http.hook";
 import { ICollectionFormValues, IItemObj } from "../interfaces/common";
 import { AuthContext } from "../context/AuthContext";
 
+export function useAllItems() {
+  const [items, setItems] = useState<IItemObj[]>([]);
+
+  const { request } = useHttp();
+
+  const fetchItems = useCallback(
+    async (key?: string) => {
+      try {
+        let url = key ? `/api/items?key=${key}` : `/api/items`;
+        const fetchedItems = await request(url);
+        setItems(fetchedItems.items);
+      } catch (error) {}
+    },
+    [request]
+  );
+
+  return { items, fetchItems };
+}
+
 export function useItems(collectionId: string) {
   const [items, setItems] = useState<IItemObj[]>([]);
   const [itemsToShow, setItemsToShow] = useState<IItemObj[]>(items);
@@ -10,12 +29,14 @@ export function useItems(collectionId: string) {
 
   const fetchItems = useCallback(
     async (key?: string) => {
-      let url = key
-        ? `/api/items/${collectionId}?key=${key}`
-        : `/api/items/${collectionId}`;
-      const fetchedItems = await request(url);
-      setItems(fetchedItems.items);
-      setItemsToShow(fetchedItems.items);
+      try {
+        let url = key
+          ? `/api/items/${collectionId}?key=${key}`
+          : `/api/items/${collectionId}`;
+        const fetchedItems = await request(url);
+        setItems(fetchedItems.items);
+        setItemsToShow(fetchedItems.items);
+      } catch (error) {}
     },
     [request, collectionId]
   );

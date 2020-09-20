@@ -13,6 +13,34 @@ const { sortArrayByElementOccurences } = require("../helper");
 
 const router = Router();
 
+router.get("/", async (req, res) => {
+  const key = req.query.key;
+  const tagId = req.query.tag;
+  try {
+    let items;
+
+    if (tagId) {
+      itemsAndTagName = await getItemsFromTag(tagId);
+      return res.json({
+        items: itemsAndTagName.items,
+        query: itemsAndTagName.tag,
+      });
+    }
+
+    if (key === "DATE") {
+      items = await Item.find({}).sort({ created: -1 });
+    } else {
+      items = await Item.find({});
+    }
+
+    res.json({ items });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
+    });
+  }
+});
+
 router.post("/create", auth, async (req, res) => {
   try {
     const newItem = new Item({
@@ -289,6 +317,13 @@ async function sortByLikesOrComments(items, key) {
     }
   });
   return sortedItems;
+}
+
+async function getItemsFromTag(tagId) {
+  const tag = await Tag.findById(Types.ObjectId(tagId));
+  const itemsIds = tag.items;
+  const items = await Item.find({ _id: { $in: itemsIds } });
+  return { items, tag: tag.name };
 }
 
 module.exports = router;
