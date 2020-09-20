@@ -13,6 +13,10 @@ export const MainPage: React.FC = () => {
   const { items, fetchItems } = useAllItems();
   const { tags, getTags } = useTags(true);
   const tagsToShow = tags.filter((tag) => tag.items.length > 0);
+  const itemsToShow = items.filter((item) => items.indexOf(item) < 5);
+  const collectionsToShow = collections.filter(
+    (collection) => collections.indexOf(collection) < 5
+  );
   const theme = useContext(ThemeContext);
   const { searchItemsByTag } = useSearch();
 
@@ -24,8 +28,8 @@ export const MainPage: React.FC = () => {
 
   return (
     <MainPageComponent
-      collections={collections}
-      items={items}
+      collections={collectionsToShow}
+      items={itemsToShow}
       tags={tagsToShow}
       onSearch={searchItemsByTag}
     />

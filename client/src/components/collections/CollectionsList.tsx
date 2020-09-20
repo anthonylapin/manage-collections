@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ICollection, ICollectionsList } from "../../interfaces/common";
+import { ICollectionsList } from "../../interfaces/common";
 
 export const CollectionsList: React.FC<ICollectionsList> = ({
   collections,
