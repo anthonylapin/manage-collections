@@ -202,6 +202,7 @@ export interface ICollectionCard {
   items: IItemObj[];
   onSort: (key: string) => void;
   onFilter: (key: string, value: string) => void;
+  onExport: () => void;
   isDark: boolean;
 }
 

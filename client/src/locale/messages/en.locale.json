@@ -82,6 +82,7 @@
     "item": "item",
     "youHaveToSignInToLikePost": "You have to sign in to like post",
     "resultsMatchingQuery": "Results matching query",
-    "itemHasBeenUpdatedSuccessfully": "Item has been updated successfully"
+    "itemHasBeenUpdatedSuccessfully": "Item has been updated successfully",
+    "exportCollectionToCsv": "Export collection to csv file"
   }
 }

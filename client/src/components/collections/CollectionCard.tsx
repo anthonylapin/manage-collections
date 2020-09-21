@@ -12,6 +12,7 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
   onSort,
   onFilter,
   isDark,
+  onExport,
 }) => {
   const { dictionary } = useContext(TranslateContext);
   return (
@@ -46,6 +47,12 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
             <ItemsFilterByComponent onChange={onFilter} />
           </div>
           <ItemsList items={items} />
+          <button
+            className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
+            onClick={onExport}
+          >
+            {dictionary.exportCollectionToCsv}
+          </button>
         </div>
       </div>
     </div>

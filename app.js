@@ -5,6 +5,7 @@ const socketIO = require("socket.io");
 const server = http.createServer(app);
 const mongoose = require("mongoose");
 const config = require("config");
+const logger = require("morgan");
 const { handleSocketConnection } = require("./socket");
 
 const PORT = process.env.PORT || config.get("port") || 5000;
@@ -12,6 +13,7 @@ const MONGODB_URI = config.get("mongoUri");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(logger("dev"));
 
 const io = socketIO(server);
 handleSocketConnection(io);
@@ -24,6 +26,7 @@ app.use("/api/tags", require("./routes/tags.routes"));
 app.use("/api/comments", require("./routes/comments.routes"));
 app.use("/api/likes", require("./routes/likes.routes"));
 app.use("/api/search", require("./routes/search.routes"));
+app.use("/api/files", require("./routes/files.routes"));
 
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
@@ -71,7 +74,7 @@ app.post("/api/googlecloud/upload", multer.single("file"), async (req, res) => {
 
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(config.get("mongoUri"), {
+    await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

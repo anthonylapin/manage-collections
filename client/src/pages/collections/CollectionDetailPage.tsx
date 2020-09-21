@@ -8,6 +8,7 @@ import { useTags } from "../../hooks/tag.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
 import { TranslateContext } from "../../context/TranslateContext";
+import { downloadCsv } from "../../helper/downloadCsv";
 
 export const CollectionDetailPage: React.FC = () => {
   const collectionId = useParams<ICollectionDetailParams>().id;
@@ -73,6 +74,10 @@ export const CollectionDetailPage: React.FC = () => {
     setItemsToShow(newItemsToShow);
   };
 
+  const exportCsvHandler = async () => {
+    await downloadCsv(collectionId);
+  };
+
   return (
     <div>
       <CollectionCard
@@ -81,6 +86,7 @@ export const CollectionDetailPage: React.FC = () => {
         onSort={sortItems}
         onFilter={filterItems}
         isDark={isDark}
+        onExport={exportCsvHandler}
       />
     </div>
   );

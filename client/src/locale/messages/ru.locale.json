@@ -82,6 +82,7 @@
     "item": "предмет",
     "youHaveToSignInToLikePost": "Вы должны авторизироваться чтобы лайкать пост",
     "resultsMatchingQuery": "Результаты поиска",
-    "itemHasBeenUpdatedSuccessfully": "Предмет были успешно обновлены"
+    "itemHasBeenUpdatedSuccessfully": "Предмет были успешно обновлены",
+    "exportCollectionToCsv": "Экспортировать коллекцию в csv файл"
   }
 }
