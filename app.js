@@ -13,7 +13,7 @@ const MONGODB_URI = config.get("mongoUri");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(logger("dev"));
+// app.use(logger("dev"));
 
 const io = socketIO(server);
 handleSocketConnection(io);
@@ -71,6 +71,14 @@ app.post("/api/googlecloud/upload", multer.single("file"), async (req, res) => {
 
   blobStream.end(req.file.buffer);
 });
+
+if (process.env.NODE_ENV === "production") {
+  console.log("We are in production");
+  app.use(express.static(path.join(__dirname, "client", "build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const connectToDatabase = async () => {
   try {
