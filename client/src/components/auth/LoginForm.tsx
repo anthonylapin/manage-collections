@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { ILoginForm } from "../../interfaces/common";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const LoginForm: React.FC<ILoginForm> = ({
   loading,
@@ -17,10 +18,12 @@ export const LoginForm: React.FC<ILoginForm> = ({
     },
   });
 
+  const { dictionary } = useContext(TranslateContext);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="form-group">
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">{dictionary.emailAddress}</label>
         <input
           id="email"
           className="form-control"
@@ -31,7 +34,7 @@ export const LoginForm: React.FC<ILoginForm> = ({
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{dictionary.Password}</label>
         <input
           id="password"
           className="form-control"
@@ -54,7 +57,7 @@ export const LoginForm: React.FC<ILoginForm> = ({
               aria-hidden="true"
             ></span>
           )}
-          Sign in
+          {dictionary.signIn}
         </button>
       </div>
     </form>

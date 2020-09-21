@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ICollection, IItemObj, ITag } from "../../interfaces/common";
 import { CollectionsList } from "../collections/CollectionsList";
 import { ItemsList } from "../items/ItemsList";
@@ -18,23 +19,24 @@ export const MainPageComponent: React.FC<IMainPageComponent> = ({
   onSearch,
 }) => {
   const firstFiveCollections = collections.splice(0, 4);
+  const { dictionary } = useContext(TranslateContext);
 
   return (
     <div>
       <div className="text-center">
-        <h5>Main page</h5>
+        <h5>{dictionary.mainPage}</h5>
       </div>
       <div className="row mt-5">
         <div className="col">
-          Tag cloud
+          {dictionary.tagCloud}
           <TagCloud tags={tags} onClick={onSearch} />
         </div>
         <div className="col">
-          Last added items
+          {dictionary.lastAddedItems}
           <ItemsList items={items} />
         </div>
         <div className="col">
-          The biggest collections
+          {dictionary.theBiggestCollections}
           <CollectionsList collections={firstFiveCollections} />
         </div>
       </div>

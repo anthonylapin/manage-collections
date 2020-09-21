@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { IRegisterForm } from "../../interfaces/common";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const RegisterForm: React.FC<IRegisterForm> = ({
   loading,
@@ -24,10 +25,12 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
     },
   });
 
+  const { dictionary } = useContext(TranslateContext);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="form-group">
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">{dictionary.emailAddress}</label>
         <input
           id="email"
           className="form-control"
@@ -38,7 +41,7 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{dictionary.Password}</label>
         <input
           id="password"
           className="form-control"
@@ -51,7 +54,7 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
       </div>
       <div className="row form-group">
         <div className="col">
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="firstName">{dictionary.firstName}</label>
           <input
             id="firstName"
             className="form-control"
@@ -62,7 +65,7 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
           />
         </div>
         <div className="col">
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="lastName">{dictionary.lastName}</label>
           <input
             id="lastName"
             className="form-control"
@@ -86,7 +89,7 @@ export const RegisterForm: React.FC<IRegisterForm> = ({
               aria-hidden="true"
             ></span>
           )}
-          Sign up
+          {dictionary.signUp}
         </button>
       </div>
     </form>

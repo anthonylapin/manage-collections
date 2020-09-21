@@ -1,6 +1,10 @@
+import { Locales } from "../locale/locales";
+import messages from "../locale/messages";
+
 export interface INavbarProps {
   isAuthenticated: boolean;
-  onToggle: () => void;
+  onThemeToggle: () => void;
+  onLocaleToggle: (lang: string) => void;
 }
 
 export interface ITopic {
@@ -340,4 +344,11 @@ export interface ITagCloud {
 
 export interface ICollectionsList {
   collections: ICollection[];
+}
+
+export interface ITranslateToggler {
+  locale: string;
+  dictionary:
+    | typeof messages[Locales.English]
+    | typeof messages[Locales.Russian];
 }

@@ -11,6 +11,7 @@ import { CommentCard } from "../../components/common/CommentCard";
 import { useLikes } from "../../hooks/like.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 let socket: SocketIOClient.Socket = {} as SocketIOClient.Socket;
 
 export const DetailItemPage: React.FC = () => {
@@ -20,6 +21,7 @@ export const DetailItemPage: React.FC = () => {
   const { comments, getComments, setComments } = useComments(itemId);
   const { likes, getLikes, setLikes } = useLikes(itemId);
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   useEffect(() => {
     getItems();
@@ -60,7 +62,7 @@ export const DetailItemPage: React.FC = () => {
 
   const likeHandler = () => {
     if (!isAuthenticated) {
-      window.alert("You have to sign in to make it possible to like a post");
+      window.alert(dictionary.youHaveToSignInToLikePost);
       return;
     }
 
@@ -94,7 +96,7 @@ export const DetailItemPage: React.FC = () => {
       {comments.length !== 0 && (
         <div className="mt-4">
           <div className="text-center">
-            <h5>Comments</h5>
+            <h5>{dictionary.Comments}</h5>
           </div>
           {comments.map((comment, index) => (
             <CommentCard isDark={isDark} key={index} comment={comment} />

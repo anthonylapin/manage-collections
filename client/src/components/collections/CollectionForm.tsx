@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ICollectionForm,
   ICreateCollectionValues,
 } from "../../interfaces/common";
 import { useFormik } from "formik";
 import { SelectTopicForm } from "../topics/SelectTopicForm";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const CollectionForm: React.FC<ICollectionForm> = ({
   topics,
@@ -72,12 +73,14 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
     ));
   };
 
+  const { dictionary } = useContext(TranslateContext);
+
   const fieldMustBeNonEmpty = () => {
     return (
       <div>
         <hr />
         <div className="alert alert-danger" role="alert">
-          This field must me non-empty
+          {dictionary.thisFieldMustBeNonEmpty}
         </div>
       </div>
     );
@@ -86,11 +89,11 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
   return (
     <form onSubmit={formik.handleSubmit}>
       <p>
-        <b>Required fields</b>
+        <b>{dictionary.requiredFields}</b>
       </p>
       <div className="form-group">
         {showAlert.name && fieldMustBeNonEmpty()}
-        <label htmlFor="name">Collection name</label>
+        <label htmlFor="name">{dictionary.collectionName}</label>
         <input
           type="text"
           className="form-control"
@@ -107,7 +110,7 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
       />
       <div className="form-group">
         {showAlert.description && fieldMustBeNonEmpty()}
-        <label htmlFor="description">Short description</label>
+        <label htmlFor="description">{dictionary.shortDescription}</label>
         <textarea
           className="form-control"
           id="description"
@@ -117,182 +120,214 @@ export const CollectionForm: React.FC<ICollectionForm> = ({
         />
       </div>
       <div className="form-group">
-        <label htmlFor="file">Image</label>
+        <label htmlFor="file">{dictionary.Image}</label>
         <input
           type="file"
-          className="form-control-file"
+          className={
+            isDark ? "form-control-file text-light" : "form-control-file"
+          }
           id="file"
           onChange={handleFileChange}
         />
       </div>
       <p>
-        <b>Optional fields</b>
+        <b>{dictionary.optionalFields}</b>
       </p>
       <div className="form-group">
-        <label htmlFor="numericField1">Custom numeric field #1</label>
+        <label htmlFor="numericField1">
+          {dictionary.Custom} {dictionary.numeric} {dictionary.field} #1
+        </label>
         <input
           type="text"
           className="form-control"
           id="numericField1"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.numericField1}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="numericField2">Custom numeric field #2</label>
+        <label htmlFor="numericField2">
+          {dictionary.Custom} {dictionary.numeric} {dictionary.field} #2
+        </label>
         <input
           type="text"
           className="form-control"
           id="numericField2"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.numericField2}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="numericField3">Custom numeric field #3</label>
+        <label htmlFor="numericField3">
+          {dictionary.Custom} {dictionary.numeric} {dictionary.field} #3
+        </label>
         <input
           type="text"
           className="form-control"
           id="numericField3"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.numericField3}
         />
       </div>
       <hr />
       <div className="form-group">
-        <label htmlFor="oneLineField1">Custom one-line field #1</label>
+        <label htmlFor="oneLineField1">
+          {dictionary.Custom} {dictionary.oneLine} {dictionary.field} #1
+        </label>
         <input
           type="text"
           className="form-control"
           id="oneLineField1"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.oneLineField1}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="oneLineField2">Custom one-line field #2</label>
+        <label htmlFor="oneLineField2">
+          {dictionary.Custom} {dictionary.oneLine} {dictionary.field} #2
+        </label>
         <input
           type="text"
           className="form-control"
           id="oneLineField2"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.oneLineField2}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="oneLineField3">Custom one-line field #3</label>
+        <label htmlFor="oneLineField3">
+          {dictionary.Custom} {dictionary.oneLine} {dictionary.field} #3
+        </label>
         <input
           type="text"
           className="form-control"
           id="oneLineField3"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.oneLineField3}
         />
       </div>
       <hr />
       <div className="form-group">
-        <label htmlFor="textField1">Custom text field #1</label>
+        <label htmlFor="textField1">
+          {dictionary.Custom} {dictionary.text} {dictionary.field} #1
+        </label>
         <input
           type="text"
           className="form-control"
           id="textField1"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.textField1}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="textField2">Custom text field #2</label>
+        <label htmlFor="textField2">
+          {dictionary.Custom} {dictionary.text} {dictionary.field} #2
+        </label>
         <input
           type="text"
           className="form-control"
           id="textField2"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.textField2}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="textField3">Custom text field #3</label>
+        <label htmlFor="textField3">
+          {dictionary.Custom} {dictionary.text} {dictionary.field} #3
+        </label>
         <input
           type="text"
           className="form-control"
           id="textField3"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.textField3}
         />
       </div>
       <hr />
       <div className="form-group">
-        <label htmlFor="dateField1">Custom date field #1</label>
+        <label htmlFor="dateField1">
+          {dictionary.Custom} {dictionary.date} {dictionary.field} #1
+        </label>
         <input
           type="text"
           className="form-control"
           id="dateField1"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.dateField1}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="dateField2">Custom date field #2</label>
+        <label htmlFor="dateField2">
+          {dictionary.Custom} {dictionary.date} {dictionary.field} #2
+        </label>
         <input
           type="text"
           className="form-control"
           id="dateField2"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.dateField2}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="dateField3">Custom date field #3</label>
+        <label htmlFor="dateField3">
+          {dictionary.Custom} {dictionary.date} {dictionary.field} #3
+        </label>
         <input
           type="text"
           className="form-control"
           id="dateField3"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.dateField3}
         />
       </div>
       <hr />
       <div className="form-group">
-        <label htmlFor="checkboxField1">Custom checkbox field #1</label>
+        <label htmlFor="checkboxField1">
+          {dictionary.Custom} {dictionary.checkbox} {dictionary.field} #1
+        </label>
         <input
           type="text"
           className="form-control"
           id="checkboxField1"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.checkboxField1}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="checkboxField2">Custom checkbox field #2</label>
+        <label htmlFor="checkboxField2">
+          {dictionary.Custom} {dictionary.checkbox} {dictionary.field} #2
+        </label>
         <input
           type="text"
           className="form-control"
           id="checkboxField2"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.checkboxField2}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="checkboxField3">Custom checkbox field #3</label>
+        <label htmlFor="checkboxField3">
+          {dictionary.Custom} {dictionary.checkbox} {dictionary.field} #3
+        </label>
         <input
           type="text"
           className="form-control"
           id="checkboxField3"
-          placeholder="Key that will be shown in each item"
+          placeholder={dictionary.keyThatWillBeShownInEachItem}
           onChange={formik.handleChange}
           value={formik.values.checkboxField3}
         />

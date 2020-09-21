@@ -3,11 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
 import { SearchContext } from "../../context/SearchContext";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const SearchItemsPage: React.FC = () => {
   const { state } = useContext(SearchContext);
   const history = useHistory();
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   if (!state.query) {
     history.push("/");
@@ -26,7 +28,9 @@ export const SearchItemsPage: React.FC = () => {
 
   return (
     <div className="text-center">
-      <h5 className="mb-4">Results matching query: {state.query}</h5>
+      <h5 className="mb-4">
+        {dictionary.resultsMatchingQuery}: {state.query}
+      </h5>
       <ul className="list-group">{foundResults()}</ul>
     </div>
   );

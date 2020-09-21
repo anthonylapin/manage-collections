@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
 import { ManageCollectionsPage } from "./pages/collections/ManageCollectionsPage";
 import { CreateCollectionPage } from "./pages/collections/CreateCollectionPage";
 import { UpdateCollectionPage } from "./pages/collections/UpdateCollectionPage";
@@ -15,7 +14,7 @@ import { AuthPage } from "./pages/auth/AuthPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { SearchItemsPage } from "./pages/items/SearchItemsPage";
 import { MainPage } from "./pages/common/MainPage";
-import { ItemsForTagPage } from "./pages/items/ItemsForTagPage";
+
 export const useRoutes = (isAuthenticated: boolean) => {
   if (isAuthenticated) {
     return (
@@ -56,9 +55,6 @@ export const useRoutes = (isAuthenticated: boolean) => {
         <Route path="/">
           <MainPage />
         </Route>
-        <Route path="/item/tag/:tagId">
-          <ItemsForTagPage />
-        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -82,9 +78,6 @@ export const useRoutes = (isAuthenticated: boolean) => {
       </Route>
       <Route path="/">
         <MainPage />
-      </Route>
-      <Route path="/hui/items/:tagId">
-        <ItemsForTagPage />
       </Route>
       <Redirect to="/" />
     </Switch>

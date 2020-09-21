@@ -14,6 +14,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 export enum Types {
   Search = "SEARCH_ITEMS",
   Clear = "CLEAR_ITEMS",
+  Change = "CHANGE_LOCALE",
 }
 
 // Items

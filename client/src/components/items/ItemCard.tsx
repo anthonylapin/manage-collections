@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { IItemCard } from "../../interfaces/common";
 import { yyyymmdd } from "../../helper/dateConverter";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const ItemCard: React.FC<IItemCard> = ({
   item,
@@ -10,6 +11,7 @@ export const ItemCard: React.FC<IItemCard> = ({
   likes,
   isDark,
 }) => {
+  const { dictionary } = useContext(TranslateContext);
   return (
     <div className={isDark ? "card bg-dark" : "card"}>
       <div className="card-header">
@@ -23,21 +25,21 @@ export const ItemCard: React.FC<IItemCard> = ({
         }
       >
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>
-          Collection:{" "}
+          {dictionary.Collection}:{" "}
           <Link to={`/collection/detail/${collection._id}`}>
             {collection.name}
           </Link>
         </li>
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>
-          Owner: {collection.owner}
+          {dictionary.Owner}: {collection.owner}
         </li>
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>
-          Topic: {collection.topic}
+          {dictionary.Topic}: {collection.topic}
         </li>
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>
           {item.tags?.length
-            ? `Tags: ${item.tags?.join(", ")}`
-            : "This item has no tags"}
+            ? `${dictionary.Tags}: ${item.tags?.join(", ")}`
+            : dictionary.thisItemHasNoTags}
         </li>
         {collection.numericFieldKey1 && (
           <li
@@ -151,7 +153,7 @@ export const ItemCard: React.FC<IItemCard> = ({
           </li>
         )}
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>
-          Item created:{" "}
+          {dictionary.itemCreated}:{" "}
           {yyyymmdd(item.created ? new Date(item.created) : new Date())}
         </li>
       </ul>
@@ -160,7 +162,7 @@ export const ItemCard: React.FC<IItemCard> = ({
           onClick={onLike}
           className={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
         >
-          Like {likes}
+          {dictionary.Like} {likes}
         </button>
       </div>
     </div>

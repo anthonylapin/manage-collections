@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { TranslateContext } from "../../context/TranslateContext";
 
 interface IManageCollectionsForm {
   isDark: boolean;
@@ -8,9 +9,10 @@ interface IManageCollectionsForm {
 export const ManageCollectionsForm: React.FC<IManageCollectionsForm> = ({
   isDark,
 }) => {
+  const { dictionary } = useContext(TranslateContext);
   return (
     <div className="text-center">
-      <h2>Manage your collections</h2>
+      <h2>{dictionary.manageYourCollections}</h2>
       <div className="main-page-buttons">
         <Link
           className={
@@ -20,7 +22,7 @@ export const ManageCollectionsForm: React.FC<IManageCollectionsForm> = ({
           }
           to="/create/collection"
         >
-          Create new collection
+          {dictionary.createNewCollection}
         </Link>
         <Link
           className={
@@ -30,7 +32,7 @@ export const ManageCollectionsForm: React.FC<IManageCollectionsForm> = ({
           }
           to="/update/collection"
         >
-          Update collection
+          {dictionary.updateCollection}
         </Link>
         <Link
           className={
@@ -40,7 +42,7 @@ export const ManageCollectionsForm: React.FC<IManageCollectionsForm> = ({
           }
           to="/show/collections"
         >
-          Show collections
+          {dictionary.showCollections}
         </Link>
         <Link
           className={
@@ -50,7 +52,7 @@ export const ManageCollectionsForm: React.FC<IManageCollectionsForm> = ({
           }
           to="/delete/collection"
         >
-          Delete collection
+          {dictionary.deleteCollection}
         </Link>
       </div>
     </div>

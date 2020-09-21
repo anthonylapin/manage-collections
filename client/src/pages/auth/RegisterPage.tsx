@@ -4,11 +4,13 @@ import { useHistory } from "react-router-dom";
 import { RegisterForm } from "../../components/auth/RegisterForm";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const RegisterPage = () => {
   const history = useHistory();
   const { loading, request, clearError } = useHttp();
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   useEffect(() => {
     clearError();
@@ -38,7 +40,7 @@ export const RegisterPage = () => {
   return (
     <div>
       <div className="text-center">
-        <h4>Registration</h4>
+        <h4>{dictionary.Registration}</h4>
       </div>
       <RegisterForm
         loading={loading}

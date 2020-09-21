@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ISelectForm } from "../../interfaces/common";
 import { useFormik } from "formik";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const SelectForm: React.FC<ISelectForm> = ({
   items,
@@ -18,11 +19,13 @@ export const SelectForm: React.FC<ISelectForm> = ({
     },
   });
 
+  const { dictionary } = useContext(TranslateContext);
+
   if (!items.length) {
     return (
       <div className="text-center">
         <h5>
-          No {target} to {buttonAction}
+          {dictionary.no} {target} {dictionary.to} {buttonAction}
         </h5>
       </div>
     );
@@ -31,7 +34,9 @@ export const SelectForm: React.FC<ISelectForm> = ({
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="form-group">
-        <label htmlFor="selectItem">Select {target}</label>
+        <label htmlFor="selectItem">
+          {dictionary.Select} {target}
+        </label>
         <select
           className="form-control"
           id="item"
@@ -39,7 +44,7 @@ export const SelectForm: React.FC<ISelectForm> = ({
           onChange={formik.handleChange}
         >
           <option value="default value" disabled>
-            Select {target}
+            {dictionary.Select} {target}
           </option>
           {items.map((item, index) => (
             <option key={index} value={item._id}>

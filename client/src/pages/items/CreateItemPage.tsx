@@ -13,6 +13,7 @@ import { Loader } from "../../components/common/Loader";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 const defaultValues: IDefaultItemFormValues = {
   name: "",
@@ -41,6 +42,7 @@ export const CreateItemPage: React.FC = () => {
   );
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   const { request, clearError, loading } = useHttp();
   const { token } = useContext(AuthContext);
@@ -70,7 +72,7 @@ export const CreateItemPage: React.FC = () => {
   };
 
   if (!collectionExists) {
-    return <h1>NOT FOUND</h1>;
+    return <h1>{dictionary.notFound}</h1>;
   }
 
   if (loading) {
@@ -80,16 +82,16 @@ export const CreateItemPage: React.FC = () => {
   return (
     <div className="createItemPage">
       {showSuccessAlert && (
-        <SuccessAlert message="Item has been created successfully" />
+        <SuccessAlert message={dictionary.itemHasBeenCreatedSuccessfully} />
       )}
 
       {!showSuccessAlert && (
         <ItemForm
-          header="Create item"
+          header={dictionary.createItem}
           defaultValues={defaultValues}
           itemForm={itemForm}
           submitHandler={submitHandler}
-          buttonName="Create"
+          buttonName={dictionary.Create}
           isDark={isDark}
         />
       )}

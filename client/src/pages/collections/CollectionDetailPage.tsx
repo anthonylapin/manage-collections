@@ -7,6 +7,7 @@ import { useItems } from "../../hooks/item.hooks";
 import { useTags } from "../../hooks/tag.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const CollectionDetailPage: React.FC = () => {
   const collectionId = useParams<ICollectionDetailParams>().id;
@@ -18,6 +19,7 @@ export const CollectionDetailPage: React.FC = () => {
   );
   const { tags, getTags } = useTags(true);
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   useEffect(() => {
     getCollection();
@@ -28,7 +30,7 @@ export const CollectionDetailPage: React.FC = () => {
   }, [getTags]);
 
   if (!collectionExists) {
-    return <h1>NOT FOUND</h1>;
+    return <h1>{dictionary.notFound}</h1>;
   }
 
   const sortItems = async (key: string) => {

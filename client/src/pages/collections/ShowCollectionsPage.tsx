@@ -9,6 +9,7 @@ import { CollectionSortByComponent } from "../../components/collections/Collecti
 import { useTopics } from "../../hooks/topic.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const ShowCollectionsPage: React.FC = () => {
   const [collections, setCollections] = useState<ICollectionValues[]>([]);
@@ -19,6 +20,7 @@ export const ShowCollectionsPage: React.FC = () => {
   const auth = useContext(AuthContext);
   const { topics, getTopics } = useTopics();
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   const fetchData = useCallback(async () => {
     try {
@@ -94,9 +96,9 @@ export const ShowCollectionsPage: React.FC = () => {
   if (!collections.length) {
     return (
       <div className="text-center">
-        <h4>There is no created collections yet.</h4>
+        <h4>{dictionary.thereIsNoCreatedCollectionsYet}</h4>
         <Link to="/create/collection">
-          Click here to create a new collection.
+          {dictionary.clickHereToCreateNewCollection}
         </Link>
       </div>
     );
@@ -105,7 +107,7 @@ export const ShowCollectionsPage: React.FC = () => {
   return (
     <div>
       <div className="text-center">
-        <h5>Your collections list</h5>
+        <h5>{dictionary.yourCollectionsList}</h5>
         <div className="row">
           <CollectionSortByComponent onChange={sortCollections} />
           <CollectionFilterByComponent

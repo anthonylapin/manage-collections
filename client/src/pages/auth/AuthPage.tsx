@@ -7,8 +7,10 @@ import { OrComponent } from "../../components/common/OrComponent";
 import { SignInWithFacebookButton } from "../../components/auth/SignInWithFacebookButton";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const AuthPage: React.FC = () => {
+  const { dictionary } = useContext(TranslateContext);
   const isDark = useContext(ThemeContext) === darkTheme;
   const auth = useContext(AuthContext);
   const { loading, request, clearError } = useHttp();
@@ -37,7 +39,7 @@ export const AuthPage: React.FC = () => {
   };
 
   const responseFailureGoogle = () => {
-    alert("Something went wrong");
+    alert(dictionary.somethingWentWrong);
   };
 
   const responseFacebook = async (res: any) => {
@@ -53,7 +55,7 @@ export const AuthPage: React.FC = () => {
   return (
     <div>
       <div className="text-center">
-        <h4>Sign in</h4>
+        <h4>{dictionary.signIn}</h4>
       </div>
       <LoginForm isDark={isDark} onLogin={loginHandler} loading={loading} />
       <OrComponent />

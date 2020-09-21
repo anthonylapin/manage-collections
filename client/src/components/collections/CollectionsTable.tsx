@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionTable } from "../../interfaces/common";
 
 export const CollectionsTable: React.FC<ICollectionTable> = ({
   collections,
   isDark,
 }) => {
+  const { dictionary } = useContext(TranslateContext);
   return (
     <table className="table mt-4">
       <tbody>
@@ -23,7 +25,7 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
                   isDark ? "btn btn-outline-primary" : "btn btn-primary"
                 }
               >
-                Add item
+                {dictionary.addItem}
               </Link>
             </th>
             <th>
@@ -33,7 +35,7 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
                   isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                 }
               >
-                Update item
+                {dictionary.updateItem}
               </Link>
             </th>
             <th>
@@ -41,7 +43,7 @@ export const CollectionsTable: React.FC<ICollectionTable> = ({
                 to={`/delete/item/${collection._id}`}
                 className={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
               >
-                Delete item
+                {dictionary.deleteItem}
               </Link>
             </th>
           </tr>

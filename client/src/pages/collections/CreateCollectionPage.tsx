@@ -12,6 +12,7 @@ import { Loader } from "../../components/common/Loader";
 import { useTopics } from "../../hooks/topic.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 const defaultValues: ICollectionFormValues = {
   name: "",
@@ -42,6 +43,7 @@ export const CreateCollectionPage: React.FC = () => {
   const history = useHistory();
   const theme = useContext(ThemeContext);
   const isDark: boolean = theme === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   useEffect(() => {
     getTopics();
@@ -78,7 +80,7 @@ export const CreateCollectionPage: React.FC = () => {
       defaultValues={defaultValues}
       topics={topics}
       onSubmit={handleCreateCollection}
-      buttonAction="Create"
+      buttonAction={dictionary.Create}
       isDark={isDark}
     />
   );

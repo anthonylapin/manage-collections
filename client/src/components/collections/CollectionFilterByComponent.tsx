@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionsFilterBy } from "../../interfaces/common";
 
 export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
@@ -22,9 +23,11 @@ export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
     ));
   };
 
+  const { dictionary } = useContext(TranslateContext);
+
   return (
     <div className="col">
-      <h6>Filter by</h6>
+      <h6>{dictionary.filterBy}</h6>
       <div className="row">
         <div className="col">
           <div className="form-group">
@@ -32,7 +35,7 @@ export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
               type="text"
               className="form-control"
               id="filter-by-name"
-              placeholder="Name"
+              placeholder={dictionary.Name}
               name="name"
               onChange={handleChange}
             />
@@ -45,7 +48,7 @@ export const CollectionFilterByComponent: React.FC<ICollectionsFilterBy> = ({
             value={selectedTopic}
             onChange={handleChange}
           >
-            <option value="default">Default</option>
+            <option value="default">{dictionary.Default}</option>
             {getOptions()}
           </select>
         </div>

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { ThemeContext } from "styled-components";
 import { SelectForm } from "../../components/common/SelectForm";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 import { useCollections } from "../../hooks/collection.hook";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -11,6 +12,7 @@ export const DeleteCollectionPage: React.FC = () => {
   const { request } = useHttp();
   const history = useHistory();
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   useEffect(() => {
     getCollections();
@@ -32,8 +34,8 @@ export const DeleteCollectionPage: React.FC = () => {
         }))}
         onSelect={selectHandler}
         buttonClass={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
-        buttonAction="Delete"
-        target="collection"
+        buttonAction={dictionary.Delete}
+        target={dictionary.collection}
       />
     </div>
   );

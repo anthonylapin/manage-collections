@@ -14,6 +14,7 @@ import { ItemForm } from "../../components/items/ItemForm";
 import { SuccessAlert } from "../../components/common/SuccessAlert";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const UpdateItemPage: React.FC = () => {
   const collectionId = useParams<IUpdateItemPage>().collectionId;
@@ -40,6 +41,7 @@ export const UpdateItemPage: React.FC = () => {
   });
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
 
   const { request, loading } = useHttp();
   const { items } = useItems(collectionId);
@@ -115,13 +117,13 @@ export const UpdateItemPage: React.FC = () => {
   }
 
   if (!collectionExists) {
-    return <h1>NOT FOUND</h1>;
+    return <h1>{dictionary.notFound}</h1>;
   }
 
   if (!items.length) {
     return (
       <div className="text-center mt-3">
-        <h5>No items in collection yet. Nothing to update.</h5>
+        <h5>{dictionary.noItemsCreatedYet}</h5>
       </div>
     );
   }
@@ -129,13 +131,13 @@ export const UpdateItemPage: React.FC = () => {
   return (
     <div>
       {showSuccessAlert && (
-        <SuccessAlert message="Item has been updated successfully" />
+        <SuccessAlert message={dictionary.itemHasBeenUpdatedSuccessfully} />
       )}
 
       {!showForm && !showSuccessAlert && (
         <SelectForm
-          buttonAction="Find"
-          target="item"
+          buttonAction={dictionary.Find}
+          target={dictionary.item}
           items={items.map((item) => ({ _id: item._id, name: item.name }))}
           onSelect={selectHandler}
           buttonClass={
@@ -145,11 +147,11 @@ export const UpdateItemPage: React.FC = () => {
       )}
       {showForm && !showSuccessAlert && (
         <ItemForm
-          header="Update item"
+          header={dictionary.updateItem}
           defaultValues={defaultValues}
           itemForm={itemForm}
           submitHandler={submitHandler}
-          buttonName="Update"
+          buttonName={dictionary.Update}
           isDark={isDark}
         />
       )}

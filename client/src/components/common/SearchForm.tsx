@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ISearchForm } from "../../interfaces/common";
 
 export const SearchForm: React.FC<ISearchForm> = ({ onSearch, loading }) => {
+  const { dictionary } = useContext(TranslateContext);
   const formik = useFormik({
     initialValues: {
       query: "",
@@ -18,14 +20,14 @@ export const SearchForm: React.FC<ISearchForm> = ({ onSearch, loading }) => {
       <input
         className="form-control mr-sm-2"
         type="search"
-        placeholder="Search"
+        placeholder={dictionary.search}
         aria-label="Search"
         name="query"
         value={formik.values.query}
         onChange={formik.handleChange}
       />
       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
+        {dictionary.search}
         {loading && (
           <span
             className="spinner-border spinner-border-sm"

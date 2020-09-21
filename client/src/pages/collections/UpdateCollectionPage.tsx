@@ -14,8 +14,10 @@ import { uploadFileToGoogleStorage } from "../../helper/uploadFileToGoogleStorag
 import { useHistory } from "react-router-dom";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const UpdateCollectionPage: React.FC = () => {
+  const { dictionary } = useContext(TranslateContext);
   const theme = useContext(ThemeContext);
   const isDark: boolean = theme === darkTheme;
   const [collectionId, setCollectionId] = useState("");
@@ -124,8 +126,8 @@ export const UpdateCollectionPage: React.FC = () => {
             name: item.name,
           }))}
           buttonClass={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
-          buttonAction="Find"
-          target="collection"
+          buttonAction={dictionary.Find}
+          target={dictionary.collection}
         />
       )}
       {showForm && (
@@ -133,7 +135,7 @@ export const UpdateCollectionPage: React.FC = () => {
           onSubmit={submitHandler}
           defaultValues={collectionForm}
           topics={topics}
-          buttonAction="Update"
+          buttonAction={dictionary.Update}
           isDark={isDark}
         />
       )}

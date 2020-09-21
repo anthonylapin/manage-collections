@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionsSortBy } from "../../interfaces/common";
 
 enum sortKeys {
@@ -16,9 +17,10 @@ export const CollectionSortByComponent: React.FC<ICollectionsSortBy> = ({
     setKey(e.target.value);
     onChange(e.target.value);
   };
+  const { dictionary } = useContext(TranslateContext);
   return (
     <div className="col">
-      <h6>Sort by</h6>
+      <h6>{dictionary.sortBy}</h6>
       <div className="form-group">
         <select
           className="form-control"
@@ -26,10 +28,10 @@ export const CollectionSortByComponent: React.FC<ICollectionsSortBy> = ({
           onChange={handleChange}
           value={key}
         >
-          <option value={sortKeys.Default}>Default</option>
-          <option value={sortKeys.Name}>Name</option>
-          <option value={sortKeys.DateCreated}>Date created</option>
-          <option value={sortKeys.Size}>Size</option>
+          <option value={sortKeys.Default}>{dictionary.Default}</option>
+          <option value={sortKeys.Name}>{dictionary.Name}</option>
+          <option value={sortKeys.DateCreated}>{dictionary.dateCreated}</option>
+          <option value={sortKeys.Size}>{dictionary.Size}</option>
         </select>
       </div>
     </div>

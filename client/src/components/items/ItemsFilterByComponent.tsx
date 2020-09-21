@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { IItemsFilterBy } from "../../interfaces/common";
 
 export const ItemsFilterByComponent: React.FC<IItemsFilterBy> = ({
@@ -8,10 +9,12 @@ export const ItemsFilterByComponent: React.FC<IItemsFilterBy> = ({
     onChange(e.target.name, e.target.value);
   };
 
+  const { dictionary } = useContext(TranslateContext);
+
   return (
     <div className="col">
       <div className="text-center">
-        <h6>Filter by</h6>
+        <h6>{dictionary.filterBy}</h6>
       </div>
       <div className="row">
         <div className="col form-group">

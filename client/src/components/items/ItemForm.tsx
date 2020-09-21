@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AutoSuggest from "react-autosuggest";
 import { IItemFormProps, IItemObj } from "../../interfaces/common";
 import { useFormik } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-const alertMessages = {
-  name: "This field must be non-empty.",
-  numericField:
-    "This field must be non-empty and should contain numeric value.",
-  oneLineField: "This field must be non-empty.",
-  textField: "This field must be non-empty.",
-};
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const ItemForm: React.FC<IItemFormProps> = ({
   itemForm,
@@ -21,6 +14,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
   buttonName,
   isDark,
 }) => {
+  const { dictionary } = useContext(TranslateContext);
   const [tags, setTags] = useState(defaultValues.tags);
   const [startDate1, setStartDate1] = useState(defaultValues.dateField1);
   const [startDate2, setStartDate2] = useState(defaultValues.dateField2);
@@ -201,7 +195,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
         {alerts.name && (
           <div className="show-alert">
             <div className="alert alert-danger" role="alert">
-              {alertMessages.name}
+              {dictionary.thisFieldMustBeNonEmpty}
             </div>
           </div>
         )}
@@ -246,7 +240,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.numericField}
+                {dictionary.thisFieldMustBeNonEmptyAndShouldContainNumericValue}
               </div>
             </div>
           )}
@@ -266,7 +260,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.numericField}
+                {dictionary.thisFieldMustBeNonEmptyAndShouldContainNumericValue}
               </div>
             </div>
           )}
@@ -286,7 +280,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.numericField}
+                {dictionary.thisFieldMustBeNonEmptyAndShouldContainNumericValue}
               </div>
             </div>
           )}
@@ -307,7 +301,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.oneLineField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}
@@ -328,7 +322,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.oneLineField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}
@@ -348,7 +342,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.oneLineField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}
@@ -368,7 +362,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.textField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}
@@ -387,7 +381,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.textField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}
@@ -406,7 +400,7 @@ export const ItemForm: React.FC<IItemFormProps> = ({
             <div className="show-alert">
               <hr />
               <div className="alert alert-danger" role="alert">
-                {alertMessages.textField}
+                {dictionary.thisFieldMustBeNonEmpty}
               </div>
             </div>
           )}

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactMarkdown from "react-markdown";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionCard } from "../../interfaces/common";
 import { ItemsFilterByComponent } from "../items/ItemsFilterByComponent";
 import { ItemsList } from "../items/ItemsList";
@@ -12,6 +13,7 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
   onFilter,
   isDark,
 }) => {
+  const { dictionary } = useContext(TranslateContext);
   return (
     <div style={{ width: "100%" }}>
       <div
@@ -27,15 +29,17 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
         <div className="card-body">
           <h5 className="card-title">{collection.name}</h5>
           <h6 className="card-subtitle mb-2 text-muted">
-            Owner: {collection.owner}
+            {dictionary.Owner}: {collection.owner}
           </h6>
-          <p className="card-text">Topic: {collection.topic}</p>
+          <p className="card-text">
+            {dictionary.Topic}: {collection.topic}
+          </p>
           <ReactMarkdown
             className="card-text"
             source={collection.description}
           />
           <div className="card-text text-center">
-            <h5>Items</h5>
+            <h5>{dictionary.Items}</h5>
           </div>
           <div className="row">
             <ItemsSortByComponent onChange={onSort} />

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TranslateContext } from "../../context/TranslateContext";
 import { IItemsSortBy } from "../../interfaces/common";
 
 enum sortKeys {
@@ -11,6 +12,7 @@ enum sortKeys {
 }
 
 export const ItemsSortByComponent: React.FC<IItemsSortBy> = ({ onChange }) => {
+  const { dictionary } = useContext(TranslateContext);
   const handleChange = (e: any) => {
     onChange(e.target.value);
   };
@@ -18,7 +20,7 @@ export const ItemsSortByComponent: React.FC<IItemsSortBy> = ({ onChange }) => {
   return (
     <div className="col">
       <div className="text-center">
-        <h6>Sort by</h6>
+        <h6>{dictionary.sortBy}</h6>
       </div>
       <div className="form-group">
         <select
@@ -26,12 +28,12 @@ export const ItemsSortByComponent: React.FC<IItemsSortBy> = ({ onChange }) => {
           id="sort-by-select"
           onChange={handleChange}
         >
-          <option value={sortKeys.Default}>Default</option>
-          <option value={sortKeys.Name}>Name</option>
-          <option value={sortKeys.DateCreated}>Date created</option>
-          <option value={sortKeys.Tags}>Tags</option>
-          <option value={sortKeys.Comments}>Comments</option>
-          <option value={sortKeys.Likes}>Likes</option>
+          <option value={sortKeys.Default}>{dictionary.Default}</option>
+          <option value={sortKeys.Name}>{dictionary.Name}</option>
+          <option value={sortKeys.DateCreated}>{dictionary.dateCreated}</option>
+          <option value={sortKeys.Tags}>{dictionary.Tags}</option>
+          <option value={sortKeys.Comments}>{dictionary.Comments}</option>
+          <option value={sortKeys.Likes}>{dictionary.Likes}</option>
         </select>
       </div>
     </div>

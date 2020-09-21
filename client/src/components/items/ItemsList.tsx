@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IItemsList } from "../../interfaces/common";
 import { Link } from "react-router-dom";
+import { TranslateContext } from "../../context/TranslateContext";
 
 export const ItemsList: React.FC<IItemsList> = ({ items }) => {
+  const { dictionary } = useContext(TranslateContext);
   if (!items.length) {
     return (
       <div>
-        <div className="card-text">No items created yet.</div>
+        <div className="card-text">{dictionary.noItemsCreatedYet}</div>
       </div>
     );
   }
