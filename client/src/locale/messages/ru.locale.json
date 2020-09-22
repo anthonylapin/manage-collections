@@ -83,6 +83,7 @@
     "youHaveToSignInToLikePost": "Вы должны авторизироваться чтобы лайкать пост",
     "resultsMatchingQuery": "Результаты поиска",
     "itemHasBeenUpdatedSuccessfully": "Предмет были успешно обновлены",
-    "exportCollectionToCsv": "Экспортировать коллекцию в csv файл"
+    "exportCollectionToCsv": "Экспортировать коллекцию в csv файл",
+    "Admin": "Админ"
   }
 }

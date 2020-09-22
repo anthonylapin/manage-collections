@@ -13,7 +13,7 @@ const MONGODB_URI = config.get("mongoUri");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(logger("dev"));
+app.use(logger("dev"));
 
 const io = socketIO(server);
 handleSocketConnection(io);

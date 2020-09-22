@@ -25,6 +25,10 @@ const userSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  blocked: {
+    type: Boolean,
+    required: true,
+  },
   collections: [
     {
       type: Types.ObjectId,

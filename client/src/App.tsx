@@ -14,9 +14,17 @@ import { TranslateContext } from "./context/TranslateContext";
 import { useLocale } from "./hooks/locale.hook";
 
 const App: React.FC = () => {
-  const { token, login, logout, userId, ready } = useAuth();
+  const {
+    token,
+    login,
+    logout,
+    userId,
+    ready,
+    isSuperuser,
+    isBlocked,
+  } = useAuth();
   const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated);
+  const routes = useRoutes(isAuthenticated, isSuperuser);
 
   const { theme, themeToggler, mountedComponent } = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
@@ -42,7 +50,15 @@ const App: React.FC = () => {
         <GlobalStyles />
         <TranslateContext.Provider value={{ locale, dictionary }}>
           <AuthContext.Provider
-            value={{ token, login, logout, userId, isAuthenticated }}
+            value={{
+              token,
+              login,
+              logout,
+              userId,
+              isAuthenticated,
+              isSuperuser,
+              isBlocked,
+            }}
           >
             <SearchProvider>
               <BrowserRouter>

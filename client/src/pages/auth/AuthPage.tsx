@@ -25,8 +25,10 @@ export const AuthPage: React.FC = () => {
         email,
         password,
       });
-      auth.login(data.token, data.userId);
-    } catch (e) {}
+      auth.login(data.token, data.userId, data.isSuperuser, data.isBlocked);
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
 
   const responseSuccessGoogle = async (res: any) => {
@@ -34,8 +36,10 @@ export const AuthPage: React.FC = () => {
       const data = await request("/api/auth/googlelogin", "POST", {
         tokenId: res.tokenId,
       });
-      auth.login(data.token, data.userId);
-    } catch (e) {}
+      auth.login(data.token, data.userId, data.isSuperuser, data.isBlocked);
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
 
   const responseFailureGoogle = () => {
@@ -48,8 +52,10 @@ export const AuthPage: React.FC = () => {
         accessToken: res.accessToken,
         userID: res.userID,
       });
-      auth.login(data.token, data.userId);
-    } catch (e) {}
+      auth.login(data.token, data.userId, data.isSuperuser, data.isBlocked);
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
 
   return (

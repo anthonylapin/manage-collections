@@ -43,9 +43,16 @@ export interface ILoginGoogle {
 export interface IAuthContext {
   token: string | null;
   userId: string | null;
-  login: (jwtToken: string, id: string) => void;
+  login: (
+    jwtToken: string,
+    id: string,
+    superuser: boolean,
+    blocked: boolean
+  ) => void;
   logout: () => void;
   isAuthenticated?: boolean;
+  isBlocked: boolean;
+  isSuperuser: boolean;
 }
 
 export interface IProgress {

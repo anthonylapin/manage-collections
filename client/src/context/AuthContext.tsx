@@ -7,4 +7,6 @@ export const AuthContext: Context<IAuthContext> = createContext<IAuthContext>({
   login: (jwtToken: string, id: string) => {},
   logout: () => {},
   isAuthenticated: false,
+  isSuperuser: false,
+  isBlocked: false,
 });

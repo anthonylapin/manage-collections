@@ -32,9 +32,15 @@ export const Navbar: React.FC<INavbarProps> = ({
           <li className="nav-item active">
             <NavLink className="nav-link" to="/manage/collections">
               {dictionary.myCollections}
-              <span className="sr-only">(current)</span>
             </NavLink>
           </li>
+          {auth.isSuperuser && (
+            <li className="nav-item active">
+              <NavLink className="nav-link" to="/admin">
+                {dictionary.Admin}
+              </NavLink>
+            </li>
+          )}
           <li
             onClick={onThemeToggle}
             style={{ cursor: "pointer" }}

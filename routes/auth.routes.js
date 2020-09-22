@@ -83,6 +83,12 @@ router.post(
         });
       }
 
+      if (user.blocked) {
+        return res.status(400).json({
+          message: "User is blocked",
+        });
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
@@ -93,9 +99,11 @@ router.post(
 
       const token = generateToken(user.id);
 
-      res.json({
+      res.status(200).json({
         token,
         userId: user.id,
+        isSuperuser: user.superuser,
+        isBlocked: user.blocked,
       });
     } catch (e) {
       res.status(500).json({
@@ -126,10 +134,18 @@ router.post("/googlelogin", async (req, res) => {
       user = await createUser(email, password, given_name, family_name);
     }
 
+    if (user.blocked) {
+      return res.status(400).json({
+        message: "User is blocked",
+      });
+    }
+
     const token = generateToken(user.id);
-    res.json({
+    res.status(200).json({
       token,
       userId: user.id,
+      isSuperuser: user.superuser,
+      isBlocked: user.blocked,
     });
   } catch (e) {
     res.status(500).json({
@@ -157,10 +173,18 @@ router.post("/facebooklogin", async (req, res) => {
       user = await createUser(email, password, nameAsArray[0], nameAsArray[1]);
     }
 
+    if (user.blocked) {
+      return res.status(400).json({
+        message: "User is blocked",
+      });
+    }
+
     const token = generateToken(user.id);
-    res.json({
+    res.status(200).json({
       token,
       userId: user.id,
+      isSuperuser: user.superuser,
+      isBlocked: user.blocked,
     });
   } catch (e) {
     res.status(500).json({
@@ -177,6 +201,7 @@ async function createUser(email, password, firstName, lastName) {
     firstName: firstName,
     lastName: lastName,
     superuser: false,
+    blocked: false,
   });
   await user.save();
   return user;

@@ -7,19 +7,28 @@ export const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const [ready, setReady] = useState<boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isSuperuser, setIsSuperuser] = useState<boolean>(false);
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
-  const login = useCallback((jwtToken: string, id: string) => {
-    setToken(jwtToken);
-    setUserId(id);
+  const login = useCallback(
+    (jwtToken: string, id: string, superuser: boolean, blocked: boolean) => {
+      setToken(jwtToken);
+      setUserId(id);
+      setIsSuperuser(superuser);
+      setIsBlocked(blocked);
 
-    localStorage.setItem(
-      storageName,
-      JSON.stringify({
-        userId: id,
-        token: jwtToken,
-      })
-    );
-  }, []);
+      localStorage.setItem(
+        storageName,
+        JSON.stringify({
+          userId: id,
+          token: jwtToken,
+          isSuperuser: superuser,
+          isBlocked: blocked,
+        })
+      );
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     setToken(null);
@@ -37,11 +46,16 @@ export const useAuth = () => {
       if (Date.now() >= expirationTime) {
         logout();
       } else {
-        login(data.token, data.userId);
+        login(data.token, data.userId, data.isSuperuser, data.isBlocked);
       }
     }
-    setReady(true);
-  }, [login, logout]);
 
-  return { login, logout, token, userId, ready };
+    if (isBlocked) {
+      logout();
+    }
+
+    setReady(true);
+  }, [login, logout, isBlocked]);
+
+  return { login, logout, token, userId, ready, isSuperuser, isBlocked };
 };

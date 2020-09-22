@@ -14,8 +14,9 @@ import { AuthPage } from "./pages/auth/AuthPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { SearchItemsPage } from "./pages/items/SearchItemsPage";
 import { MainPage } from "./pages/common/MainPage";
+import { AdminPage } from "./pages/admin/AdminPage";
 
-export const useRoutes = (isAuthenticated: boolean) => {
+export const useRoutes = (isAuthenticated: boolean, isSuperuser: boolean) => {
   if (isAuthenticated) {
     return (
       <Switch>
@@ -52,6 +53,11 @@ export const useRoutes = (isAuthenticated: boolean) => {
         <Route path="/search/results">
           <SearchItemsPage />
         </Route>
+        {isSuperuser && (
+          <Route path="/admin">
+            <AdminPage />
+          </Route>
+        )}
         <Route path="/">
           <MainPage />
         </Route>
