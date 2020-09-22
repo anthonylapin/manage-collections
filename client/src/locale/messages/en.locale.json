@@ -84,6 +84,7 @@
     "resultsMatchingQuery": "Results matching query",
     "itemHasBeenUpdatedSuccessfully": "Item has been updated successfully",
     "exportCollectionToCsv": "Export collection to csv file",
-    "Admin": "Admin"
+    "Admin": "Admin",
+    "adminPanel": "Admin panel"
   }
 }

@@ -84,6 +84,7 @@
     "resultsMatchingQuery": "Результаты поиска",
     "itemHasBeenUpdatedSuccessfully": "Предмет были успешно обновлены",
     "exportCollectionToCsv": "Экспортировать коллекцию в csv файл",
-    "Admin": "Админ"
+    "Admin": "Админ",
+    "adminPanel": "Панель админа"
   }
 }

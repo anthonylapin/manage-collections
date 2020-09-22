@@ -1,9 +1,10 @@
 import React from "react";
+import { AdminPageComponent } from "../../components/admin/AdminPageComponent";
 
 export const AdminPage: React.FC = () => {
   return (
     <div>
-      <h1>Admin page</h1>
+      <AdminPageComponent />
     </div>
   );
 };
