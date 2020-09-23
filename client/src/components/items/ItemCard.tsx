@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { IItemCard } from "../../interfaces/common";
 import { yyyymmdd } from "../../helper/dateConverter";
 import { TranslateContext } from "../../context/TranslateContext";
@@ -14,6 +14,7 @@ export const ItemCard: React.FC<IItemCard> = ({
 }) => {
   const { dictionary } = useContext(TranslateContext);
   const { isSuperuser } = useContext(AuthContext);
+  const history = useHistory();
   return (
     <div className={isDark ? "card bg-dark" : "card"}>
       <div className="card-header">
@@ -168,16 +169,26 @@ export const ItemCard: React.FC<IItemCard> = ({
                 className={
                   isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                 }
+                onClick={() => {
+                  history.push(
+                    `/update/item/${collection._id}?itemId=${item._id}`
+                  );
+                }}
               >
-                Update item
+                {dictionary.updateItem}
               </button>
               <button
                 type="button"
                 className={
                   isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                 }
+                onClick={() => {
+                  history.push(
+                    `/delete/item/${collection._id}?itemId=${item._id}`
+                  );
+                }}
               >
-                Delete item
+                {dictionary.deleteItem}
               </button>
             </div>
           </div>

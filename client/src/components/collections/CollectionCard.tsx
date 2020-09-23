@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ReactMarkdown from "react-markdown";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionCard } from "../../interfaces/common";
@@ -17,6 +18,7 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
 }) => {
   const { dictionary } = useContext(TranslateContext);
   const { isSuperuser } = useContext(AuthContext);
+  const history = useHistory();
   return (
     <div style={{ width: "100%" }}>
       <div
@@ -61,24 +63,37 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
                   className={
                     isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                   }
+                  onClick={() => {
+                    history.push(
+                      `/update/collection?collectionId=${collection._id}`
+                    );
+                  }}
                 >
-                  Update collection
+                  {dictionary.updateCollection}
                 </button>
                 <button
                   type="button"
                   className={
                     isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                   }
+                  onClick={() => {
+                    history.push(
+                      `/delete/collection?collectionId=${collection._id}`
+                    );
+                  }}
                 >
-                  Delete collection
+                  {dictionary.deleteCollection}
                 </button>
                 <button
                   type="button"
                   className={
                     isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
                   }
+                  onClick={() => {
+                    history.push(`/create/item/${collection._id}`);
+                  }}
                 >
-                  Add item
+                  {dictionary.addItem}
                 </button>
               </div>
             </div>

@@ -100,6 +100,7 @@ export const useCollection = (collectionId: string) => {
       const topicName = response.topic.name;
 
       setCollection({
+        _id: collectionInfo._id,
         name: collectionInfo.name,
         owner: ownerName,
         description: collectionInfo.description,

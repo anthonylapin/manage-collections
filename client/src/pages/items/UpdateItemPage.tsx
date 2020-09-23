@@ -15,6 +15,7 @@ import { SuccessAlert } from "../../components/common/SuccessAlert";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
 import { TranslateContext } from "../../context/TranslateContext";
+import { useQuery } from "../../hooks/query.hook";
 
 export const UpdateItemPage: React.FC = () => {
   const collectionId = useParams<IUpdateItemPage>().collectionId;
@@ -42,6 +43,8 @@ export const UpdateItemPage: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const isDark = useContext(ThemeContext) === darkTheme;
   const { dictionary } = useContext(TranslateContext);
+  const query = useQuery();
+  const candidate = query.get("itemId");
 
   const { request, loading } = useHttp();
   const { items } = useItems(collectionId);

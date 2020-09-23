@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { SelectForm } from "../../components/common/SelectForm";
 import { useCollections } from "../../hooks/collection.hook";
 import {
@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
 import { TranslateContext } from "../../context/TranslateContext";
+import { useQuery } from "../../hooks/query.hook";
 
 export const UpdateCollectionPage: React.FC = () => {
   const { dictionary } = useContext(TranslateContext);
@@ -46,8 +47,10 @@ export const UpdateCollectionPage: React.FC = () => {
   const { topics, getTopics } = useTopics();
   const { getCollections, collections } = useCollections();
   const { request, loading, setLoading } = useHttp();
-  const { token } = useContext(AuthContext);
+  const { token, isSuperuser } = useContext(AuthContext);
   const history = useHistory();
+  const query = useQuery();
+  const candidate = query.get("collectionId");
 
   useEffect(() => {
     getTopics();
@@ -57,44 +60,55 @@ export const UpdateCollectionPage: React.FC = () => {
     getCollections();
   }, [getCollections]);
 
-  const selectHandler = async (selectedId: string) => {
-    setCollectionId(selectedId);
-    try {
-      const response = await request(
-        `/api/collections/collection/${selectedId}`,
-        "GET",
-        null,
-        {
-          Authorization: `Bearer ${token}`,
-        }
-      );
-      const fetchedCollection = response.collection;
+  const selectHandler = useCallback(
+    async (selectedId: string) => {
+      setCollectionId(selectedId);
+      try {
+        const response = await request(
+          `/api/collections/collection/${selectedId}`,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+        const fetchedCollection = response.collection;
 
-      setCollectionForm({
-        name: fetchedCollection.name,
-        owner: fetchedCollection.owner,
-        description: fetchedCollection.description,
-        topic: fetchedCollection.topic,
-        numericFieldKey1: fetchedCollection.numericField1,
-        numericFieldKey2: fetchedCollection.numericField2,
-        numericFieldKey3: fetchedCollection.numericField3,
-        oneLineFieldKey1: fetchedCollection.oneLineField1,
-        oneLineFieldKey2: fetchedCollection.oneLineField2,
-        oneLineFieldKey3: fetchedCollection.oneLineField3,
-        textFieldKey1: fetchedCollection.textField1,
-        textFieldKey2: fetchedCollection.textField2,
-        textFieldKey3: fetchedCollection.textField3,
-        dateFieldKey1: fetchedCollection.dateField1,
-        dateFieldKey2: fetchedCollection.dateField2,
-        dateFieldKey3: fetchedCollection.dateField3,
-        checkboxFieldKey1: fetchedCollection.checkboxField1,
-        checkboxFieldKey2: fetchedCollection.checkboxField2,
-        checkboxFieldKey3: fetchedCollection.checkboxField3,
-      });
+        setCollectionForm({
+          name: fetchedCollection.name,
+          owner: fetchedCollection.owner,
+          description: fetchedCollection.description,
+          topic: fetchedCollection.topic,
+          numericFieldKey1: fetchedCollection.numericField1,
+          numericFieldKey2: fetchedCollection.numericField2,
+          numericFieldKey3: fetchedCollection.numericField3,
+          oneLineFieldKey1: fetchedCollection.oneLineField1,
+          oneLineFieldKey2: fetchedCollection.oneLineField2,
+          oneLineFieldKey3: fetchedCollection.oneLineField3,
+          textFieldKey1: fetchedCollection.textField1,
+          textFieldKey2: fetchedCollection.textField2,
+          textFieldKey3: fetchedCollection.textField3,
+          dateFieldKey1: fetchedCollection.dateField1,
+          dateFieldKey2: fetchedCollection.dateField2,
+          dateFieldKey3: fetchedCollection.dateField3,
+          checkboxFieldKey1: fetchedCollection.checkboxField1,
+          checkboxFieldKey2: fetchedCollection.checkboxField2,
+          checkboxFieldKey3: fetchedCollection.checkboxField3,
+        });
 
-      setShowForm(true);
-    } catch (e) {}
-  };
+        setShowForm(true);
+      } catch (e) {
+        window.alert(e.message);
+      }
+    },
+    [request, token]
+  );
+
+  useEffect(() => {
+    if (isSuperuser && candidate) {
+      selectHandler(candidate);
+    }
+  }, [selectHandler, candidate, isSuperuser]);
 
   const submitHandler = async (submitObj: ICreateCollectionValues) => {
     try {

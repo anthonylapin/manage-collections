@@ -5,8 +5,11 @@ const { Types } = require("mongoose");
 const router = Router();
 
 router.get("/", async (req, res) => {
+  console.log("hui");
   try {
     let tags = await Tag.find({});
+
+    console.log(tags);
 
     if (!req.query.withId) {
       tags = tags.map((tag) => tag.name);

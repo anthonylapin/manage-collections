@@ -110,7 +110,9 @@ router.put("/:itemId", async (req, res) => {
   try {
     await Item.updateOne({ _id: itemId }, { $set: { ...item, tags: [] } });
 
-    await updateTags(item.tags, itemId);
+    if (item.tags.length) {
+      await updateTags(item.tags, itemId);
+    }
 
     res.json({
       message: "Updated",

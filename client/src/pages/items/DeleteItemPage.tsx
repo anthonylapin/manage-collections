@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { IDeleteItemPage } from "../../interfaces/common";
 import { SelectForm } from "../../components/common/SelectForm";
@@ -8,6 +8,8 @@ import { useHttp } from "../../hooks/http.hook";
 import { ThemeContext } from "styled-components";
 import { darkTheme } from "../../components/themes/Themes";
 import { TranslateContext } from "../../context/TranslateContext";
+import { useQuery } from "../../hooks/query.hook";
+import { AuthContext } from "../../context/AuthContext";
 
 export const DeleteItemPage: React.FC = () => {
   const collectionId = useParams<IDeleteItemPage>().collectionId;
@@ -18,16 +20,28 @@ export const DeleteItemPage: React.FC = () => {
   const { items } = useItems(collectionId);
   const { request } = useHttp();
   const history = useHistory();
+  const query = useQuery();
+  const candidate = query.get("itemId");
+  const { isSuperuser } = useContext(AuthContext);
 
-  const selectHandler = async (selectedId: string) => {
-    try {
-      await request(`/api/items/${selectedId}`, "DELETE");
-      setShowSuccessAlert(true);
-      setTimeout(() => {
-        history.push("/show/collections");
-      }, 1500);
-    } catch (e) {}
-  };
+  const selectHandler = useCallback(
+    async (selectedId: string) => {
+      try {
+        await request(`/api/items/${selectedId}`, "DELETE");
+        setShowSuccessAlert(true);
+        setTimeout(() => {
+          history.push("/show/collections");
+        }, 1500);
+      } catch (e) {}
+    },
+    [request]
+  );
+
+  useEffect(() => {
+    if (candidate && isSuperuser) {
+      selectHandler(candidate);
+    }
+  }, [candidate, isSuperuser, selectHandler]);
 
   return (
     <div>
