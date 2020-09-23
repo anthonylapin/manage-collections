@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IItemCard } from "../../interfaces/common";
 import { yyyymmdd } from "../../helper/dateConverter";
 import { TranslateContext } from "../../context/TranslateContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export const ItemCard: React.FC<IItemCard> = ({
   item,
@@ -12,6 +13,7 @@ export const ItemCard: React.FC<IItemCard> = ({
   isDark,
 }) => {
   const { dictionary } = useContext(TranslateContext);
+  const { isSuperuser } = useContext(AuthContext);
   return (
     <div className={isDark ? "card bg-dark" : "card"}>
       <div className="card-header">
@@ -158,6 +160,28 @@ export const ItemCard: React.FC<IItemCard> = ({
         </li>
       </ul>
       <div className="card-footer">
+        {isSuperuser && (
+          <div className="btn-toolbar mb-2" role="toolbar" aria-label="Toolbar">
+            <div className="btn-group mr-2" role="group">
+              <button
+                type="button"
+                className={
+                  isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                }
+              >
+                Update item
+              </button>
+              <button
+                type="button"
+                className={
+                  isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                }
+              >
+                Delete item
+              </button>
+            </div>
+          </div>
+        )}
         <button
           onClick={onLike}
           className={isDark ? "btn btn-outline-danger" : "btn btn-danger"}

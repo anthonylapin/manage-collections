@@ -84,7 +84,11 @@ router.post(
     }
 
     try {
-      await createNewCollection(req.body, req.user.userId);
+      if (req.query.userId) {
+        await createNewCollection(req.body, req.query.userId);
+      } else {
+        await createNewCollection(req.body, req.user.userId);
+      }
       res.status(201).json({
         message: `New collection is created.`,
       });

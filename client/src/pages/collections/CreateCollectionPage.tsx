@@ -62,7 +62,9 @@ export const CreateCollectionPage: React.FC = () => {
     }
 
     try {
-      await request("/api/collections/create", "POST", values, {
+      let url = "/api/collections/create";
+
+      await request(url, "POST", values, {
         Authorization: `Bearer ${auth.token}`,
       });
       history.push("/");

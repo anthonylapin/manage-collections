@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { AdminPageComponent } from "../../components/admin/AdminPageComponent";
+import { Loader } from "../../components/common/Loader";
 import { useAdmin } from "../../hooks/admin.hook";
 import { useTopics } from "../../hooks/topic.hook";
+import { ICreateCollectionValues } from "../../interfaces/common";
 
 export const AdminPage: React.FC = () => {
   const {
@@ -12,8 +14,9 @@ export const AdminPage: React.FC = () => {
     createTopic,
     updateTopic,
     deleteTopic,
+    createCollection,
+    loading,
   } = useAdmin();
-
   const { topics, getTopics } = useTopics();
 
   useEffect(() => {
@@ -21,12 +24,22 @@ export const AdminPage: React.FC = () => {
     getTopics();
   }, [getUsers, getTopics]);
 
-  const submitUserAction = async (userId: string, userAction: string) => {
-    if (userAction === "DELETE") {
-      await deleteUser(userId);
-      return;
+  const submitUserAction = async (
+    userId: string,
+    action: string,
+    values?: ICreateCollectionValues
+  ) => {
+    switch (action) {
+      case "DELETE":
+        await deleteUser(userId);
+        break;
+      case "CREATE":
+        values && (await createCollection(values, userId, topics));
+        break;
+      default:
+        await updateUser(userId, action);
+        break;
     }
-    await updateUser(userId, userAction);
   };
 
   const submitTopicAction = async (
@@ -37,7 +50,6 @@ export const AdminPage: React.FC = () => {
     switch (action) {
       case "CREATE":
         if (name) {
-          console.log("We are here");
           await createTopic(name);
         }
         break;
@@ -56,6 +68,10 @@ export const AdminPage: React.FC = () => {
         break;
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>

@@ -1,16 +1,24 @@
 import React, { useContext, useState } from "react";
 import { ThemeContext } from "styled-components";
-
 import { TranslateContext } from "../../context/TranslateContext";
-import { ITopic, IUser } from "../../interfaces/common";
+import {
+  ICreateCollectionValues,
+  ITopic,
+  IUser,
+} from "../../interfaces/common";
 import { darkTheme } from "../themes/Themes";
+import { AdminCreateCollection } from "./AdminCreateCollectionComponent";
 import { AdminTopicActionsComponent } from "./AdminTopicActionsComponent";
 import { AdminUserActionsComponent } from "./AdminUserActionsComponent";
 
 interface IAdminPageComponent {
   users: IUser[];
   topics: ITopic[];
-  submitUserAction: (userId: string, userAction: string) => void;
+  submitUserAction: (
+    userId: string,
+    userAction: string,
+    values?: ICreateCollectionValues
+  ) => void;
   submitTopicAction: (action: string, topicId?: string, name?: string) => void;
 }
 
@@ -23,9 +31,30 @@ export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
   const { dictionary } = useContext(TranslateContext);
   const isDark = useContext(ThemeContext) === darkTheme;
   const [action, setAction] = useState("none");
+  const [createCollectionData, setCreateCollectionData] = useState({
+    show: false,
+    userId: "",
+    action: "",
+  });
 
   const selectActionHandler = (e: any) => {
     setAction(e.target.value);
+  };
+
+  const submitUserActionHandler = (
+    selectedUserId: string,
+    userAction: string
+  ) => {
+    if (userAction === "CREATE") {
+      setCreateCollectionData({
+        show: true,
+        userId: selectedUserId,
+        action: userAction,
+      });
+      return;
+    }
+
+    submitUserAction(selectedUserId, userAction);
   };
 
   return (
@@ -60,12 +89,23 @@ export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
         </div>
       )}
       {action === "user" && (
-        <AdminUserActionsComponent users={users} onSubmit={submitUserAction} />
+        <AdminUserActionsComponent
+          users={users}
+          onSubmit={submitUserActionHandler}
+        />
       )}
       {action === "topic" && (
         <AdminTopicActionsComponent
           onSubmit={submitTopicAction}
           topics={topics}
+        />
+      )}
+      {createCollectionData.show && (
+        <AdminCreateCollection
+          action={createCollectionData.action}
+          userId={createCollectionData.userId}
+          topics={topics}
+          onSubmit={submitUserAction}
         />
       )}
     </div>

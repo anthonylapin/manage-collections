@@ -1,11 +1,13 @@
-import { useCallback, useState } from "react";
-import { IUser } from "../interfaces/common";
+import { useCallback, useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { uploadFileToGoogleStorage } from "../helper/uploadFileToGoogleStorage";
+import { ICreateCollectionValues, ITopic, IUser } from "../interfaces/common";
 import { useHttp } from "./http.hook";
 
 export const useAdmin = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-
-  const { request } = useHttp();
+  const { request, loading, setLoading } = useHttp();
+  const auth = useContext(AuthContext);
 
   const getUsers = useCallback(async () => {
     try {
@@ -93,6 +95,37 @@ export const useAdmin = () => {
     }
   };
 
+  const createCollection = async (
+    values: ICreateCollectionValues,
+    userId: string,
+    topics: ITopic[]
+  ) => {
+    setLoading(true);
+    let imageUrl = await uploadFileToGoogleStorage(values.file);
+    setLoading(false);
+
+    values["imageUrl"] = imageUrl;
+    delete values["file"];
+
+    if (!values.topic) {
+      values.topic = topics[0].id;
+    }
+
+    try {
+      let url = `/api/collections/create?userId=${userId}`;
+      const response = await request(url, "POST", values, {
+        Authorization: `Bearer ${auth.token}`,
+      });
+      window.alert(response.message);
+    } catch (e) {
+      window.alert(e.message);
+    }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
   return {
     users,
     getUsers,
@@ -101,5 +134,7 @@ export const useAdmin = () => {
     createTopic,
     updateTopic,
     deleteTopic,
+    createCollection,
+    loading,
   };
 };

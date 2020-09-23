@@ -1,9 +1,8 @@
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from "styled-components";
 import { TranslateContext } from "../../context/TranslateContext";
 import { IUser } from "../../interfaces/common";
-import { SelectForm } from "../common/SelectForm";
 import { darkTheme } from "../themes/Themes";
 
 interface IUserActions {
@@ -27,6 +26,10 @@ const userActions = [
   {
     _id: "ADMIN",
     name: "Make admin",
+  },
+  {
+    _id: "CREATE",
+    name: "Create collection",
   },
 ];
 

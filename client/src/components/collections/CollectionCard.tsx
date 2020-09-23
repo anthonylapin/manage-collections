@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ReactMarkdown from "react-markdown";
+import { AuthContext } from "../../context/AuthContext";
 import { TranslateContext } from "../../context/TranslateContext";
 import { ICollectionCard } from "../../interfaces/common";
 import { ItemsFilterByComponent } from "../items/ItemsFilterByComponent";
@@ -15,6 +16,7 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
   onExport,
 }) => {
   const { dictionary } = useContext(TranslateContext);
+  const { isSuperuser } = useContext(AuthContext);
   return (
     <div style={{ width: "100%" }}>
       <div
@@ -47,6 +49,40 @@ export const CollectionCard: React.FC<ICollectionCard> = ({
             <ItemsFilterByComponent onChange={onFilter} />
           </div>
           <ItemsList items={items} />
+          {isSuperuser && (
+            <div
+              className="btn-toolbar mb-2"
+              role="toolbar"
+              aria-label="Toolbar"
+            >
+              <div className="btn-group mr-2" role="group">
+                <button
+                  type="button"
+                  className={
+                    isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                  }
+                >
+                  Update collection
+                </button>
+                <button
+                  type="button"
+                  className={
+                    isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                  }
+                >
+                  Delete collection
+                </button>
+                <button
+                  type="button"
+                  className={
+                    isDark ? "btn btn-outline-secondary" : "btn btn-secondary"
+                  }
+                >
+                  Add item
+                </button>
+              </div>
+            </div>
+          )}
           <button
             className={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
             onClick={onExport}

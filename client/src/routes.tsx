@@ -89,3 +89,5 @@ export const useRoutes = (isAuthenticated: boolean, isSuperuser: boolean) => {
     </Switch>
   );
 };
+
+export const useAdminRoutes = () => {};
