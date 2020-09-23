@@ -85,6 +85,14 @@
     "itemHasBeenUpdatedSuccessfully": "Item has been updated successfully",
     "exportCollectionToCsv": "Export collection to csv file",
     "Admin": "Admin",
-    "adminPanel": "Admin panel"
+    "adminPanel": "Admin panel",
+    "user": "user",
+    "action": "action",
+    "userActions": "User actions",
+    "topicActions": "Topic actions",
+    "createTopic": "Create topic",
+    "updateTopic": "Update topic",
+    "deleteTopic": "Delete topic",
+    "topic": "topic"
   }
 }

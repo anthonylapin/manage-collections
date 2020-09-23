@@ -1,5 +1,7 @@
 const { Router } = require("express");
+const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
+const Topic = require("../models/Topic");
 const { Types } = require("mongoose");
 const router = Router();
 
@@ -11,7 +13,13 @@ const userActions = {
 
 router.get("/users", async (req, res) => {
   try {
-    const users = await User.find({});
+    let users = await User.find({});
+
+    users = users.map((user) => ({
+      _id: user._id,
+      name: `${user.firstName} ${user.lastName}`,
+    }));
+
     res.status(200).json({ users });
   } catch (error) {
     res.status(500).json({
@@ -20,9 +28,9 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.put("/users", async (req, res) => {
+router.put("/users/:userId", async (req, res) => {
   const action = req.query.action;
-  const userId = Types.ObjectId(req.body.userId);
+  const userId = Types.ObjectId(req.params.userId);
 
   try {
     const user = await User.findOne({ _id: userId });
@@ -68,8 +76,8 @@ router.put("/users", async (req, res) => {
   }
 });
 
-router.delete("/users", async (req, res) => {
-  const userId = Types.ObjectId(req.query.userId);
+router.delete("/users/:userId", async (req, res) => {
+  const userId = Types.ObjectId(req.params.userId);
   try {
     await User.deleteOne({ _id: userId });
     res.json({
@@ -81,5 +89,87 @@ router.delete("/users", async (req, res) => {
     });
   }
 });
+
+router.post(
+  "/topics",
+  [
+    check("name", "Name must exist.").exists().isLength({
+      min: 1,
+    }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: "Incorrect data during creating new topic.",
+      });
+    }
+
+    try {
+      const { name } = req.body;
+      const capitalizedName = capitalizeWords(name);
+
+      const candidate = await Topic.findOne({ name: capitalizedName });
+      if (candidate) {
+        return res.status(400).json({
+          message: "Such topic already exists, choose different name.",
+        });
+      }
+
+      await createTopic(capitalizedName);
+      res.status(201).json({
+        message: `Topic ${capitalizedName} is created.`,
+      });
+    } catch (e) {
+      res.status(500).json({
+        message: "Something went wrong, try again.",
+      });
+    }
+  }
+);
+
+router.put("/topics/:topicId", async (req, res) => {
+  const topicId = Types.ObjectId(req.params.topicId);
+  try {
+    await Topic.updateOne(
+      { _id: topicId },
+      { name: capitalizeWords(req.body.name) }
+    );
+    res.status(200).json({
+      message: "Updated",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
+    });
+  }
+});
+
+router.delete("/topics/:topicId", async (req, res) => {
+  const topicId = Types.ObjectId(req.params.topicId);
+  try {
+    await Topic.deleteOne({ _id: topicId });
+    res.status(200).json({
+      message: "Deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong, try again.",
+    });
+  }
+});
+
+async function createTopic(name) {
+  const newTopic = new Topic({ name });
+  await newTopic.save();
+  return newTopic;
+}
+
+function capitalizeWords(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 
 module.exports = router;

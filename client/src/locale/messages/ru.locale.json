@@ -85,6 +85,14 @@
     "itemHasBeenUpdatedSuccessfully": "Предмет были успешно обновлены",
     "exportCollectionToCsv": "Экспортировать коллекцию в csv файл",
     "Admin": "Админ",
-    "adminPanel": "Панель админа"
+    "adminPanel": "Панель админа",
+    "user": "пользователя",
+    "action": "действие",
+    "userActions": "Действия над пользователем",
+    "topicActions": "Действия над тематиками",
+    "createTopic": "Создать тематику",
+    "updateTopic": "Обновить тематику",
+    "deleteTopic": "Удалить тематику",
+    "topic": "тематика"
   }
 }

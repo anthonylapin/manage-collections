@@ -360,3 +360,8 @@ export interface ITranslateToggler {
     | typeof messages[Locales.English]
     | typeof messages[Locales.Russian];
 }
+
+export interface IUser {
+  _id: string;
+  name: string;
+}
