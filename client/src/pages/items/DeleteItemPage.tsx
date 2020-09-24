@@ -34,7 +34,7 @@ export const DeleteItemPage: React.FC = () => {
         }, 1500);
       } catch (e) {}
     },
-    [request]
+    [request, history]
   );
 
   useEffect(() => {

@@ -25,7 +25,7 @@ export function useAllItems() {
 export function useItems(collectionId: string) {
   const [items, setItems] = useState<IItemObj[]>([]);
   const [itemsToShow, setItemsToShow] = useState<IItemObj[]>(items);
-  const { request } = useHttp();
+  const { request, loading } = useHttp();
 
   const fetchItems = useCallback(
     async (key?: string) => {
@@ -45,7 +45,7 @@ export function useItems(collectionId: string) {
     fetchItems();
   }, [fetchItems]);
 
-  return { items, itemsToShow, setItemsToShow, fetchItems };
+  return { items, itemsToShow, setItemsToShow, fetchItems, loading };
 }
 
 export function useItem(itemId: string) {
