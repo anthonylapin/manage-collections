@@ -12,7 +12,7 @@ router.get("/:itemId", async (req, res) => {
     const userIds = comments.map((comment) => comment.author);
     const authors = await User.find({ _id: { $in: userIds } });
 
-    modifiedComments = comments.map((comment) => {
+    const modifiedComments = comments.map((comment) => {
       const author = authors.find(
         (author) => String(comment.author) === String(author._id)
       );
@@ -26,7 +26,7 @@ router.get("/:itemId", async (req, res) => {
       comments: modifiedComments,
     });
   } catch (e) {
-    console.log(e.message);
+    console.log("Error", e.message);
     res.status(500).json({
       message: "Something went wrong, try again.",
     });

@@ -49,7 +49,7 @@ export const DeleteCollectionPage: React.FC = () => {
         onSelect={selectHandler}
         buttonClass={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
         buttonAction={dictionary.Delete}
-        target={dictionary.collection}
+        target={dictionary.collectionPrescriptiveCase}
       />
     </div>
   );

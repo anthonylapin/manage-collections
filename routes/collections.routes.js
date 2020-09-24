@@ -129,9 +129,6 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const collectionId = Types.ObjectId(req.params.id);
   try {
-    const itemsIds = await findItemsIdsFromCollection(collectionId);
-    await deleteItemsFromTags(itemsIds);
-    await deleteItems(itemsIds);
     await deleteCollection(collectionId);
 
     res.json({
@@ -172,6 +169,12 @@ async function createNewCollection(body, userId) {
   return newCollection;
 }
 
+async function deleteCollection(collectionId) {
+  const itemsIds = await findItemsIdsFromCollection(collectionId);
+  await deleteItemsFromTags(itemsIds);
+  await deleteItems(itemsIds);
+  await Collection.deleteOne({ _id: collectionId });
+}
 async function findItemsIdsFromCollection(collectionId) {
   const items = await Item.find({ collectionId });
   return items.map((item) => Types.ObjectId(item._id));
@@ -186,10 +189,6 @@ async function deleteItemsFromTags(itemsIds) {
 
 async function deleteItems(itemsIds) {
   await Item.deleteMany({ _id: { $in: itemsIds } });
-}
-
-async function deleteCollection(collectionId) {
-  await Collection.deleteOne({ _id: collectionId });
 }
 
 async function sortCollection(key, collections) {

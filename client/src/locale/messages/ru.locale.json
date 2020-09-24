@@ -23,7 +23,6 @@
     "Password": "Пароль",
     "firstName": "Имя",
     "lastName": "Фамилия",
-    "signUp": "Зарегистрироваться",
     "loginWithGoogle": "Зайти с помощью Google",
     "Owner": "Владелец",
     "Topic": "Тематика",
@@ -98,6 +97,7 @@
     "Blocked": "Заблокирован",
     "Superuser": "Администратор",
     "Created": "Создан",
-    "userDataIsShownBelow": "Информация о пользователе отображена снизу"
+    "userDataIsShownBelow": "Информация о пользователе отображена снизу",
+    "collectionPrescriptiveCase": "коллекцию"
   }
 }

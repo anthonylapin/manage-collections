@@ -141,7 +141,7 @@ export const UpdateCollectionPage: React.FC = () => {
           }))}
           buttonClass={isDark ? "btn btn-outline-primary" : "btn btn-primary"}
           buttonAction={dictionary.Find}
-          target={dictionary.collection}
+          target={dictionary.collectionPrescriptiveCase}
         />
       )}
       {showForm && (

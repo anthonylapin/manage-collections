@@ -136,7 +136,11 @@ export const ItemCard: React.FC<IItemCard> = ({
             className={isDark ? "list-group-item bg-dark" : "list-group-item"}
           >
             {collection.checkboxFieldKey1}:{" "}
-            <input type="checkbox" defaultChecked={!!item.checkboxField1} />
+            <input
+              type="checkbox"
+              checked={String(item.checkboxField1) === "true"}
+              readOnly
+            />
           </li>
         )}
         {collection.checkboxFieldKey2 && (
@@ -144,7 +148,11 @@ export const ItemCard: React.FC<IItemCard> = ({
             className={isDark ? "list-group-item bg-dark" : "list-group-item"}
           >
             {collection.checkboxFieldKey2}:{" "}
-            <input type="checkbox" defaultChecked={!!item.checkboxField2} />
+            <input
+              type="checkbox"
+              checked={String(item.checkboxField2) === "true"}
+              readOnly
+            />
           </li>
         )}
         {collection.checkboxFieldKey3 && (
@@ -152,7 +160,11 @@ export const ItemCard: React.FC<IItemCard> = ({
             className={isDark ? "list-group-item bg-dark" : "list-group-item"}
           >
             {collection.checkboxFieldKey3}:{" "}
-            <input type="checkbox" defaultChecked={!!item.checkboxField3} />
+            <input
+              type="checkbox"
+              checked={String(item.checkboxField3) === "true"}
+              readOnly
+            />
           </li>
         )}
         <li className={isDark ? "list-group-item bg-dark" : "list-group-item"}>

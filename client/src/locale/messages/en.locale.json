@@ -23,7 +23,6 @@
     "Password": "Password",
     "firstName": "First name",
     "lastName": "Last name",
-    "signUp": "Sign up",
     "loginWithGoogle": "Login with Google",
     "Owner": "Owner",
     "Topic": "Topic",
@@ -98,6 +97,7 @@
     "Blocked": "Blocked",
     "Superuser": "Superuser",
     "Created": "Created",
-    "userDataIsShownBelow": "User data is shown below"
+    "userDataIsShownBelow": "User data is shown below",
+    "collectionPrescriptiveCase": "collection"
   }
 }
