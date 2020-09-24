@@ -3,6 +3,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Topic = require("../models/Topic");
 const { Types } = require("mongoose");
+const { capitalizeWords } = require("../helper");
 const router = Router();
 
 const userActions = {
@@ -164,12 +165,6 @@ async function createTopic(name) {
   const newTopic = new Topic({ name });
   await newTopic.save();
   return newTopic;
-}
-
-function capitalizeWords(str) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
 }
 
 module.exports = router;

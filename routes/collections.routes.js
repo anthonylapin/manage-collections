@@ -9,6 +9,13 @@ const Tag = require("../models/Tag");
 const router = Router();
 const helper = require("../helper");
 
+const sortKeys = {
+  Name: "NAME",
+  DateCreated: "DATE_CREATED",
+  Size: "SIZE",
+  Default: "DEFAULT",
+};
+
 router.get("/", auth, async (req, res) => {
   const key = req.query.key;
   try {
@@ -185,13 +192,6 @@ async function deleteCollection(collectionId) {
   await Collection.deleteOne({ _id: collectionId });
 }
 
-const sortKeys = {
-  Name: "NAME",
-  DateCreated: "DATE_CREATED",
-  Size: "SIZE",
-  Default: "DEFAULT",
-};
-
 async function sortCollection(key, collections) {
   switch (key) {
     case sortKeys.Name:
@@ -226,20 +226,6 @@ async function sortBySize(collections) {
   });
 
   return sortedCollections;
-}
-
-function removeDuplicatesFromArray(array) {
-  const arrayOfUniqueIds = [];
-  const uniqueArray = [];
-
-  array.forEach((element) => {
-    if (!arrayOfUniqueIds.includes(String(element))) {
-      arrayOfUniqueIds.push(String(element));
-      uniqueArray.push(element);
-    }
-  });
-
-  return uniqueArray;
 }
 
 module.exports = router;

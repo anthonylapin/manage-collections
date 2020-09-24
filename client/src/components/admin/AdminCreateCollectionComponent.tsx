@@ -4,7 +4,7 @@ import { TranslateContext } from "../../context/TranslateContext";
 import {
   ICollectionFormValues,
   ICreateCollectionValues,
-  ITopic,
+  IAdminCreateCollection,
 } from "../../interfaces/common";
 import { CollectionForm } from "../collections/CollectionForm";
 import { darkTheme } from "../themes/Themes";
@@ -30,17 +30,6 @@ const defaultValues: ICollectionFormValues = {
   checkboxFieldKey2: "",
   checkboxFieldKey3: "",
 };
-
-interface IAdminCreateCollection {
-  action: string;
-  userId: string;
-  topics: ITopic[];
-  onSubmit: (
-    userId: string,
-    userAction: string,
-    values: ICreateCollectionValues
-  ) => void;
-}
 
 export const AdminCreateCollection: React.FC<IAdminCreateCollection> = ({
   action,

@@ -17,7 +17,6 @@ export enum Types {
   Change = "CHANGE_LOCALE",
 }
 
-// Items
 type ItemPayload = {
   [Types.Search]: {
     items: IItemObj[];

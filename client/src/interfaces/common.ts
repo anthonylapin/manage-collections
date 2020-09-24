@@ -365,3 +365,35 @@ export interface IUser {
   _id: string;
   name: string;
 }
+
+export interface IAdminCreateCollection {
+  action: string;
+  userId: string;
+  topics: ITopic[];
+  onSubmit: (
+    userId: string,
+    userAction: string,
+    values: ICreateCollectionValues
+  ) => void;
+}
+
+export interface IAdminPageComponent {
+  users: IUser[];
+  topics: ITopic[];
+  submitUserAction: (
+    userId: string,
+    userAction: string,
+    values?: ICreateCollectionValues
+  ) => void;
+  submitTopicAction: (action: string, topicId?: string, name?: string) => void;
+}
+
+export interface IAdminTopicActions {
+  onSubmit: (action: string, topicId?: string, name?: string) => void;
+  topics: ITopic[];
+}
+
+export interface IUserActions {
+  users: IUser[];
+  onSubmit: (userId: string, action: string) => void;
+}

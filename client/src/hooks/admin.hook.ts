@@ -28,9 +28,6 @@ export const useAdmin = () => {
       );
 
       window.alert(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       window.alert(error.message);
     }
@@ -46,9 +43,6 @@ export const useAdmin = () => {
       );
 
       window.alert(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       window.alert(error.message);
     }
@@ -58,9 +52,6 @@ export const useAdmin = () => {
     try {
       const response = await request("/api/admin/topics", "POST", { name }, {});
       window.alert(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       window.alert(error.message);
     }
@@ -75,9 +66,6 @@ export const useAdmin = () => {
         {}
       );
       window.alert(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       window.alert(error.message);
     }
@@ -87,9 +75,6 @@ export const useAdmin = () => {
     try {
       const response = await request(`/api/admin/topics/${topicId}`, "DELETE");
       window.alert(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       window.alert(error.message);
     }
@@ -120,10 +105,6 @@ export const useAdmin = () => {
     } catch (e) {
       window.alert(e.message);
     }
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
   };
 
   return {

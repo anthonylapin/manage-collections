@@ -7,6 +7,10 @@ const mongoose = require("mongoose");
 const config = require("config");
 const logger = require("morgan");
 const { handleSocketConnection } = require("./socket");
+const Multer = require("multer");
+const { Storage } = require("@google-cloud/storage");
+const path = require("path");
+const { format } = require("util");
 
 const PORT = process.env.PORT || config.get("port") || 5000;
 const MONGODB_URI = config.get("mongoUri");
@@ -28,11 +32,6 @@ app.use("/api/likes", require("./routes/likes.routes"));
 app.use("/api/search", require("./routes/search.routes"));
 app.use("/api/files", require("./routes/files.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
-
-const Multer = require("multer");
-const { Storage } = require("@google-cloud/storage");
-const path = require("path");
-const { format } = require("util");
 
 const multer = Multer({
   storage: Multer.memoryStorage(),
@@ -74,7 +73,6 @@ app.post("/api/googlecloud/upload", multer.single("file"), async (req, res) => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  console.log("We are in production");
   app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));

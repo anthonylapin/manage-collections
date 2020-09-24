@@ -1,26 +1,11 @@
 import React, { useContext, useState } from "react";
 import { ThemeContext } from "styled-components";
 import { TranslateContext } from "../../context/TranslateContext";
-import {
-  ICreateCollectionValues,
-  ITopic,
-  IUser,
-} from "../../interfaces/common";
+import { IAdminPageComponent } from "../../interfaces/common";
 import { darkTheme } from "../themes/Themes";
 import { AdminCreateCollection } from "./AdminCreateCollectionComponent";
 import { AdminTopicActionsComponent } from "./AdminTopicActionsComponent";
 import { AdminUserActionsComponent } from "./AdminUserActionsComponent";
-
-interface IAdminPageComponent {
-  users: IUser[];
-  topics: ITopic[];
-  submitUserAction: (
-    userId: string,
-    userAction: string,
-    values?: ICreateCollectionValues
-  ) => void;
-  submitTopicAction: (action: string, topicId?: string, name?: string) => void;
-}
 
 export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
   users,

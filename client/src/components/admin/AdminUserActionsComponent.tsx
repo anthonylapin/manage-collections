@@ -2,13 +2,8 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components";
 import { TranslateContext } from "../../context/TranslateContext";
-import { IUser } from "../../interfaces/common";
+import { IUserActions } from "../../interfaces/common";
 import { darkTheme } from "../themes/Themes";
-
-interface IUserActions {
-  users: IUser[];
-  onSubmit: (userId: string, action: string) => void;
-}
 
 const userActions = [
   {

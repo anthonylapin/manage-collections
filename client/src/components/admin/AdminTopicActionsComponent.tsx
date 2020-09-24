@@ -1,16 +1,11 @@
 import React, { useContext, useState } from "react";
 import { ThemeContext } from "styled-components";
 import { TranslateContext } from "../../context/TranslateContext";
-import { ITopic } from "../../interfaces/common";
+import { IAdminTopicActions } from "../../interfaces/common";
 import { darkTheme } from "../themes/Themes";
 import { TopicForm } from "../topics/TopicForm";
 import { DeleteTopicComponent } from "../topics/DeleteTopicComponent";
 import { UpdateTopicComponent } from "../topics/UpdateTopicComponent";
-
-interface IAdminTopicActions {
-  onSubmit: (action: string, topicId?: string, name?: string) => void;
-  topics: ITopic[];
-}
 
 enum topicActions {
   Delete = "DELETE",
