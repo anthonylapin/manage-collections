@@ -40,6 +40,7 @@ export const AdminPage: React.FC = () => {
         await updateUser(userId, action);
         break;
     }
+    await getUsers();
   };
 
   const submitTopicAction = async (
@@ -67,6 +68,7 @@ export const AdminPage: React.FC = () => {
         console.log("some error...");
         break;
     }
+    await getTopics();
   };
 
   if (loading) {

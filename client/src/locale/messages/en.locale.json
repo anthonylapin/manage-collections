@@ -93,6 +93,11 @@
     "createTopic": "Create topic",
     "updateTopic": "Update topic",
     "deleteTopic": "Delete topic",
-    "topic": "topic"
+    "topic": "topic",
+    "topicPrescriptiveCase": "topic",
+    "Blocked": "Blocked",
+    "Superuser": "Superuser",
+    "Created": "Created",
+    "userDataIsShownBelow": "User data is shown below"
   }
 }

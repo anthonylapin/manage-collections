@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import { ThemeContext } from "styled-components";
 import { TranslateContext } from "../../context/TranslateContext";
-import { IAdminPageComponent } from "../../interfaces/common";
+import { IAdminPageComponent, IUser } from "../../interfaces/common";
 import { darkTheme } from "../themes/Themes";
 import { AdminCreateCollection } from "./AdminCreateCollectionComponent";
 import { AdminTopicActionsComponent } from "./AdminTopicActionsComponent";
 import { AdminUserActionsComponent } from "./AdminUserActionsComponent";
+import { UserComponent } from "./UserComponent";
 
 export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
   users,
@@ -20,6 +21,10 @@ export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
     show: false,
     userId: "",
     action: "",
+  });
+  const [userForm, setUserForm] = useState({
+    data: {} as IUser,
+    show: false,
   });
 
   const selectActionHandler = (e: any) => {
@@ -36,6 +41,19 @@ export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
         userId: selectedUserId,
         action: userAction,
       });
+      return;
+    }
+
+    if (userAction === "SHOW") {
+      const user = users.find((user) => user._id === selectedUserId);
+
+      if (user) {
+        setUserForm({
+          show: true,
+          data: user,
+        });
+      }
+      window.alert(dictionary.userDataIsShownBelow);
       return;
     }
 
@@ -92,6 +110,11 @@ export const AdminPageComponent: React.FC<IAdminPageComponent> = ({
           topics={topics}
           onSubmit={submitUserAction}
         />
+      )}
+      {userForm.show && (
+        <div className="mt-4">
+          <UserComponent user={userForm.data} />
+        </div>
       )}
     </div>
   );

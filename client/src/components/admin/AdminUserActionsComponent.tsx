@@ -26,6 +26,10 @@ const userActions = [
     _id: "CREATE",
     name: "Create collection",
   },
+  {
+    _id: "SHOW",
+    name: "Show user",
+  },
 ];
 
 export const AdminUserActionsComponent: React.FC<IUserActions> = ({
@@ -59,9 +63,9 @@ export const AdminUserActionsComponent: React.FC<IUserActions> = ({
           <option value="default value" disabled>
             {dictionary.Select} {dictionary.user}
           </option>
-          {users.map((item, index) => (
-            <option key={index} value={item._id}>
-              {item.name}
+          {users.map((user, index) => (
+            <option key={index} value={user._id}>
+              {`${user.firstName} ${user.lastName}`}
             </option>
           ))}
         </select>

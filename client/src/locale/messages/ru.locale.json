@@ -93,6 +93,11 @@
     "createTopic": "Создать тематику",
     "updateTopic": "Обновить тематику",
     "deleteTopic": "Удалить тематику",
-    "topic": "тематика"
+    "topic": "тематика",
+    "topicPrescriptiveCase": "тематику",
+    "Blocked": "Заблокирован",
+    "Superuser": "Администратор",
+    "Created": "Создан",
+    "userDataIsShownBelow": "Информация о пользователе отображена снизу"
   }
 }

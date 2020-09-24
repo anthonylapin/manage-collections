@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { TranslateContext } from "../../context/TranslateContext";
 import { ITopic } from "../../interfaces/common";
 import { SelectForm } from "../common/SelectForm";
+import { darkTheme } from "../themes/Themes";
 
 interface IDeleteTopic {
   topics: ITopic[];
@@ -13,6 +16,8 @@ export const DeleteTopicComponent: React.FC<IDeleteTopic> = ({
   topics,
   onSubmit,
 }) => {
+  const isDark = useContext(ThemeContext) === darkTheme;
+  const { dictionary } = useContext(TranslateContext);
   const selectHandler = (selectedId: string) => {
     const topicName = topics.find((topic) => topic.id === selectedId)?.name;
     if (topicName) {
@@ -25,9 +30,9 @@ export const DeleteTopicComponent: React.FC<IDeleteTopic> = ({
       <SelectForm
         items={topics.map((topic) => ({ _id: topic.id, name: topic.name }))}
         onSelect={selectHandler}
-        buttonAction="Delete"
-        buttonClass={"btn btn-danger"}
-        target="topic"
+        buttonAction={dictionary.Delete}
+        buttonClass={isDark ? "btn btn-outline-danger" : "btn btn-danger"}
+        target={dictionary.topicPrescriptiveCase}
       />
     </div>
   );

@@ -363,7 +363,14 @@ export interface ITranslateToggler {
 
 export interface IUser {
   _id: string;
-  name: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  superuser: boolean;
+  blocked: boolean;
+  collections: ICollection[];
+  created: Date;
 }
 
 export interface IAdminCreateCollection {
@@ -396,4 +403,8 @@ export interface IAdminTopicActions {
 export interface IUserActions {
   users: IUser[];
   onSubmit: (userId: string, action: string) => void;
+}
+
+export interface IUserComponent {
+  user: IUser;
 }

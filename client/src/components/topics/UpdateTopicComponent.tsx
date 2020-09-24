@@ -33,7 +33,7 @@ export const UpdateTopicComponent: React.FC<IDeleteTopic> = ({
           onSelect={selectHandler}
           buttonAction={dictionary.Update}
           buttonClass={isDark ? "btn btn-outline-info" : "btn btn-info"}
-          target={dictionary.topic}
+          target={dictionary.topicPrescriptiveCase}
         />
       )}
       {topic && (

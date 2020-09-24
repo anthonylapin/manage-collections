@@ -16,10 +16,10 @@ router.get("/users", async (req, res) => {
   try {
     let users = await User.find({});
 
-    users = users.map((user) => ({
-      _id: user._id,
-      name: `${user.firstName} ${user.lastName}`,
-    }));
+    // users = users.map((user) => ({
+    //   _id: user._id,
+    //   name: `${user.firstName} ${user.lastName}`,
+    // }));
 
     res.status(200).json({ users });
   } catch (error) {
